@@ -9,6 +9,30 @@ class TimestampedModel(models.Model):
         abstract = True
 
 
+class Topic(TimestampedModel):
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
+    description = models.TextField(blank=True, default='')
+    icon = models.CharField(max_length=50, blank=True, default='')
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class DisabilityType(TimestampedModel):
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class Resource(TimestampedModel):
     class ResourceType(models.TextChoices):
         REPORT = 'REPORT', 'Report'
@@ -17,16 +41,18 @@ class Resource(TimestampedModel):
         POLICY_BRIEF = 'POLICY_BRIEF', 'Policy Brief'
         RESEARCH = 'RESEARCH', 'Research'
         VIDEO = 'VIDEO', 'Video'
+        AUDIO = 'AUDIO', 'Audio'
         OTHER = 'OTHER', 'Other'
 
     title = models.CharField(max_length=255)
     description = models.TextField()
     resource_type = models.CharField(max_length=32, choices=ResourceType.choices)
-    language = models.CharField(max_length=16, default='en')
-    countries = models.CharField(max_length=255, blank=True, default='')
-    topics = models.CharField(max_length=255, blank=True, default='')
-    file_url = models.URLField(blank=True, default='')
+    file = models.FileField(upload_to='resources/', blank=True, null=True)
     external_url = models.URLField(blank=True, default='')
+    thumbnail = models.ImageField(upload_to='resource_thumbnails/', blank=True, null=True)
+    language = models.CharField(max_length=16, default='en')
+    topics = models.ManyToManyField(Topic, blank=True, related_name='resources')
+    disability_types = models.ManyToManyField(DisabilityType, blank=True, related_name='resources')
     published_at = models.DateTimeField()
     download_count = models.PositiveIntegerField(default=0)
     is_featured = models.BooleanField(default=False)

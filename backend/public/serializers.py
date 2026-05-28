@@ -1,11 +1,29 @@
 from rest_framework import serializers
 
-from .models import ContactMessage, Event, NewsArticle, Resource
+from .models import ContactMessage, DisabilityType, Event, NewsArticle, Resource, Topic
+
+
+class TopicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Topic
+        fields = ['id', 'name', 'slug', 'description', 'icon']
+
+
+class DisabilityTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DisabilityType
+        fields = ['id', 'name', 'slug']
 
 
 class ResourceSerializer(serializers.ModelSerializer):
-    countries = serializers.SerializerMethodField()
-    topics = serializers.SerializerMethodField()
+    topics = TopicSerializer(many=True, read_only=True)
+    disability_types = DisabilityTypeSerializer(many=True, read_only=True)
+    topic_ids = serializers.ListField(
+        child=serializers.IntegerField(), write_only=True, required=False
+    )
+    disability_type_ids = serializers.ListField(
+        child=serializers.IntegerField(), write_only=True, required=False
+    )
 
     class Meta:
         model = Resource
@@ -14,21 +32,43 @@ class ResourceSerializer(serializers.ModelSerializer):
             'title',
             'description',
             'resource_type',
-            'language',
-            'countries',
-            'topics',
-            'file_url',
+            'file',
             'external_url',
+            'thumbnail',
+            'language',
+            'topics',
+            'disability_types',
+            'topic_ids',
+            'disability_type_ids',
             'published_at',
             'download_count',
             'is_featured',
         ]
 
-    def get_countries(self, obj: Resource) -> list[str]:
-        return [item.strip() for item in obj.countries.split(',') if item.strip()]
+    def create(self, validated_data):
+        topic_ids = validated_data.pop('topic_ids', [])
+        disability_type_ids = validated_data.pop('disability_type_ids', [])
+        resource = Resource.objects.create(**validated_data)
+        if topic_ids:
+            resource.topics.set(topic_ids)
+        if disability_type_ids:
+            resource.disability_types.set(disability_type_ids)
+        return resource
 
-    def get_topics(self, obj: Resource) -> list[str]:
-        return [item.strip() for item in obj.topics.split(',') if item.strip()]
+    def update(self, instance, validated_data):
+        topic_ids = validated_data.pop('topic_ids', None)
+        disability_type_ids = validated_data.pop('disability_type_ids', None)
+        
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        
+        if topic_ids is not None:
+            instance.topics.set(topic_ids)
+        if disability_type_ids is not None:
+            instance.disability_types.set(disability_type_ids)
+        
+        return instance
 
 
 class NewsArticleSerializer(serializers.ModelSerializer):

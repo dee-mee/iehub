@@ -4,13 +4,35 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .models import ContactMessage, Event, NewsArticle, Resource
+from .models import ContactMessage, DisabilityType, Event, NewsArticle, Resource, Topic
 from .serializers import (
     ContactMessageSerializer,
+    DisabilityTypeSerializer,
     EventSerializer,
     NewsArticleSerializer,
     ResourceSerializer,
+    TopicSerializer,
 )
+
+
+class TopicViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Topic.objects.all()
+    serializer_class = TopicSerializer
+    permission_classes = [AllowAny]
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['name', 'description']
+    ordering_fields = ['name']
+    ordering = ['name']
+
+
+class DisabilityTypeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = DisabilityType.objects.all()
+    serializer_class = DisabilityTypeSerializer
+    permission_classes = [AllowAny]
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['name']
+    ordering_fields = ['name']
+    ordering = ['name']
 
 
 class ResourceViewSet(viewsets.ReadOnlyModelViewSet):
@@ -18,7 +40,7 @@ class ResourceViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ResourceSerializer
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter, OrderingFilter]
-    search_fields = ['title', 'description', 'resource_type', 'topics', 'countries']
+    search_fields = ['title', 'description', 'resource_type']
     ordering_fields = ['published_at', 'download_count', 'title']
     ordering = ['-published_at']
 
@@ -31,7 +53,7 @@ class ResourceViewSet(viewsets.ReadOnlyModelViewSet):
             {
                 'id': resource.id,
                 'download_count': resource.download_count,
-                'file_url': resource.file_url,
+                'file_url': resource.file.url if resource.file else None,
                 'external_url': resource.external_url,
             },
             status=status.HTTP_200_OK,
