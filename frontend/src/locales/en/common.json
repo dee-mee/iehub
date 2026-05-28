@@ -1,0 +1,46 @@
+{
+  "siteName": "Inclusive Education Hub for Africa",
+  "siteShort": "IE Hub",
+  "tagline": "Learning, collaboration, and advocacy for inclusive education across Africa",
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "resources": "Resource Library",
+    "news": "News & Events",
+    "contact": "Contact",
+    "accessibility": "Accessibility",
+    "join": "Join the Community",
+    "donate": "Support IE Hub"
+  },
+  "skipToContent": "Skip to main content",
+  "footer": {
+    "newsletterTitle": "Stay informed",
+    "newsletterDesc": "Subscribe for news, events, and resources on inclusive education.",
+    "subscribe": "Subscribe",
+    "consent": "I consent to receiving emails from IE Hub.",
+    "quickLinks": "Quick links",
+    "contact": "Contact",
+    "copyright": "© {{year}} Inclusive Education Hub for Africa. All rights reserved."
+  },
+  "home": {
+    "heroTitle": "Inclusive Education Hub for Africa",
+    "heroSubtitle": "A continental platform for practitioners, policymakers, and communities advancing inclusive education.",
+    "watchIntro": "Learn about IE Hub",
+    "whoWeAre": "Who we are",
+    "whyWeDoIt": "Why we do it",
+    "whatWeDo": "What we do",
+    "impact": "Our impact",
+    "programs": "Focus areas",
+    "latestNews": "News and stories",
+    "upcomingEvents": "Upcoming events",
+    "partners": "Our partners",
+    "ctaTitle": "Join the Community of Practice",
+    "ctaDesc": "Connect with educators and advocates across 54 African countries."
+  },
+  "stats": {
+    "members": "Community members",
+    "resources": "Resources in library",
+    "countries": "Countries represented",
+    "downloads": "Resource downloads"
+  }
+}
