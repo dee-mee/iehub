@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
-import { login as loginApi, me as meApi, register as registerApi } from '@/api/auth'
+import { login as loginApi, me as meApi, register as registerApi, updateMe as updateMeApi } from '@/api/auth'
 import type { AuthTokens, AuthUser } from '@/api/auth'
 
 type RegisterPayload = {
@@ -23,6 +23,7 @@ type AuthContextValue = {
   loading: boolean
   login: (email: string, password: string) => Promise<void>
   register: (payload: RegisterPayload) => Promise<void>
+  updateProfile: (payload: Partial<AuthUser>) => Promise<void>
   logout: () => void
 }
 
@@ -105,13 +106,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           country: payload.country,
         })
       },
+      updateProfile: async (payload: Partial<AuthUser>) => {
+        if (!tokens?.access) return
+        const updatedUser = await updateMeApi(tokens.access, payload)
+        setUser(updatedUser)
+      },
       logout: () => {
         setUser(null)
         setTokens(null)
         saveTokens(null)
       },
     }),
-    [loading, user],
+    [loading, user, tokens],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

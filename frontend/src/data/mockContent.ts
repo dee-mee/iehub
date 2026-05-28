@@ -100,6 +100,7 @@ export const resources: Resource[] = [
     description:
       'A continental reference for ministries developing inclusive education policies aligned with the UN CRPD.',
     resourceType: 'POLICY_BRIEF',
+    accessLevel: 'PUBLIC',
     language: 'English',
     countries: ['Kenya', 'Uganda', 'Tanzania'],
     topics: ['Policy & Advocacy'],
@@ -113,6 +114,7 @@ export const resources: Resource[] = [
     description:
       'Practical classroom strategies for diverse learners, with case studies from East Africa.',
     resourceType: 'TOOLKIT',
+    accessLevel: 'PUBLIC',
     language: 'English',
     countries: ['Kenya', 'Ethiopia'],
     topics: ['Teacher Training'],
@@ -126,6 +128,7 @@ export const resources: Resource[] = [
     description:
       'Guidance on procurement, maintenance, and training for assistive technology in schools.',
     resourceType: 'PUBLICATION',
+    accessLevel: 'PUBLIC',
     language: 'French',
     countries: ['DRC', 'Chad'],
     topics: ['Assistive Technology'],
@@ -139,6 +142,7 @@ export const resources: Resource[] = [
     description:
       'Synthesis of research on gender-responsive inclusive education programming.',
     resourceType: 'RESEARCH',
+    accessLevel: 'PUBLIC',
     language: 'English',
     countries: ['Rwanda', 'Burundi'],
     topics: ['Research & Evidence'],
@@ -151,6 +155,7 @@ export const resources: Resource[] = [
     description:
       'How organizations of persons with disabilities can partner with education actors.',
     resourceType: 'TOOLKIT',
+    accessLevel: 'PUBLIC',
     language: 'English',
     countries: ['Kenya', 'South Sudan'],
     topics: ['OPD Collaboration'],
@@ -163,6 +168,7 @@ export const resources: Resource[] = [
     description:
       'Rapid assessment and programming guidance for humanitarian education teams.',
     resourceType: 'REPORT',
+    accessLevel: 'PUBLIC',
     language: 'English',
     countries: ['Sudan', 'Somalia', 'South Sudan'],
     topics: ['Education in Emergencies'],

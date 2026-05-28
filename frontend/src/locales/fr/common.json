@@ -1,0 +1,94 @@
+{
+  "siteName": "Hub d'Éducation Inclusive pour l'Afrique",
+  "siteShort": "IE Hub",
+  "tagline": "Apprentissage, collaboration et plaidoyer pour l'éducation inclusive à travers l'Afrique",
+  "nav": {
+    "home": "Accueil",
+    "dashboard": "Tableau de bord",
+    "about": "À propos",
+    "resources": "Bibliothèque de ressources",
+    "news": "Actualités & Événements",
+    "contact": "Contact",
+    "accessibility": "Accessibilité",
+    "forum": "Forum",
+    "members": "Membres",
+    "join": "Rejoindre la communauté",
+    "donate": "Soutenir IE Hub",
+    "profile": "Mon profil",
+    "signOut": "Se déconnecter",
+    "signIn": "Se connecter"
+  },
+  "skipToContent": "Passer au contenu principal",
+  "footer": {
+    "newsletterTitle": "Restez informé",
+    "newsletterDesc": "Inscrivez-vous pour recevoir des nouvelles, des événements et des ressources sur l'éducation inclusive.",
+    "subscribe": "S'abonner",
+    "consent": "Je consens à recevoir des e-mails de IE Hub.",
+    "quickLinks": "Liens rapides",
+    "contact": "Contact",
+    "copyright": "© {{year}} Hub d'Éducation Inclusive pour l'Afrique. Tous droits réservés."
+  },
+  "home": {
+    "heroTitle": "Hub d'Éducation Inclusive pour l'Afrique",
+    "heroSubtitle": "Une plateforme continentale pour les praticiens, les décideurs et les communautés faisant progresser l'éducation inclusive.",
+    "watchIntro": "Découvrir IE Hub",
+    "whoWeAre": "Qui nous sommes",
+    "whyWeDoIt": "Pourquoi nous le faisons",
+    "whatWeDo": "Ce que nous faisons",
+    "impact": "Notre impact",
+    "programs": "Domaines d'intervention",
+    "latestNews": "Actualités et histoires",
+    "upcomingEvents": "Événements à venir",
+    "partners": "Nos partenaires",
+    "ctaTitle": "Rejoindre la communauté de pratique",
+    "ctaDesc": "Connectez-vous avec des éducateurs et des défenseurs dans 54 pays africains."
+  },
+  "dashboard": {
+    "welcome": "Bon retour, {{name}}",
+    "recentDiscussions": "Discussions récentes",
+    "latestUpdates": "Dernières mises à jour",
+    "upcomingEvents": "Événements à venir",
+    "featuredResources": "Ressources à la une",
+    "quickActions": "Actions rapides",
+    "viewAll": "Tout voir",
+    "viewCalendar": "Voir le calendrier",
+    "browseLibrary": "Parcourir la bibliothèque"
+  },
+  "forum": {
+    "title": "Communauté de Pratique",
+    "description": "Partagez vos connaissances, discutez des défis et connectez-vous avec vos pairs.",
+    "announcements": "Annonces",
+    "general": "Discussion générale",
+    "thematic": "Communautés thématiques",
+    "regional": "Groupes régionaux",
+    "startDiscussion": "Démarrer une nouvelle discussion",
+    "threads": "sujets",
+    "posts": "messages",
+    "lastActive": "Dernière activité",
+    "postReply": "Répondre",
+    "submitReply": "Envoyer la réponse",
+    "react": "Réagir"
+  },
+  "profile": {
+    "title": "Mon Profil",
+    "professionalInfo": "Informations professionnelles",
+    "editProfile": "Modifier le profil",
+    "bio": "Biographie professionnelle",
+    "expertise": "Domaines d'expertise",
+    "organization": "Organisation actuelle",
+    "location": "Emplacement",
+    "connect": "Se connecter",
+    "saveChanges": "Enregistrer les modifications",
+    "status": {
+      "verified": "Email vérifié",
+      "approved": "Approuvé par l'administrateur",
+      "visible": "Visible dans l'annuaire"
+    }
+  },
+  "stats": {
+    "members": "Membres de la communauté",
+    "resources": "Ressources en bibliothèque",
+    "countries": "Pays représentés",
+    "downloads": "Téléchargements de ressources"
+  }
+}

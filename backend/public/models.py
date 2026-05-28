@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class TimestampedModel(models.Model):
@@ -44,9 +45,14 @@ class Resource(TimestampedModel):
         AUDIO = 'AUDIO', 'Audio'
         OTHER = 'OTHER', 'Other'
 
+    class AccessLevel(models.TextChoices):
+        PUBLIC = 'PUBLIC', 'Public'
+        MEMBERS_ONLY = 'MEMBERS_ONLY', 'Members Only'
+
     title = models.CharField(max_length=255)
     description = models.TextField()
     resource_type = models.CharField(max_length=32, choices=ResourceType.choices)
+    access_level = models.CharField(max_length=32, choices=AccessLevel.choices, default=AccessLevel.PUBLIC)
     file = models.FileField(upload_to='resources/', blank=True, null=True)
     external_url = models.URLField(blank=True, default='')
     thumbnail = models.ImageField(upload_to='resource_thumbnails/', blank=True, null=True)
@@ -131,3 +137,29 @@ class ContactMessage(TimestampedModel):
 
     def __str__(self) -> str:
         return f'{self.full_name} - {self.subject}'
+
+
+class Donation(TimestampedModel):
+    class Currency(models.TextChoices):
+        USD = 'USD', 'US Dollar'
+        EUR = 'EUR', 'Euro'
+        KES = 'KES', 'Kenya Shilling'
+        UGX = 'UGX', 'Uganda Shilling'
+        TZS = 'TZS', 'Tanzania Shilling'
+
+    class Status(models.TextChoices):
+        PENDING = 'PENDING', 'Pending'
+        SUCCESS = 'SUCCESS', 'Success'
+        FAILED = 'FAILED', 'Failed'
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='donations')
+    full_name = models.CharField(max_length=255)
+    email = models.EmailField()
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    currency = models.CharField(max_length=3, choices=Currency.choices, default=Currency.USD)
+    transaction_reference = models.CharField(max_length=100, unique=True)
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
+    is_anonymous = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return f'{self.full_name} - {self.amount} {self.currency} ({self.status})'

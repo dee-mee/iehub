@@ -1,0 +1,94 @@
+{
+  "siteName": "Kituo cha Elimu Jumuishi kwa Afrika",
+  "siteShort": "IE Hub",
+  "tagline": "Kujifunza, kushirikiana, na utetezi wa elimu jumuishi barani Afrika",
+  "nav": {
+    "home": "Nyumbani",
+    "dashboard": "Dashibodi",
+    "about": "Kuhusu",
+    "resources": "Maktaba ya Nyaraka",
+    "news": "Habari na Matukio",
+    "contact": "Wasiliana nasi",
+    "accessibility": "Ufikiaji",
+    "forum": "Jukwaa",
+    "members": "Wanachama",
+    "join": "Jiunge na Jumuiya",
+    "donate": "Saidia IE Hub",
+    "profile": "Wasifu Wangu",
+    "signOut": "Ondoka",
+    "signIn": "Ingia"
+  },
+  "skipToContent": "Ruka hadi kwenye maudhui",
+  "footer": {
+    "newsletterTitle": "Pata taarifa",
+    "newsletterDesc": "Jiandikishe kwa habari, matukio, na rasilimali kuhusu elimu jumuishi.",
+    "subscribe": "Jiandikishe",
+    "consent": "Ninakubali kupokea barua pepe kutoka IE Hub.",
+    "quickLinks": "Viungo vya haraka",
+    "contact": "Wasiliana nasi",
+    "copyright": "© {{year}} Kituo cha Elimu Jumuishi kwa Afrika. Haki zote zimehifadhiwa."
+  },
+  "home": {
+    "heroTitle": "Kituo cha Elimu Jumuishi kwa Afrika",
+    "heroSubtitle": "Jukwaa la bara kwa watendaji, watunga sera, na jumuiya zinazoendeleza elimu jumuishi.",
+    "watchIntro": "Jifunze kuhusu IE Hub",
+    "whoWeAre": "Sisi ni nani",
+    "whyWeDoIt": "Kwa nini tunafanya hivi",
+    "whatWeDo": "Tunachofanya",
+    "impact": "Matokeo yetu",
+    "programs": "Maeneo ya kipaumbele",
+    "latestNews": "Habari na hadithi",
+    "upcomingEvents": "Matukio yajayo",
+    "partners": "Washirika wetu",
+    "ctaTitle": "Jiunge na Jumuiya ya Watendaji",
+    "ctaDesc": "Wasiliana na waelimishaji na watetezi katika nchi 54 za Afrika."
+  },
+  "dashboard": {
+    "welcome": "Karibu tena, {{name}}",
+    "recentDiscussions": "Mazungumzo ya hivi karibuni",
+    "latestUpdates": "Taarifa za hivi karibuni",
+    "upcomingEvents": "Matukio yajayo",
+    "featuredResources": "Rasilimali zilizoangaziwa",
+    "quickActions": "Hatua za haraka",
+    "viewAll": "Angalia zote",
+    "viewCalendar": "Angalia kalenda",
+    "browseLibrary": "Vinjari maktaba"
+  },
+  "forum": {
+    "title": "Jumuiya ya Watendaji",
+    "description": "Shiriki maarifa, jadili changamoto, na wasiliana na wenzako.",
+    "announcements": "Matangazo",
+    "general": "Mazungumzo ya jumla",
+    "thematic": "Jumuiya za kimaudhui",
+    "regional": "Vikundi vya kikanda",
+    "startDiscussion": "Anzisha mazungumzo mapya",
+    "threads": "mada",
+    "posts": "ujumbe",
+    "lastActive": "Iliyotumika mwisho",
+    "postReply": "Jibu",
+    "submitReply": "Tuma jibu",
+    "react": "Tumia emoji"
+  },
+  "profile": {
+    "title": "Wasifu Wangu",
+    "professionalInfo": "Taarifa za kitaaluma",
+    "editProfile": "Hariri wasifu",
+    "bio": "Maelezo ya kitaaluma",
+    "expertise": "Maeneo ya utaalamu",
+    "organization": "Shirika la sasa",
+    "location": "Mahali",
+    "connect": "Wasiliana",
+    "saveChanges": "Hifadhi mabadiliko",
+    "status": {
+      "verified": "Barua pepe imethibitishwa",
+      "approved": "Imeidhinishwa na msimamizi",
+      "visible": "Inaonekana kwenye saraka"
+    }
+  },
+  "stats": {
+    "members": "Wanachama wa jumuiya",
+    "resources": "Rasilimali kwenye maktaba",
+    "countries": "Nchi zinazowakilishwa",
+    "downloads": "Rasilimali zilizopakuliwa"
+  }
+}

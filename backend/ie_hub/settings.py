@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS', 'localhost,
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,9 +43,12 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_filters',
     'django_celery_beat',
     'public',
     'users',
+    'forum',
+    'django_ckeditor_5',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +67,7 @@ ROOT_URLCONF = 'ie_hub.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -137,6 +141,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
 # Media files (MinIO S3-compatible storage)
 MEDIA_URL = os.getenv('MEDIA_URL', 'http://localhost:9000/media/')
@@ -194,3 +201,127 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60  # 30 minutes
+
+# CKEditor 5 Configuration
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link',
+                    'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
+    },
+    'extends': {
+        'blockToolbar': [
+            'paragraph', 'heading1', 'heading2', 'heading3',
+            '|',
+            'bulletedList', 'numberedList',
+            '|',
+            'blockQuote',
+        ],
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
+                    'code', 'subscript', 'superscript', 'highlight', '|', 'codeBlock',
+                    'bulletedList', 'numberedList', 'todoList', '|', 'outdent', 'indent', '|',
+                    'blockQuote', 'insertTable', '|', 'fontSize', 'fontFamily', 'fontColor',
+                    'fontBackgroundColor', 'mediaEmbed', 'removeFormat', 'insertImage', ],
+        'image': {
+            'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft',
+                        'imageStyle:alignCenter', 'imageStyle:alignRight', 'imageStyle:full',
+                        'imageStyle:side', '|'],
+            'styles': [
+                'full',
+                'side',
+                'alignLeft',
+                'alignCenter',
+                'alignRight',
+            ]
+        },
+        'table': {
+            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells',
+                               'tableProperties', 'tableCellProperties'],
+        },
+        'heading': {
+            'options': [
+                {'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph'},
+                {'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1'},
+                {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2'},
+                {'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3'}
+            ]
+        }
+    }
+}
+
+# Jazzmin Settings (WordPress-like look)
+JAZZMIN_SETTINGS = {
+    "site_title": "IE Hub Admin",
+    "site_header": "IE Hub Portal",
+    "site_brand": "IE Hub",
+    "welcome_sign": "Welcome to the IE Hub Management Portal",
+    "copyright": "Inclusive Education Hub for Africa",
+    "search_model": ["users.CustomUser", "forum.ForumThread"],
+    "topmenu_links": [
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Dashboard", "url": "/dashboard", "new_window": True},
+        {"model": "users.CustomUser"},
+    ],
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "users.CustomUser": "fas fa-user-graduate",
+        "users.Country": "fas fa-globe-africa",
+        "users.MemberProfile": "fas fa-id-card",
+        "users.ExpertiseTag": "fas fa-tags",
+        "users.Notification": "fas fa-bell",
+        "forum.ForumCategory": "fas fa-folder",
+        "forum.ForumThread": "fas fa-comments",
+        "forum.ForumPost": "fas fa-comment-dots",
+        "forum.ForumReaction": "fas fa-heart",
+        "public.Resource": "fas fa-book",
+        "public.NewsArticle": "fas fa-newspaper",
+        "public.Event": "fas fa-calendar-alt",
+        "public.ContactMessage": "fas fa-envelope",
+        "public.Donation": "fas fa-hand-holding-usd",
+    },
+    "order_with_respect_to": ["users", "forum", "public", "auth"],
+    "custom_links": {
+        "users": [{
+            "name": "Pending Approvals", 
+            "url": "/admin/users/customuser/?is_approved__exact=0&is_verified__exact=1", 
+            "icon": "fas fa-user-clock",
+        }]
+    },
+    "changeform_format": "horizontal_tabs",
+    "custom_css": "admin/css/wp-custom.css",
+}
+
+JAZZMIN_UI_CONFIG = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-dark",
+    "accent": "accent-primary",
+    "navbar": "navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": True,
+    "layout_fixed": True,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "flatly",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
+}

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import ContactMessage, DisabilityType, Event, NewsArticle, Resource, Topic
+from .models import ContactMessage, DisabilityType, Event, NewsArticle, Resource, Topic, Donation
 
 
 class TopicSerializer(serializers.ModelSerializer):
@@ -32,6 +32,7 @@ class ResourceSerializer(serializers.ModelSerializer):
             'title',
             'description',
             'resource_type',
+            'access_level',
             'file',
             'external_url',
             'thumbnail',
@@ -118,3 +119,13 @@ class ContactMessageSerializer(serializers.ModelSerializer):
             'created_at',
         ]
         read_only_fields = ['id', 'created_at']
+
+
+class DonationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Donation
+        fields = [
+            'id', 'full_name', 'email', 'amount', 'currency', 
+            'transaction_reference', 'status', 'is_anonymous', 'created_at'
+        ]
+        read_only_fields = ['id', 'status', 'created_at']

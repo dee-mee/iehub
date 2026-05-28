@@ -17,6 +17,14 @@ export type AuthUser = {
   how_heard?: string
   is_verified: boolean
   is_approved: boolean
+  profile?: {
+    linkedin_url?: string
+    twitter_url?: string
+    website_url?: string
+    is_visible_in_directory: boolean
+    expertise_areas: Array<{ id: number; name: string; slug: string }>
+    countries_of_work: string[]
+  }
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
@@ -73,5 +81,15 @@ export function me(accessToken: string): Promise<AuthUser> {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
+  })
+}
+
+export function updateMe(accessToken: string, payload: Partial<AuthUser>): Promise<AuthUser> {
+  return request<AuthUser>('/auth/me/', {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(payload),
   })
 }

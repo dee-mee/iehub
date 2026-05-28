@@ -4,13 +4,19 @@
   "tagline": "Learning, collaboration, and advocacy for inclusive education across Africa",
   "nav": {
     "home": "Home",
+    "dashboard": "Dashboard",
     "about": "About",
     "resources": "Resource Library",
     "news": "News & Events",
     "contact": "Contact",
     "accessibility": "Accessibility",
+    "forum": "Forum",
+    "members": "Members",
     "join": "Join the Community",
-    "donate": "Support IE Hub"
+    "donate": "Support IE Hub",
+    "profile": "My Profile",
+    "signOut": "Sign out",
+    "signIn": "Sign in"
   },
   "skipToContent": "Skip to main content",
   "footer": {
@@ -36,6 +42,48 @@
     "partners": "Our partners",
     "ctaTitle": "Join the Community of Practice",
     "ctaDesc": "Connect with educators and advocates across 54 African countries."
+  },
+  "dashboard": {
+    "welcome": "Welcome back, {{name}}",
+    "recentDiscussions": "Recent Discussions",
+    "latestUpdates": "Latest Updates",
+    "upcomingEvents": "Upcoming Events",
+    "featuredResources": "Featured Resources",
+    "quickActions": "Quick Actions",
+    "viewAll": "View All",
+    "viewCalendar": "View Calendar",
+    "browseLibrary": "Browse Library"
+  },
+  "forum": {
+    "title": "Community of Practice",
+    "description": "Share knowledge, discuss challenges, and connect with peers.",
+    "announcements": "Announcements",
+    "general": "General Discussion",
+    "thematic": "Thematic Communities",
+    "regional": "Regional Groups",
+    "startDiscussion": "Start New Discussion",
+    "threads": "threads",
+    "posts": "posts",
+    "lastActive": "Last active",
+    "postReply": "Post a Reply",
+    "submitReply": "Submit Reply",
+    "react": "React"
+  },
+  "profile": {
+    "title": "My Profile",
+    "professionalInfo": "Professional Information",
+    "editProfile": "Edit Profile",
+    "bio": "Professional Bio",
+    "expertise": "Areas of Expertise",
+    "organization": "Current Organization",
+    "location": "Location",
+    "connect": "Connect",
+    "saveChanges": "Save Changes",
+    "status": {
+      "verified": "Email Verified",
+      "approved": "Admin Approved",
+      "visible": "Visible in Directory"
+    }
   },
   "stats": {
     "members": "Community members",

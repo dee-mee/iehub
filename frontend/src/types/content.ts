@@ -7,11 +7,14 @@ export type ResourceType =
   | 'VIDEO'
   | 'OTHER'
 
+export type AccessLevel = 'PUBLIC' | 'MEMBERS_ONLY'
+
 export interface Resource {
   id: number | string
   title: string
   description: string
   resourceType: ResourceType
+  accessLevel: AccessLevel
   language: string
   countries: string[]
   topics: string[]

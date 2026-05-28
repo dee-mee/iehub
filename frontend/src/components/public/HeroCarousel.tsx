@@ -16,10 +16,9 @@ export function HeroCarousel() {
     <section
       className="relative overflow-hidden bg-primary-800 text-white"
       aria-labelledby="hero-stat-heading"
-      aria-live="polite"
     >
       <div className="container-page grid gap-8 py-16 md:grid-cols-2 md:items-center md:py-24">
-        <div>
+        <div id="hero-stat-panel" role="tabpanel" aria-labelledby={`hero-tab-${stat.id}`}>
           <p className="text-sm font-semibold uppercase tracking-widest text-accent-400">
             Inclusive Education Hub for Africa
           </p>
@@ -49,6 +48,7 @@ export function HeroCarousel() {
             {heroStats.map((item, i) => (
               <button
                 key={item.id}
+                id={`hero-tab-${item.id}`}
                 type="button"
                 role="tab"
                 aria-selected={i === index}

@@ -1,7 +1,10 @@
+import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
+from public.models import TimestampedModel
 
 
 class Country(models.Model):
@@ -101,3 +104,37 @@ def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
     else:
         MemberProfile.objects.get_or_create(user=instance)
+
+
+class EmailVerificationToken(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='verification_token')
+    token = models.UUIDField(default=uuid.uuid4, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_valid(self) -> bool:
+        # Token is valid for 24 hours
+        return (timezone.now() - self.created_at).total_seconds() < 24 * 3600
+
+    def __str__(self) -> str:
+        return f"Token for {self.user.email}"
+
+
+class Notification(TimestampedModel):
+    class NotificationType(models.TextChoices):
+        SYSTEM = 'SYSTEM', 'System'
+        FORUM_REPLY = 'FORUM_REPLY', 'Forum Reply'
+        MEMBER_APPROVAL = 'MEMBER_APPROVAL', 'Member Approval'
+        NEW_RESOURCE = 'NEW_RESOURCE', 'New Resource'
+
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='notifications')
+    notification_type = models.CharField(max_length=32, choices=NotificationType.choices, default=NotificationType.SYSTEM)
+    title = models.CharField(max_length=255)
+    message = models.TextField()
+    link = models.CharField(max_length=255, blank=True, default='')
+    is_read = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self) -> str:
+        return f"Notification for {self.user.username}: {self.title}"

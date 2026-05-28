@@ -18,7 +18,7 @@ export function LoginPage() {
 
     try {
       await login(String(data.get('email') ?? ''), String(data.get('password') ?? ''))
-      navigate('/')
+      navigate('/dashboard')
     } catch {
       setError('Invalid credentials. Please try again.')
     } finally {
@@ -39,15 +39,15 @@ export function LoginPage() {
             <label htmlFor="password" className="block text-sm font-medium">Password</label>
             <input id="password" name="password" type="password" required className="mt-1 w-full min-h-11 rounded-lg border border-primary-200 px-3" />
           </div>
-          <button type="submit" className="btn-primary" disabled={submitting}>
+          <button type="submit" className="btn-primary w-full" disabled={submitting}>
             {submitting ? 'Signing in...' : 'Sign in'}
           </button>
-          {error && <p className="text-sm text-red-700" role="status">{error}</p>}
-          <p className="text-sm text-muted">
-            New here? <Link to="/register" className="text-primary-700 underline">Create account</Link>
+          {error && <p className="text-sm text-red-700 text-center" role="status">{error}</p>}
+          <p className="text-sm text-muted text-center pt-2 border-t border-primary-50">
+            New here? <Link to="/register" className="text-primary-700 underline font-medium">Create account</Link>
           </p>
-          <p className="text-sm text-muted">
-            <Link to="/forgot-password" className="text-primary-700 underline">Forgot password?</Link>
+          <p className="text-sm text-muted text-center">
+            <Link to="/forgot-password" className="text-primary-700 underline font-medium">Forgot password?</Link>
           </p>
         </form>
       </div>

@@ -6,22 +6,34 @@ Continental platform for inclusive education — public website and Community of
 
 ## Current status
 
-**Phase: Public website (frontend + backend API)** — React app wired to Django APIs for resources, news, events, and contact messages.
+**Phase 4: Advanced Features & Launch (Complete)** — Full-featured platform with membership, forum, analytics, and multilingual support.
 
-### Public pages
+### Features
 
-| Route | Page |
-|-------|------|
-| `/` | Home |
-| `/about` | About |
-| `/resources` | Resource library (search & filter) |
-| `/resources/:id` | Resource detail |
-| `/news` | News & events |
-| `/news/:slug` | News article |
-| `/contact` | Contact & join interest |
-| `/accessibility` | Accessibility statement |
+- **Public Website:** Home, About, News, Events, and filterable Resource Library.
+- **Community of Practice:** Member registration, email verification, and administrative approval.
+- **Member Dashboard:** Personalized hub with recent forum activity, news, and resources.
+- **Interactive Forum:** Categorized discussion groups (Regional, Thematic, General) with rich text and reactions.
+- **Member Directory:** Searchable directory of inclusive education practitioners across Africa.
+- **Resource Access Control:** Distinction between public resources and professional member-only content.
+- **Multilingual Support:** English, Français, Kiswahili, and Arabic (with RTL support).
+- **Notification System:** Real-time in-app alerts and asynchronous email-ready tasks.
+- **Donation System:** Contribution tracking with Flutterwave-ready infrastructure.
+- **Admin Dashboard:** Modernized, WordPress-like management portal with platform-wide analytics.
 
-Design references: [APDK](https://apdk.org/) (hero, impact, programs, news/events) and [IDDC](https://iddcconsortium.net/) (stat highlights, values, library focus).
+### Platform Routes
+
+| Route | Page | Access |
+|-------|------|--------|
+| `/` | Home | Public |
+| `/dashboard` | Member Hub | Member |
+| `/resources` | Resource Library | Public / Member |
+| `/forum` | Community Forum | Member |
+| `/members` | Practitioner Directory | Member |
+| `/notifications` | User Alerts | Member |
+| `/profile` | Professional Profile | Member |
+| `/donate` | Support IE Hub | Public |
+| `/admin` | Management Portal | Admin |
 
 ## Quick start
 
@@ -46,40 +58,33 @@ source .venv/bin/activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py seed_public_data
+python manage.py seed_forum
 python manage.py runserver
 ```
 
 Frontend:
 ```bash
 cd frontend
-cp .env.example .env.local   # optional: set VITE_USERWAY_KEY
 npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173).
+## Accessibility & Compliance
 
-## Accessibility
-
-- WCAG 2.2 AA target on all public pages
-- Skip to main content, semantic landmarks, focus styles, labelled forms
-- [UserWay](https://userway.org/) widget when `VITE_USERWAY_KEY` is set
+- **WCAG 2.2 AA:** Verified via accessibility audit on all public and core member pages.
+- **Multilingual:** Infrastructure for English, French, Swahili, and Arabic.
+- **Security:** JWT-based authentication with role-based access control.
 
 ## Project structure
 
 ```
 ie-HUB/
-├── backend/           # Django + DRF public APIs
-├── frontend/          # React + Vite + TypeScript + Tailwind
+├── backend/           # Django + DRF (Auth, Forum, Public APIs, Media)
+├── frontend/          # React + Vite + TypeScript + TanStack Query + i18next
 ├── docker-compose.yml
-├── ROADMAP.MD
-└── IE_HUB_MASTER_INSTRUCTIONS.md
+├── ROADMAP.MD         # Development milestones
+└── IE_HUB_MASTER_INSTRUCTIONS.md # Detailed technical specifications
 ```
 
-## Next steps
-
-1. Add CustomUser + JWT auth foundation
-2. Start forum and member platform APIs
-3. Complete accessibility audit and deployment hardening
-
-See `ROADMAP.MD` for full sprint plan.
+---
+*Last Updated: 28 May 2026*

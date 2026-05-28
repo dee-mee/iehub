@@ -22,6 +22,7 @@ export function ResourcesPage() {
   const topicParam = searchParams.get('topic') ?? ''
   const [query, setQuery] = useState('')
   const [typeFilter, setTypeFilter] = useState<ResourceType | ''>('')
+  const [accessFilter, setAccessFilter] = useState<'ALL' | 'PUBLIC' | 'MEMBERS_ONLY'>('ALL')
   const [page, setPage] = useState(1)
 
   const resourcesQuery = useQuery({
@@ -40,12 +41,13 @@ export function ResourcesPage() {
         r.title.toLowerCase().includes(q) ||
         r.description.toLowerCase().includes(q)
       const matchesType = !typeFilter || r.resourceType === typeFilter
+      const matchesAccess = accessFilter === 'ALL' || r.accessLevel === accessFilter
       const matchesTopic =
         !topicParam ||
         r.topics.some((t) => t.toLowerCase().replace(/\s+/g, '-') === topicParam)
-      return matchesQuery && matchesType && matchesTopic
+      return matchesQuery && matchesType && matchesTopic && matchesAccess
     })
-  }, [allResources, typeFilter, topicParam])
+  }, [allResources, typeFilter, topicParam, accessFilter])
 
   return (
     <>
@@ -61,7 +63,7 @@ export function ResourcesPage() {
             onSubmit={(e) => e.preventDefault()}
         >
           <h2 className="text-lg font-semibold text-ink">Search and filter</h2>
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
+          <div className="mt-4 grid gap-4 md:grid-cols-3">
             <div>
               <label htmlFor="resource-search" className="block text-sm font-medium text-ink">
                 Search resources
@@ -93,6 +95,21 @@ export function ResourcesPage() {
                     {opt.label}
                   </option>
                 ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="access-level" className="block text-sm font-medium text-ink">
+                Access level
+              </label>
+              <select
+                id="access-level"
+                value={accessFilter}
+                onChange={(e) => setAccessFilter(e.target.value as any)}
+                className="mt-1 w-full min-h-11 rounded-lg border border-primary-200 px-3"
+              >
+                <option value="ALL">All access levels</option>
+                <option value="PUBLIC">Publicly available</option>
+                <option value="MEMBERS_ONLY">Member-only content</option>
               </select>
             </div>
           </div>

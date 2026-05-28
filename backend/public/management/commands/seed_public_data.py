@@ -4,7 +4,8 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 from django.utils.text import slugify
 
-from public.models import Event, NewsArticle, Resource
+from public.models import DisabilityType, Event, NewsArticle, Resource, Topic, Donation
+from users.models import ExpertiseTag
 
 
 class Command(BaseCommand):
@@ -13,14 +14,68 @@ class Command(BaseCommand):
     def handle(self, *args, **options):  # noqa: ANN002, ANN003
         now = timezone.now()
 
-        resources = [
+        # 0. Seed Expertise Tags
+        expertise_data = [
+            'Inclusive Pedagogy', 'UDL Implementation', 'Policy Development',
+            'Assistive Technology', 'Disability Rights', 'Sign Language',
+            'Braille Literacy', 'Community-Based Rehabilitation',
+            'Education in Emergencies', 'Early Childhood Development',
+            'Monitoring & Evaluation', 'Grant Writing', 'Teacher Training'
+        ]
+        for tag_name in expertise_data:
+            ExpertiseTag.objects.get_or_create(
+                slug=slugify(tag_name),
+                defaults={'name': tag_name}
+            )
+        self.stdout.write(self.style.SUCCESS('Expertise tags seeded.'))
+
+        # 1. Seed Topics
+        topics_data = [
+            {'name': 'Policy and Advocacy', 'slug': 'policy-advocacy', 'description': 'Policy frameworks and advocacy resources', 'icon': '📜'},
+            {'name': 'Teacher Training', 'slug': 'teacher-training', 'description': 'Teacher capacity building resources', 'icon': '👨‍🏫'},
+            {'name': 'Assistive Technology', 'slug': 'assistive-technology', 'description': 'Assistive technology tools and guides', 'icon': '🔧'},
+            {'name': 'Research and Evidence', 'slug': 'research-evidence', 'description': 'Research findings and evidence-based resources', 'icon': '📊'},
+            {'name': 'Gender and Inclusion', 'slug': 'gender-inclusion', 'description': 'Gender-responsive inclusive education', 'icon': '⚧'},
+            {'name': 'Education in Emergencies', 'slug': 'education-emergencies', 'description': 'Education in emergency situations', 'icon': '🚨'},
+            {'name': 'Early Childhood', 'slug': 'early-childhood', 'description': 'Early childhood inclusive education', 'icon': '👶'},
+            {'name': 'OPD Collaboration', 'slug': 'opd-collaboration', 'description': 'Organizations of Persons with Disabilities collaboration', 'icon': '🤝'},
+            {'name': 'Resource Sharing', 'slug': 'resource-sharing', 'description': 'Shared resources and toolkits', 'icon': '📚'},
+        ]
+
+        for topic_data in topics_data:
+            Topic.objects.update_or_create(
+                slug=topic_data['slug'],
+                defaults=topic_data
+            )
+
+        # 2. Seed Disability Types
+        disability_types_data = [
+            {'name': 'Visual Impairment', 'slug': 'visual-impairment'},
+            {'name': 'Hearing Impairment', 'slug': 'hearing-impairment'},
+            {'name': 'Mobility Impairment', 'slug': 'mobility-impairment'},
+            {'name': 'Intellectual Disability', 'slug': 'intellectual-disability'},
+            {'name': 'Autism Spectrum', 'slug': 'autism-spectrum'},
+            {'name': 'Learning Disabilities', 'slug': 'learning-disabilities'},
+            {'name': 'Albinism', 'slug': 'albinism'},
+            {'name': 'Cerebral Palsy', 'slug': 'cerebral-palsy'},
+        ]
+
+        for dt_data in disability_types_data:
+            DisabilityType.objects.update_or_create(
+                slug=dt_data['slug'],
+                defaults=dt_data
+            )
+
+        # 3. Seed Resources
+        resources_data = [
             {
                 'title': 'Inclusive Education Policy Framework for Africa',
                 'description': 'Reference for ministries developing inclusive education policies.',
                 'resource_type': Resource.ResourceType.POLICY_BRIEF,
+                'access_level': Resource.AccessLevel.PUBLIC,
                 'language': 'en',
-                'countries': 'Kenya,Uganda,Tanzania',
-                'topics': 'Policy and Advocacy',
+                'topics': ['Policy and Advocacy'],
+                'disability_types': [],
                 'published_at': now - timedelta(days=40),
                 'download_count': 342,
                 'is_featured': True,
@@ -29,32 +84,46 @@ class Command(BaseCommand):
                 'title': 'Teacher Toolkit: Universal Design for Learning',
                 'description': 'Practical classroom strategies and case studies from East Africa.',
                 'resource_type': Resource.ResourceType.TOOLKIT,
+                'access_level': Resource.AccessLevel.PUBLIC,
                 'language': 'en',
-                'countries': 'Kenya,Ethiopia',
-                'topics': 'Teacher Training and Capacity Building',
+                'topics': ['Teacher Training'],
+                'disability_types': ['Learning Disabilities'],
                 'published_at': now - timedelta(days=60),
                 'download_count': 518,
                 'is_featured': True,
             },
             {
-                'title': 'Assistive Devices in Low-Resource Schools',
-                'description': 'Guidance on procurement and maintenance for assistive technology.',
-                'resource_type': Resource.ResourceType.PUBLICATION,
-                'language': 'fr',
-                'countries': 'DRC,Chad',
-                'topics': 'Assistive Technology',
-                'published_at': now - timedelta(days=90),
-                'download_count': 201,
-                'is_featured': True,
+                'title': 'Private Member Resource: Regional Strategy',
+                'description': 'Internal coordination strategy for steering committee members.',
+                'resource_type': Resource.ResourceType.REPORT,
+                'access_level': Resource.AccessLevel.MEMBERS_ONLY,
+                'language': 'en',
+                'topics': ['Policy and Advocacy'],
+                'disability_types': [],
+                'published_at': now - timedelta(days=10),
+                'download_count': 12,
+                'is_featured': False,
             },
         ]
 
-        for resource in resources:
-            Resource.objects.update_or_create(
-                title=resource['title'],
-                defaults=resource,
+        for data in resources_data:
+            topics_names = data.pop('topics', [])
+            dt_names = data.pop('disability_types', [])
+            
+            resource, created = Resource.objects.update_or_create(
+                title=data['title'],
+                defaults=data,
             )
+            
+            if topics_names:
+                topics = Topic.objects.filter(name__in=topics_names)
+                resource.topics.set(topics)
+            
+            if dt_names:
+                dts = DisabilityType.objects.filter(name__in=dt_names)
+                resource.disability_types.set(dts)
 
+        # 4. Seed News Articles
         articles = [
             {
                 'title': 'IE Hub soft launch on Day of the African Child',
@@ -65,56 +134,33 @@ class Command(BaseCommand):
                 'published_at': now - timedelta(days=5),
                 'is_featured': True,
             },
-            {
-                'title': 'Steering Committee agrees platform governance model',
-                'excerpt': 'Thirteen partners confirmed rotating ownership and governance process.',
-                'content': 'The committee finalized ownership and content approval structures.',
-                'category': NewsArticle.Category.NEWS,
-                'author_name': 'IE Hub Secretariat',
-                'published_at': now - timedelta(days=20),
-                'is_featured': False,
-            },
         ]
 
         for article in articles:
+            slug = slugify(article['title'])
             NewsArticle.objects.update_or_create(
-                slug=slugify(article['title']),
-                defaults={
-                    **article,
-                    'slug': slugify(article['title']),
-                },
+                slug=slug,
+                defaults=article,
             )
 
-        events = [
-            {
-                'title': 'IE Hub Soft Launch Webinar',
-                'description': 'Introduction to the platform and public resource library.',
-                'event_type': Event.EventType.WEBINAR,
-                'start_datetime': now + timedelta(days=20),
-                'end_datetime': now + timedelta(days=20, hours=2),
-                'location_type': Event.LocationType.ONLINE,
-                'online_link': 'https://example.com/register',
-                'registration_link': 'https://example.com/register',
-                'is_members_only': False,
-            },
-            {
-                'title': 'East Africa Inclusive Education Forum',
-                'description': 'Regional practitioners share lessons on policy implementation.',
-                'event_type': Event.EventType.CONFERENCE,
-                'start_datetime': now + timedelta(days=40),
-                'end_datetime': now + timedelta(days=42),
-                'location_type': Event.LocationType.HYBRID,
-                'location_address': 'Nairobi, Kenya',
-                'online_link': 'https://example.com/forum',
-                'registration_link': 'https://example.com/forum',
-                'is_members_only': False,
-            },
+        # 5. Seed Donations
+        donations = [
+            {'full_name': 'Global Education Trust', 'email': 'info@globaledu.org', 'amount': 1500, 'status': Donation.Status.SUCCESS, 'ref': 'SEED-001'},
+            {'full_name': 'Anonymous Donor', 'email': 'donor@example.com', 'amount': 50, 'status': Donation.Status.SUCCESS, 'ref': 'SEED-002', 'anon': True},
+            {'full_name': 'Local Business Group', 'email': 'csr@localbiz.co.ke', 'amount': 250, 'status': Donation.Status.SUCCESS, 'ref': 'SEED-003'},
         ]
 
-        for event in events:
-            Event.objects.update_or_create(
-                title=event['title'],
-                defaults=event,
+        for don in donations:
+            Donation.objects.get_or_create(
+                transaction_reference=don['ref'],
+                defaults={
+                    'full_name': don['full_name'],
+                    'email': don['email'],
+                    'amount': don['amount'],
+                    'currency': 'USD',
+                    'status': don['status'],
+                    'is_anonymous': don.get('anon', False)
+                }
             )
 
-        self.stdout.write(self.style.SUCCESS('Public website seed data loaded successfully.'))
+        self.stdout.write(self.style.SUCCESS('Public website seed data refreshed with members-only content and donations.'))

@@ -1,0 +1,45 @@
+/* WordPress-like sidebar colors */
+.main-sidebar {
+    background-color: #1d2327 !important;
+}
+
+.brand-link {
+    background-color: #1d2327 !important;
+    border-bottom: 1px solid #3c434a !important;
+}
+
+.nav-sidebar .nav-item > .nav-link {
+    color: #c3c4c7 !important;
+}
+
+.nav-sidebar .nav-item > .nav-link:hover {
+    background-color: #2c3338 !important;
+    color: #72aee6 !important;
+}
+
+.nav-sidebar .nav-item.menu-open > .nav-link,
+.nav-sidebar .nav-item > .nav-link.active {
+    background-color: #2271b1 !important;
+    color: #ffffff !important;
+}
+
+/* Dashboard card styles */
+.card-header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #dcdcde !important;
+}
+
+.card-title {
+    font-weight: 600 !important;
+    color: #1d2327 !important;
+}
+
+.btn-primary {
+    background-color: #2271b1 !important;
+    border-color: #2271b1 !important;
+}
+
+.btn-primary:hover {
+    background-color: #135e96 !important;
+    border-color: #135e96 !important;
+}
