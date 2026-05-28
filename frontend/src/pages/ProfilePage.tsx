@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { useAuth } from '@/context/AuthContext'
@@ -14,7 +13,6 @@ type ExpertiseTag = {
 }
 
 export function ProfilePage() {
-  const { t } = useTranslation()
   const { user, updateProfile, loading: authLoading } = useAuth()
   
   const [editing, setEditing] = useState(false)

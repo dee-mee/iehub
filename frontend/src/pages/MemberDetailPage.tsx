@@ -1,6 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { PageHeader } from '@/components/ui/PageHeader'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import type { AuthUser } from '@/api/auth'
 
@@ -65,7 +64,7 @@ export function MemberDetailPage() {
             </div>
           </div>
           <div className="mt-6 md:mt-0 md:ml-auto">
-            <Link to="/messages/new" className="btn-primary bg-accent-500 hover:bg-accent-600 text-ink">
+            <Link to="/contact" className="btn-primary bg-accent-500 hover:bg-accent-600 text-ink">
               Send Message
             </Link>
           </div>

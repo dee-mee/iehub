@@ -72,7 +72,13 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
                     ],
                     placeholder: placeholder || 'Type your content here...',
                     mention: {
-                        // Mention configuration if needed
+                        feeds: [
+                            {
+                                marker: '@',
+                                feed: ['Admin', 'Support', 'Expert'],
+                                minimumCharacters: 1
+                            }
+                        ]
                     },
                 }}
                 data={value}

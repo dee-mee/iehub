@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 
@@ -24,7 +23,6 @@ const typeIcons = {
 }
 
 export function NotificationsPage() {
-  const { t } = useTranslation()
   const queryClient = useQueryClient()
 
   const { data, isLoading } = useQuery<Notification[]>({

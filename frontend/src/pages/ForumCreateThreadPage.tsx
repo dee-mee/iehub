@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'

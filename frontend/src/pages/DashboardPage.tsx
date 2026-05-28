@@ -4,8 +4,21 @@ import { useTranslation } from 'react-i18next'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { useAuth } from '@/context/AuthContext'
 import { fetchNews, fetchEvents, fetchResources } from '@/api/public'
+import type { EventItem } from '@/types/content'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api'
+
+type ForumThread = {
+  id: number
+  title: string
+  slug: string
+  author: {
+    first_name: string
+    username: string
+  }
+  post_count: number
+  last_activity: string
+}
 
 export function DashboardPage() {
   const { t } = useTranslation()
@@ -26,7 +39,7 @@ export function DashboardPage() {
     queryFn: () => fetchResources({ page: 1 }),
   })
 
-  const forumQuery = useQuery({
+  const forumQuery = useQuery<ForumThread[]>({
     queryKey: ['dashboard-forum'],
     queryFn: async () => {
       const tokens = JSON.parse(localStorage.getItem('iehub_tokens') || '{}')
@@ -79,7 +92,7 @@ export function DashboardPage() {
                 <Link to="/forum" className="text-sm font-bold text-primary-700 hover:underline">{t('dashboard.viewAll')}</Link>
               </div>
               <div className="divide-y divide-primary-50">
-                {forumQuery.data?.map((thread: any) => (
+                {forumQuery.data?.map((thread) => (
                   <Link 
                     key={thread.id} 
                     to={`/forum/t/${thread.slug}`}
@@ -128,7 +141,7 @@ export function DashboardPage() {
             <section className="card border-accent-100 bg-accent-50/30">
               <h2 className="text-lg font-bold text-ink mb-4">{t('dashboard.upcomingEvents')}</h2>
               <div className="space-y-4">
-                {eventsQuery.data?.slice(0, 3).map((event) => (
+                {eventsQuery.data?.results.slice(0, 3).map((event: EventItem) => (
                   <div key={event.id} className="flex gap-4">
                     <div className="w-12 h-12 bg-white rounded-lg border border-accent-200 flex flex-col items-center justify-center shrink-0">
                       <span className="text-[10px] font-bold text-accent-700 uppercase">

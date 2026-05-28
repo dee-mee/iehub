@@ -14,6 +14,12 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
       : 'text-ink hover:bg-primary-50 hover:text-primary-800',
   ].join(' ')
 
+type NavLinkItem = {
+  to: string
+  label: string
+  end?: boolean
+}
+
 function LanguageSwitcher() {
   const { i18n } = useTranslation()
   
@@ -107,20 +113,20 @@ export function Navbar() {
     setMenuOpen(false)
   }
 
-  const baseLinks = [
+  const baseLinks: NavLinkItem[] = [
     { to: '/', label: t('nav.home'), end: true },
     { to: '/about', label: t('nav.about') },
     { to: '/resources', label: t('nav.resources') },
     { to: '/news', label: t('nav.news') },
   ]
 
-  const authLinks = [
+  const authLinks: NavLinkItem[] = [
     { to: '/forum', label: t('nav.forum') },
     { to: '/members', label: t('nav.members') },
   ]
 
-  const desktopLinks = [...baseLinks, ...(isAuthenticated ? authLinks : []), { to: '/contact', label: t('nav.contact') }]
-  const mobileLinks = [...desktopLinks, { to: '/accessibility', label: t('nav.accessibility') }]
+  const desktopLinks: NavLinkItem[] = [...baseLinks, ...(isAuthenticated ? authLinks : []), { to: '/contact', label: t('nav.contact') }]
+  const mobileLinks: NavLinkItem[] = [...desktopLinks, { to: '/accessibility', label: t('nav.accessibility') }]
 
   return (
     <header className="sticky top-0 z-50 border-b border-primary-100 bg-white/95 backdrop-blur">

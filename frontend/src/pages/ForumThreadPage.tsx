@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { PageHeader } from '@/components/ui/PageHeader'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { RichTextEditor } from '@/components/ui/RichTextEditor'
-import { useAuth } from '@/context/AuthContext'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api'
 
@@ -40,7 +38,6 @@ const REACTION_TYPES = [
 
 export function ForumThreadPage() {
   const { slug } = useParams()
-  const { user } = useAuth()
   const queryClient = useQueryClient()
   const [replyContent, setReplyContent] = useState('')
 

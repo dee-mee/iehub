@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams, Link, useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api'
 
 export function VerifyEmailPage() {
-  const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const token = searchParams.get('token')

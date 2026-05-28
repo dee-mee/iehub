@@ -1,7 +1,5 @@
-import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { PageHeader } from '@/components/ui/PageHeader'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api'
@@ -60,7 +58,7 @@ export function ForumCategoryPage() {
       })
       if (!response.ok) throw new Error('Failed to fetch threads')
       const data = await response.json()
-      return data.results || data // Handle paginated or list response
+      return data.results || data 
     },
     enabled: !!slug
   })
@@ -127,7 +125,7 @@ export function ForumCategoryPage() {
                 </div>
               </div>
               
-              <div className="w-24 flex flex-row md:flex-col items-center justify-center gap-4 md:gap-0 hidden md:flex">
+              <div className="w-24 flex-row md:flex-col items-center justify-center gap-4 md:gap-0 hidden md:flex">
                 <div className="text-center">
                   <span className="block text-lg font-bold text-ink leading-none">{thread.post_count}</span>
                   <span className="text-[10px] text-muted uppercase font-bold tracking-tighter leading-none">Posts</span>

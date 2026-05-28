@@ -50,17 +50,17 @@ export function AnalyticsDashboard() {
   if (isLoading) return <LoadingSpinner label="Collecting platform data..." />
 
   if (error || !data) {
-    return <div className="container-page py-12 text-center text-red-600">Error loading analytics data.</div>
+    return (
+      <div className="container-page py-12 text-center">
+        <p className="text-red-600 mb-4">Error loading analytics data.</p>
+        <Link to="/dashboard" className="btn-primary">Back to Dashboard</Link>
+      </div>
+    )
   }
 
   return (
     <>
-      <div className="bg-primary-900 text-white py-12">
-        <div className="container-page">
-          <h1 className="text-3xl font-bold">Platform Analytics</h1>
-          <p className="text-primary-100 mt-2">Overseeing growth, engagement, and impact across the IE Hub.</p>
-        </div>
-      </div>
+      <PageHeader title="Platform Analytics" description="Overseeing growth, engagement, and impact across the IE Hub." />
 
       <div className="container-page py-12 space-y-8">
         {/* Stats Grid */}
