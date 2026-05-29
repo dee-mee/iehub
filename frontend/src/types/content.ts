@@ -9,6 +9,20 @@ export type ResourceType =
 
 export type AccessLevel = 'PUBLIC' | 'MEMBERS_ONLY'
 
+export interface Topic {
+  id: number
+  name: string
+  slug: string
+  description?: string
+  icon?: string
+}
+
+export interface DisabilityType {
+  id: number
+  name: string
+  slug: string
+}
+
 export interface Resource {
   id: number | string
   title: string
@@ -17,7 +31,8 @@ export interface Resource {
   accessLevel: AccessLevel
   language: string
   countries: string[]
-  topics: string[]
+  topics: Topic[]
+  disabilityTypes: DisabilityType[]
   publishedAt: string
   downloadCount: number
   isFeatured?: boolean
@@ -58,4 +73,16 @@ export interface FocusArea {
   title: string
   description: string
   href: string
+}
+
+export type ForumThread = {
+  id: number
+  title: string
+  slug: string
+  author: {
+    first_name: string
+    username: string
+  }
+  post_count: number
+  last_activity: string
 }

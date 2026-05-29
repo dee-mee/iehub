@@ -4,7 +4,6 @@ import { useSearchParams } from 'react-router-dom'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { ResourceCard } from '@/components/public/ResourceCard'
 import { fetchResources } from '@/api/public'
-import { resources as fallbackResources } from '@/data/mockContent'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import type { ResourceType } from '@/types/content'
 
@@ -30,8 +29,8 @@ export function ResourcesPage() {
     queryFn: () => fetchResources({ page, search: query }),
   })
 
-  const allResources = resourcesQuery.data?.results ?? fallbackResources
-  const totalCount = resourcesQuery.data?.count ?? allResources.length
+  const allResources = resourcesQuery.data?.results ?? []
+  const totalCount = resourcesQuery.data?.count ?? 0
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -44,10 +43,10 @@ export function ResourcesPage() {
       const matchesAccess = accessFilter === 'ALL' || r.accessLevel === accessFilter
       const matchesTopic =
         !topicParam ||
-        r.topics.some((t) => t.toLowerCase().replace(/\s+/g, '-') === topicParam)
+        r.topics.some((t) => t.slug === topicParam)
       return matchesQuery && matchesType && matchesTopic && matchesAccess
     })
-  }, [allResources, typeFilter, topicParam, accessFilter])
+  }, [allResources, typeFilter, topicParam, accessFilter, query])
 
   return (
     <>
@@ -163,7 +162,7 @@ export function ResourcesPage() {
         )}
         {resourcesQuery.isError && (
           <p className="mt-6 text-sm text-red-700" role="status">
-            Could not load latest resources from API. Showing fallback content.
+            Could not load latest resources from API.
           </p>
         )}
       </div>

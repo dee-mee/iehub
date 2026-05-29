@@ -2,7 +2,6 @@ import { Link, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { fetchResourceById } from '@/api/public'
-import { resources as fallbackResources } from '@/data/mockContent'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { useAuth } from '@/context/AuthContext'
 
@@ -15,7 +14,7 @@ export function ResourceDetailPage() {
     queryFn: () => fetchResourceById(id ?? ''),
     enabled: Boolean(id),
   })
-  const resource = resourceQuery.data ?? fallbackResources.find((r) => String(r.id) === id)
+  const resource = resourceQuery.data
 
   if (resourceQuery.isLoading) {
     return <LoadingSpinner label="Loading resource details" />
@@ -75,8 +74,8 @@ export function ResourceDetailPage() {
             <dt className="text-sm font-semibold text-ink">Topics</dt>
             <dd className="text-muted mt-1 flex flex-wrap gap-1">
               {resource.topics.map(topic => (
-                <span key={topic} className="px-2 py-0.5 bg-primary-50 text-primary-700 rounded text-xs">
-                  {topic}
+                <span key={topic.id} className="px-2 py-0.5 bg-primary-50 text-primary-700 rounded text-xs">
+                  {topic.name}
                 </span>
               ))}
             </dd>
@@ -120,7 +119,7 @@ export function ResourceDetailPage() {
         
         {resourceQuery.isError && (
           <p className="mt-6 p-3 bg-red-50 text-red-700 text-xs rounded border border-red-100" role="status">
-            Note: Live API details could not be loaded; fallback content shown.
+            Note: Live API details could not be loaded.
           </p>
         )}
       </article>

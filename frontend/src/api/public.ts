@@ -1,4 +1,4 @@
-import type { EventItem, NewsArticle, Resource, AccessLevel } from '@/types/content'
+import type { EventItem, NewsArticle, Resource, AccessLevel, Topic, DisabilityType } from '@/types/content'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api'
 
@@ -17,7 +17,8 @@ type ResourceApi = {
   access_level: AccessLevel
   language: string
   countries: string[]
-  topics: string[]
+  topics: Topic[]
+  disability_types: DisabilityType[]
   published_at: string
   download_count: number
   is_featured: boolean
@@ -90,6 +91,7 @@ function mapResource(item: ResourceApi): Resource {
     language: item.language,
     countries: item.countries,
     topics: item.topics,
+    disabilityTypes: item.disability_types,
     publishedAt: item.published_at,
     downloadCount: item.download_count,
     isFeatured: item.is_featured,

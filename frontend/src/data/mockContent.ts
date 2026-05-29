@@ -54,35 +54,35 @@ export const focusAreas: FocusArea[] = [
     title: 'Policy & Advocacy',
     description:
       'Evidence-based policy briefs and advocacy tools for governments and civil society.',
-    href: '/resources?topic=policy',
+    href: '/resources?topic=policy-advocacy',
   },
   {
     id: 'training',
     title: 'Teacher Training',
     description:
       'Capacity building resources for inclusive pedagogy and classroom practice.',
-    href: '/resources?topic=training',
+    href: '/resources?topic=teacher-training',
   },
   {
     id: 'assistive',
     title: 'Assistive Technology',
     description:
       'Guidance on accessible learning materials and assistive devices in schools.',
-    href: '/resources?topic=assistive',
+    href: '/resources?topic=assistive-technology',
   },
   {
     id: 'research',
     title: 'Research & Evidence',
     description:
       'Research findings and data to inform inclusive education programming.',
-    href: '/resources?topic=research',
+    href: '/resources?topic=research-evidence',
   },
   {
     id: 'emergencies',
     title: 'Education in Emergencies',
     description:
       'Resources for inclusive education in conflict and humanitarian settings.',
-    href: '/resources?topic=emergencies',
+    href: '/resources?topic=education-emergencies',
   },
   {
     id: 'early',
@@ -103,7 +103,8 @@ export const resources: Resource[] = [
     accessLevel: 'PUBLIC',
     language: 'English',
     countries: ['Kenya', 'Uganda', 'Tanzania'],
-    topics: ['Policy & Advocacy'],
+    topics: [{ id: 1, name: 'Policy & Advocacy', slug: 'policy-advocacy' }],
+    disabilityTypes: [],
     publishedAt: '2026-03-15',
     downloadCount: 342,
     isFeatured: true,
@@ -117,7 +118,8 @@ export const resources: Resource[] = [
     accessLevel: 'PUBLIC',
     language: 'English',
     countries: ['Kenya', 'Ethiopia'],
-    topics: ['Teacher Training'],
+    topics: [{ id: 2, name: 'Teacher Training', slug: 'teacher-training' }],
+    disabilityTypes: [{ id: 6, name: 'Learning Disabilities', slug: 'learning-disabilities' }],
     publishedAt: '2026-02-20',
     downloadCount: 518,
     isFeatured: true,
@@ -131,49 +133,14 @@ export const resources: Resource[] = [
     accessLevel: 'PUBLIC',
     language: 'French',
     countries: ['DRC', 'Chad'],
-    topics: ['Assistive Technology'],
+    topics: [{ id: 3, name: 'Assistive Technology', slug: 'assistive-technology' }],
+    disabilityTypes: [
+        { id: 1, name: 'Visual Impairment', slug: 'visual-impairment' },
+        { id: 2, name: 'Hearing Impairment', slug: 'hearing-impairment' }
+    ],
     publishedAt: '2026-01-10',
     downloadCount: 201,
     isFeatured: true,
-  },
-  {
-    id: '4',
-    title: 'Gender and Inclusive Education — Research Synthesis',
-    description:
-      'Synthesis of research on gender-responsive inclusive education programming.',
-    resourceType: 'RESEARCH',
-    accessLevel: 'PUBLIC',
-    language: 'English',
-    countries: ['Rwanda', 'Burundi'],
-    topics: ['Research & Evidence'],
-    publishedAt: '2025-11-28',
-    downloadCount: 167,
-  },
-  {
-    id: '5',
-    title: 'OPD Collaboration Guide for Education Coalitions',
-    description:
-      'How organizations of persons with disabilities can partner with education actors.',
-    resourceType: 'TOOLKIT',
-    accessLevel: 'PUBLIC',
-    language: 'English',
-    countries: ['Kenya', 'South Sudan'],
-    topics: ['OPD Collaboration'],
-    publishedAt: '2025-10-05',
-    downloadCount: 89,
-  },
-  {
-    id: '6',
-    title: 'Inclusive Education in Emergencies — Field Manual',
-    description:
-      'Rapid assessment and programming guidance for humanitarian education teams.',
-    resourceType: 'REPORT',
-    accessLevel: 'PUBLIC',
-    language: 'English',
-    countries: ['Sudan', 'Somalia', 'South Sudan'],
-    topics: ['Education in Emergencies'],
-    publishedAt: '2025-09-12',
-    downloadCount: 276,
   },
 ]
 

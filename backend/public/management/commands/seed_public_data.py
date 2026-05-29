@@ -42,11 +42,13 @@ class Command(BaseCommand):
             {'name': 'Resource Sharing', 'slug': 'resource-sharing', 'description': 'Shared resources and toolkits', 'icon': '📚'},
         ]
 
+        topic_objects = {}
         for topic_data in topics_data:
-            Topic.objects.update_or_create(
+            topic, _ = Topic.objects.update_or_create(
                 slug=topic_data['slug'],
                 defaults=topic_data
             )
+            topic_objects[topic.name] = topic
 
         # 2. Seed Disability Types
         disability_types_data = [
@@ -60,11 +62,13 @@ class Command(BaseCommand):
             {'name': 'Cerebral Palsy', 'slug': 'cerebral-palsy'},
         ]
 
+        dt_objects = {}
         for dt_data in disability_types_data:
-            DisabilityType.objects.update_or_create(
+            dt, _ = DisabilityType.objects.update_or_create(
                 slug=dt_data['slug'],
                 defaults=dt_data
             )
+            dt_objects[dt.name] = dt
 
         # 3. Seed Resources
         resources_data = [
@@ -116,11 +120,11 @@ class Command(BaseCommand):
             )
             
             if topics_names:
-                topics = Topic.objects.filter(name__in=topics_names)
+                topics = [topic_objects[name] for name in topics_names if name in topic_objects]
                 resource.topics.set(topics)
             
             if dt_names:
-                dts = DisabilityType.objects.filter(name__in=dt_names)
+                dts = [dt_objects[name] for name in dt_names if name in dt_objects]
                 resource.disability_types.set(dts)
 
         # 4. Seed News Articles
