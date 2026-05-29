@@ -6,7 +6,7 @@ from .views import (
     MeView, RegisterView, VerifyEmailView, ResendVerificationView,
     PendingMembersView, ApproveMemberView,
     MemberListView, MemberDetailView, ExpertiseTagListView,
-    NotificationViewSet
+    NotificationViewSet, CountryListView,
 )
 
 router = DefaultRouter()
@@ -20,12 +20,15 @@ urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name='auth-login'),
     path('refresh/', TokenRefreshView.as_view(), name='auth-refresh'),
     path('me/', MeView.as_view(), name='auth-me'),
-    
+
+    # Public lookup lists
+    path('countries/', CountryListView.as_view(), name='country-list'),
+    path('expertise-tags/', ExpertiseTagListView.as_view(), name='expertise-tags'),
+
     # Directory endpoints
     path('directory/', MemberListView.as_view(), name='member-directory'),
     path('directory/<int:pk>/', MemberDetailView.as_view(), name='member-detail'),
-    path('expertise-tags/', ExpertiseTagListView.as_view(), name='expertise-tags'),
-    
+
     # Admin endpoints
     path('admin/pending/', PendingMembersView.as_view(), name='admin-pending-members'),
     path('admin/approve/<int:pk>/', ApproveMemberView.as_view(), name='admin-approve-member'),

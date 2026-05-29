@@ -35,13 +35,32 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
     inlines = (MemberProfileInline,)
 
-    fieldsets = UserAdmin.fieldsets + (
-        (
-            'IE Hub Profile',
-            {
-                'fields': ('role', 'country', 'organization', 'organization_type', 'professional_title', 'bio', 'how_heard', 'is_verified', 'is_approved'),
-            },
-        ),
+    # Fields shown when EDITING an existing user
+    fieldsets = (
+        (None, {'fields': ('email', 'username', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name')}),
+        ('Permissions', {
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
+        }),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+        ('IE Hub Profile', {
+            'fields': (
+                'role', 'country', 'organization', 'organization_type',
+                'professional_title', 'bio', 'how_heard', 'is_verified', 'is_approved',
+            ),
+        }),
+    )
+
+    # Fields shown when ADDING a new user — email is the USERNAME_FIELD so must be here
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'username', 'first_name', 'last_name', 'password1', 'password2'),
+        }),
+        ('IE Hub Profile', {
+            'classes': ('wide',),
+            'fields': ('role', 'country', 'organization', 'is_verified', 'is_approved'),
+        }),
     )
 
     def approve_members(self, request, queryset):

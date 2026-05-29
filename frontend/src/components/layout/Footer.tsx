@@ -14,117 +14,99 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-primary-200 bg-primary-900 text-white" role="contentinfo">
+    <footer className="border-t border-gray-200 bg-gray-900 text-white" role="contentinfo">
       <div className="container-page grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4">
+
         <div>
-          <p className="text-lg font-bold text-accent-400">{t('siteShort')}</p>
-          <p className="mt-2 text-sm text-primary-100">{t('tagline')}</p>
-          <p className="mt-4 text-sm text-primary-200">
-            Hosted from Nairobi, Kenya · Continental reach across Africa
-          </p>
+          <div className="flex items-center gap-2 mb-3">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg text-sm font-extrabold text-white"
+              style={{ background: 'linear-gradient(135deg, #00a170 0%, #662d91 100%)' }}>
+              IE
+            </span>
+            <span className="text-lg font-extrabold" style={{ color: '#00a170' }}>IE Hub</span>
+          </div>
+          <p className="text-sm text-gray-400">{t('tagline')}</p>
+          <p className="mt-3 text-sm text-gray-500">{t('footer.hostedFrom')}</p>
+          <div className="mt-5 flex gap-3">
+            {['twitter', 'facebook', 'linkedin', 'youtube'].map(s => (
+              <a key={s} href="#" aria-label={s}
+                className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-800 text-gray-400 hover:bg-[#00a170] hover:text-white transition-colors text-xs font-bold uppercase">
+                {s.slice(0, 2)}
+              </a>
+            ))}
+          </div>
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-accent-400">
+          <h2 className="text-sm font-bold uppercase tracking-wide mb-4" style={{ color: '#00a170' }}>
             {t('footer.quickLinks')}
           </h2>
-          <ul className="mt-4 space-y-2 text-sm">
-            <li>
-              <Link className="hover:underline focus-visible:outline-white" to="/resources">
-                {t('nav.resources')}
-              </Link>
-            </li>
-            <li>
-              <Link className="hover:underline focus-visible:outline-white" to="/news">
-                {t('nav.news')}
-              </Link>
-            </li>
-            <li>
-              <Link className="hover:underline focus-visible:outline-white" to="/about">
-                {t('nav.about')}
-              </Link>
-            </li>
-            <li>
-              <Link className="hover:underline focus-visible:outline-white" to="/accessibility">
-                {t('nav.accessibility')}
-              </Link>
-            </li>
+          <ul className="space-y-2.5 text-sm">
+            {[
+              { to: '/resources',   label: t('nav.resources') },
+              { to: '/news',        label: t('nav.news') },
+              { to: '/about',       label: t('nav.about') },
+              { to: '/programmes',  label: t('nav.programmes') },
+              { to: '/members',     label: t('nav.members') },
+              { to: '/accessibility', label: t('nav.accessibility') },
+            ].map(link => (
+              <li key={link.to}>
+                <Link to={link.to} className="text-gray-400 hover:text-white transition-colors hover:underline underline-offset-2">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-accent-400">
+          <h2 className="text-sm font-bold uppercase tracking-wide mb-4" style={{ color: '#00a170' }}>
             {t('footer.contact')}
           </h2>
-          <address className="mt-4 space-y-2 text-sm not-italic text-primary-100">
+          <address className="space-y-2.5 text-sm not-italic text-gray-400">
             <p>
-              <span className="font-medium text-white">Email:</span>{' '}
-              <a href="mailto:info@iehub.africa" className="underline-offset-2 hover:underline">
-                info@iehub.africa
-              </a>
+              <span className="font-semibold text-white">Email: </span>
+              <a href="mailto:info@iehub.africa" className="hover:text-white transition-colors hover:underline">info@iehub.africa</a>
             </p>
             <p>
-              <span className="font-medium text-white">Phone:</span>{' '}
-              <a href="tel:+254700000000" className="underline-offset-2 hover:underline">
-                +254 700 000 000
-              </a>
+              <span className="font-semibold text-white">Phone: </span>
+              <a href="tel:+254700000000" className="hover:text-white transition-colors hover:underline">+254 700 000 000</a>
             </p>
             <p>LM International · Nairobi, Kenya</p>
           </address>
         </div>
 
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-accent-400">
+          <h2 className="text-sm font-bold uppercase tracking-wide mb-2" style={{ color: '#00a170' }}>
             {t('footer.newsletterTitle')}
           </h2>
-          <p className="mt-2 text-sm text-primary-100">{t('footer.newsletterDesc')}</p>
+          <p className="mb-4 text-sm text-gray-400">{t('footer.newsletterDesc')}</p>
           {submitted ? (
-            <p className="mt-4 rounded-lg bg-primary-800 p-3 text-sm" role="status">
-              Thank you for subscribing. You will receive a confirmation email shortly.
+            <p className="rounded-lg bg-gray-800 p-3 text-sm text-gray-300" role="status">
+              {t('footer.thankYou')}
             </p>
           ) : (
-            <form className="mt-4 space-y-3" onSubmit={handleNewsletter} noValidate>
-              <div>
-                <label htmlFor="newsletter-name" className="sr-only">
-                  Name
-                </label>
-                <input
-                  id="newsletter-name"
-                  name="name"
-                  type="text"
-                  autoComplete="name"
-                  required
-                  className="w-full min-h-11 rounded-lg border border-primary-600 bg-primary-800 px-3 text-white placeholder:text-primary-300"
-                  placeholder="Your name"
-                />
-              </div>
-              <div>
-                <label htmlFor="newsletter-email" className="sr-only">
-                  Email
-                </label>
-                <input
-                  id="newsletter-email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="w-full min-h-11 rounded-lg border border-primary-600 bg-primary-800 px-3 text-white placeholder:text-primary-300"
-                  placeholder="Email address"
-                />
-              </div>
+            <form className="space-y-3" onSubmit={handleNewsletter} noValidate>
+              <input
+                name="name" type="text" required autoComplete="name"
+                placeholder={t('footer.yourName')}
+                className="w-full min-h-10 rounded-lg border border-gray-700 bg-gray-800 px-3 text-sm text-white placeholder:text-gray-500 focus:border-[#00a170] focus:outline-none"
+              />
+              <input
+                name="email" type="email" required autoComplete="email"
+                placeholder={t('footer.emailAddress')}
+                className="w-full min-h-10 rounded-lg border border-gray-700 bg-gray-800 px-3 text-sm text-white placeholder:text-gray-500 focus:border-[#00a170] focus:outline-none"
+              />
               <div className="flex items-start gap-2">
-                <input
-                  id="newsletter-consent"
-                  name="consent"
-                  type="checkbox"
-                  required
-                  className="mt-1 h-5 w-5 rounded border-primary-400"
-                />
-                <label htmlFor="newsletter-consent" className="text-xs text-primary-100">
+                <input id="newsletter-consent" name="consent" type="checkbox" required
+                  className="mt-1 h-4 w-4 rounded border-gray-500 accent-[#00a170]" />
+                <label htmlFor="newsletter-consent" className="text-xs text-gray-500">
                   {t('footer.consent')}
                 </label>
               </div>
-              <button type="submit" className="btn-primary w-full bg-accent-500 hover:bg-accent-600">
+              <button type="submit"
+                className="w-full rounded-lg py-2.5 text-sm font-bold text-white transition-all hover:opacity-90"
+                style={{ background: '#00a170' }}>
                 {t('footer.subscribe')}
               </button>
             </form>
@@ -132,10 +114,12 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-primary-700">
-        <div className="container-page flex flex-col items-center justify-between gap-2 py-4 text-center text-xs text-primary-300 sm:flex-row sm:text-start">
+      <div className="border-t border-gray-800">
+        <div className="container-page flex flex-col items-center justify-between gap-2 py-4 text-xs text-gray-500 sm:flex-row">
           <p>{t('footer.copyright', { year })}</p>
-          <p>WCAG 2.2 AA · Built for accessibility from day one</p>
+          <Link to="/privacy-policy" className="hover:text-white transition-colors underline underline-offset-2">
+            {t('footer.privacyPolicy')}
+          </Link>
         </div>
       </div>
     </footer>

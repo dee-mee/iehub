@@ -6,26 +6,59 @@
     "home": "Home",
     "dashboard": "Dashboard",
     "about": "About",
-    "resources": "Resource Library",
+    "resources": "Resources",
     "news": "News & Events",
     "contact": "Contact",
     "accessibility": "Accessibility",
     "forum": "Forum",
     "members": "Members",
+    "programmes": "Programmes",
     "join": "Join the Community",
     "donate": "Support IE Hub",
     "profile": "My Profile",
     "signOut": "Sign out",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "aboutDropdown": {
+      "ourStory": "Our Story",
+      "whoWeAre": "Who We Are",
+      "steeringCommittee": "Steering Committee",
+      "countryOffices": "LM Country Offices"
+    },
+    "resourcesDropdown": {
+      "allResources": "All Resources",
+      "policyAdvocacy": "Policy & Advocacy",
+      "teacherTraining": "Teacher Training",
+      "assistiveTech": "Assistive Technology",
+      "research": "Research & Evidence",
+      "emergencies": "Education in Emergencies"
+    },
+    "programmesDropdown": {
+      "overview": "Overview",
+      "earlyChildhood": "Early Childhood Development",
+      "teacherCapacity": "Teacher Capacity Building",
+      "policyReform": "Policy Reform",
+      "community": "Community Engagement"
+    },
+    "newsDropdown": {
+      "latestNews": "Latest News",
+      "events": "Events",
+      "announcements": "Announcements",
+      "blog": "Blog"
+    }
   },
   "skipToContent": "Skip to main content",
   "footer": {
-    "newsletterTitle": "Stay informed",
+    "newsletterTitle": "Stay Informed",
     "newsletterDesc": "Subscribe for news, events, and resources on inclusive education.",
+    "yourName": "Your name",
+    "emailAddress": "Email address",
     "subscribe": "Subscribe",
     "consent": "I consent to receiving emails from IE Hub.",
-    "quickLinks": "Quick links",
+    "thankYou": "Thank you for subscribing! You'll receive a confirmation shortly.",
+    "quickLinks": "Quick Links",
     "contact": "Contact",
+    "hostedFrom": "Hosted from Nairobi, Kenya · Continental reach across Africa",
+    "privacyPolicy": "Privacy Policy",
     "copyright": "© {{year}} Inclusive Education Hub for Africa. All rights reserved."
   },
   "home": {
@@ -41,7 +74,19 @@
     "upcomingEvents": "Upcoming events",
     "partners": "Our partners",
     "ctaTitle": "Join the Community of Practice",
-    "ctaDesc": "Connect with educators and advocates across 54 African countries."
+    "ctaDesc": "Connect with educators and advocates across 54 African countries.",
+    "exploreResources": "Explore resources",
+    "joinMember": "Join as a member",
+    "learnMore": "Learn More",
+    "joinCommunity": "Join as a Member",
+    "viewAll": "View All →",
+    "allNews": "All news stories →",
+    "allEvents": "All events →",
+    "viewAllProgrammes": "View All Programmes",
+    "featuredResources": "Featured Resources",
+    "newsEvents": "News & Events",
+    "latestNewsLabel": "Latest News",
+    "upcomingEventsLabel": "Upcoming Events"
   },
   "dashboard": {
     "welcome": "Welcome back, {{name}}",

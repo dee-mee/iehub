@@ -6,8 +6,9 @@ from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from .models import CustomUser, EmailVerificationToken, ExpertiseTag, Notification
+from .models import Country, CustomUser, EmailVerificationToken, ExpertiseTag, Notification
 from .serializers import (
+    CountrySerializer,
     RegisterSerializer, UserMeSerializer, UserUpdateSerializer,
     ExpertiseTagSerializer, NotificationSerializer
 )
@@ -175,3 +176,10 @@ class NotificationViewSet(viewsets.ModelViewSet):
         notification.is_read = True
         notification.save()
         return Response({'status': 'marked as read'})
+
+
+class CountryListView(generics.ListAPIView):
+    """Public endpoint — lists all seeded African countries."""
+    serializer_class = CountrySerializer
+    queryset = Country.objects.all().order_by('name')
+    permission_classes = []  # public, no auth required

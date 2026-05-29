@@ -9,7 +9,8 @@ declare global {
 const USERWAY_KEY = import.meta.env.VITE_USERWAY_KEY as string | undefined
 
 /**
- * Loads UserWay accessibility widget when VITE_USERWAY_KEY is set.
+ * Optional: loads the UserWay SaaS widget ONLY when VITE_USERWAY_KEY is set.
+ * The built-in AccessibilityWidget is always loaded regardless.
  * @see https://userway.org/
  */
 export function UserWay() {

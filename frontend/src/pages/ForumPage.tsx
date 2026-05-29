@@ -27,7 +27,8 @@ export function ForumPage() {
         }
       })
       if (!response.ok) throw new Error('Failed to fetch forum categories')
-      return response.json()
+      const data = await response.json()
+      return data.results ?? data
     }
   })
 

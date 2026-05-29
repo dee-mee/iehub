@@ -6,26 +6,59 @@
     "home": "Accueil",
     "dashboard": "Tableau de bord",
     "about": "À propos",
-    "resources": "Bibliothèque de ressources",
+    "resources": "Ressources",
     "news": "Actualités & Événements",
     "contact": "Contact",
     "accessibility": "Accessibilité",
     "forum": "Forum",
     "members": "Membres",
+    "programmes": "Programmes",
     "join": "Rejoindre la communauté",
     "donate": "Soutenir IE Hub",
     "profile": "Mon profil",
     "signOut": "Se déconnecter",
-    "signIn": "Se connecter"
+    "signIn": "Se connecter",
+    "aboutDropdown": {
+      "ourStory": "Notre histoire",
+      "whoWeAre": "Qui nous sommes",
+      "steeringCommittee": "Comité de pilotage",
+      "countryOffices": "Bureaux pays LM"
+    },
+    "resourcesDropdown": {
+      "allResources": "Toutes les ressources",
+      "policyAdvocacy": "Politique & Plaidoyer",
+      "teacherTraining": "Formation des enseignants",
+      "assistiveTech": "Technologie d'assistance",
+      "research": "Recherche & Preuves",
+      "emergencies": "Éducation en situations d'urgence"
+    },
+    "programmesDropdown": {
+      "overview": "Aperçu",
+      "earlyChildhood": "Développement de la petite enfance",
+      "teacherCapacity": "Renforcement des capacités des enseignants",
+      "policyReform": "Réforme des politiques",
+      "community": "Engagement communautaire"
+    },
+    "newsDropdown": {
+      "latestNews": "Dernières nouvelles",
+      "events": "Événements",
+      "announcements": "Annonces",
+      "blog": "Blog"
+    }
   },
   "skipToContent": "Passer au contenu principal",
   "footer": {
     "newsletterTitle": "Restez informé",
     "newsletterDesc": "Inscrivez-vous pour recevoir des nouvelles, des événements et des ressources sur l'éducation inclusive.",
+    "yourName": "Votre nom",
+    "emailAddress": "Adresse e-mail",
     "subscribe": "S'abonner",
     "consent": "Je consens à recevoir des e-mails de IE Hub.",
+    "thankYou": "Merci pour votre inscription ! Vous recevrez une confirmation sous peu.",
     "quickLinks": "Liens rapides",
     "contact": "Contact",
+    "hostedFrom": "Hébergé depuis Nairobi, Kenya · Portée continentale à travers l'Afrique",
+    "privacyPolicy": "Politique de confidentialité",
     "copyright": "© {{year}} Hub d'Éducation Inclusive pour l'Afrique. Tous droits réservés."
   },
   "home": {
@@ -41,7 +74,19 @@
     "upcomingEvents": "Événements à venir",
     "partners": "Nos partenaires",
     "ctaTitle": "Rejoindre la communauté de pratique",
-    "ctaDesc": "Connectez-vous avec des éducateurs et des défenseurs dans 54 pays africains."
+    "ctaDesc": "Connectez-vous avec des éducateurs et des défenseurs dans 54 pays africains.",
+    "exploreResources": "Explorer les ressources",
+    "joinMember": "Rejoindre en tant que membre",
+    "learnMore": "En savoir plus",
+    "joinCommunity": "Rejoindre en tant que membre",
+    "viewAll": "Voir tout →",
+    "allNews": "Toutes les actualités →",
+    "allEvents": "Tous les événements →",
+    "viewAllProgrammes": "Voir tous les programmes",
+    "featuredResources": "Ressources à la une",
+    "newsEvents": "Actualités & Événements",
+    "latestNewsLabel": "Dernières nouvelles",
+    "upcomingEventsLabel": "Événements à venir"
   },
   "dashboard": {
     "welcome": "Bon retour, {{name}}",

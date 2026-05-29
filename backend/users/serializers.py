@@ -10,7 +10,12 @@ class NotificationSerializer(serializers.ModelSerializer):
         model = Notification
         fields = ['id', 'notification_type', 'title', 'message', 'link', 'is_read', 'created_at']
         read_only_fields = ['id', 'notification_type', 'title', 'message', 'link', 'created_at']
-...
+
+
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = ['id', 'code', 'name', 'region', 'flag_emoji']
 
 
 class ExpertiseTagSerializer(serializers.ModelSerializer):
@@ -67,6 +72,14 @@ class RegisterSerializer(serializers.ModelSerializer):
             'country',
         ]
 
+    def validate_country(self, value):
+        """
+        value is already a Country instance resolved by SlugRelatedField.
+        This validator is a no-op but gives a clear error message if the
+        Country table is empty (seed hasn't run).
+        """
+        return value
+
     def create(self, validated_data):
         password = validated_data.pop('password')
         user = User(**validated_data)
@@ -76,7 +89,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.is_approved = False
         user.save()
 
-        # Create verification token
         EmailVerificationToken.objects.get_or_create(user=user)
 
         return user
@@ -89,6 +101,7 @@ class UserMeSerializer(serializers.ModelSerializer):
         required=False,
         allow_null=True
     )
+    country_detail = CountrySerializer(read_only=True, source='country')
     profile = MemberProfileSerializer(read_only=True)
 
     class Meta:
@@ -101,6 +114,7 @@ class UserMeSerializer(serializers.ModelSerializer):
             'last_name',
             'role',
             'country',
+            'country_detail',
             'organization',
             'organization_type',
             'professional_title',
@@ -119,6 +133,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         required=False,
         allow_null=True
     )
+    country_detail = CountrySerializer(read_only=True, source='country')
     profile = MemberProfileSerializer(required=False)
 
     class Meta:
@@ -127,6 +142,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'country',
+            'country_detail',
             'organization',
             'organization_type',
             'professional_title',
@@ -136,13 +152,11 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         profile_data = validated_data.pop('profile', None)
-        
-        # Update User fields
+
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
 
-        # Update Profile fields
         if profile_data:
             profile = instance.profile
             for attr, value in profile_data.items():
