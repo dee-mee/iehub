@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ContactMessage, DisabilityType, Event, NewsArticle, Resource, Topic
+from .models import ContactMessage, DisabilityType, Event, NewsArticle, Resource, ResourceFile, Topic
 
 
 @admin.register(Topic)
@@ -19,6 +19,13 @@ class DisabilityTypeAdmin(admin.ModelAdmin):
     ordering = ('name',)
 
 
+class ResourceFileInline(admin.TabularInline):
+    model = ResourceFile
+    extra = 1
+    fields = ('file', 'file_type', 'label', 'order')
+    ordering = ('order', 'created_at')
+
+
 @admin.register(Resource)
 class ResourceAdmin(admin.ModelAdmin):
     list_display = ('title', 'resource_type', 'language', 'published_at', 'download_count', 'is_featured')
@@ -29,11 +36,13 @@ class ResourceAdmin(admin.ModelAdmin):
     readonly_fields = ('download_count', 'created_at', 'updated_at')
     date_hierarchy = 'published_at'
     ordering = ('-published_at',)
+    inlines = [ResourceFileInline]
     fieldsets = (
         ('Basic Information', {
-            'fields': ('title', 'description', 'resource_type', 'language')
+            'fields': ('title', 'description', 'resource_type', 'language', 'access_level')
         }),
-        ('Files', {
+        ('Primary File / Link', {
+            'description': 'Use the "Resource Files" section below to attach multiple files (PDFs, videos, etc.).',
             'fields': ('file', 'external_url', 'thumbnail')
         }),
         ('Classification', {

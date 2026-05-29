@@ -146,24 +146,17 @@ STATICFILES_DIRS = [
 ]
 
 # Media files (MinIO S3-compatible storage)
-MEDIA_URL = os.getenv('MEDIA_URL', 'http://localhost:9000/media/')
+MEDIA_URL = '/media/'
 STORAGES = {
     'default': {
-        'BACKEND': 'django_minio_storage.minio_storage.MinioMediaStorage',
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
     },
     'staticfiles': {
         'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
     },
 }
 
-# MinIO Configuration
-MINIO_ENDPOINT = os.getenv('MINIO_ENDPOINT', 'minio:9000')
-MINIO_ACCESS_KEY = os.getenv('MINIO_ACCESS_KEY', 'iehubminio')
-MINIO_SECRET_KEY = os.getenv('MINIO_SECRET_KEY', 'iehubminio123')
-MINIO_USE_HTTPS = False
-MINIO_MEDIA_BUCKET_NAME = os.getenv('MINIO_MEDIA_BUCKET_NAME', 'iehub-media')
-MINIO_MEDIA_PREFIX = 'media/'
-MINIO_CONSISTENCY_CHECK = False
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

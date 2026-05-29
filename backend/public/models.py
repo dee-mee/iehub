@@ -70,6 +70,35 @@ class Resource(TimestampedModel):
         return self.title
 
 
+class ResourceFile(TimestampedModel):
+    """Allows attaching multiple files (PDFs, videos, etc.) to a single Resource."""
+
+    class FileType(models.TextChoices):
+        PDF = 'PDF', 'PDF'
+        VIDEO = 'VIDEO', 'Video'
+        AUDIO = 'AUDIO', 'Audio'
+        IMAGE = 'IMAGE', 'Image'
+        DOCUMENT = 'DOCUMENT', 'Document'
+        OTHER = 'OTHER', 'Other'
+
+    resource = models.ForeignKey(Resource, on_delete=models.CASCADE, related_name='files')
+    file = models.FileField(upload_to='resource_files/')
+    file_type = models.CharField(max_length=16, choices=FileType.choices, default=FileType.OTHER)
+    label = models.CharField(
+        max_length=255,
+        blank=True,
+        default='',
+        help_text='Optional display label, e.g. "English PDF" or "Intro Video"',
+    )
+    order = models.PositiveSmallIntegerField(default=0, help_text='Display order (lower = first)')
+
+    class Meta:
+        ordering = ['order', 'created_at']
+
+    def __str__(self) -> str:
+        return f'{self.resource.title} — {self.label or self.file_type}'
+
+
 class NewsArticle(TimestampedModel):
     class Category(models.TextChoices):
         NEWS = 'NEWS', 'News'
