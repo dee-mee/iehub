@@ -36,7 +36,7 @@ class DisabilityTypeViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class ResourceViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Resource.objects.all()
+    queryset = Resource.objects.prefetch_related('topics', 'disability_types', 'files').all()
     serializer_class = ResourceSerializer
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter, OrderingFilter]

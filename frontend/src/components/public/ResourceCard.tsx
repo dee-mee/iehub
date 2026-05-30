@@ -8,6 +8,7 @@ const typeLabels: Record<Resource['resourceType'], string> = {
   POLICY_BRIEF: 'Policy brief',
   RESEARCH: 'Research',
   VIDEO: 'Video',
+  AUDIO: 'Audio',
   OTHER: 'Other',
 }
 

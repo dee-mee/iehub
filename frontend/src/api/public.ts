@@ -1,6 +1,9 @@
-import type { EventItem, NewsArticle, Resource, AccessLevel, Topic, DisabilityType } from '@/types/content'
+import type { EventItem, NewsArticle, Resource, ResourceFile, AccessLevel, Topic, DisabilityType } from '@/types/content'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api'
+// Use a relative URL so requests go through the Vite dev-server proxy
+// (which forwards to the backend). An explicit VITE_API_URL env var can
+// override this for production builds pointing at a real API host.
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? '/api'
 
 type Paginated<T> = {
   count: number
@@ -9,16 +12,28 @@ type Paginated<T> = {
   results: T[]
 }
 
+type ResourceFileApi = {
+  id: number
+  file_url: string | null
+  file_type: ResourceFile['fileType']
+  label: string
+  order: number
+}
+
 type ResourceApi = {
   id: number
   title: string
   description: string
   resource_type: Resource['resourceType']
   access_level: AccessLevel
+  file_url: string | null
+  external_url: string
+  thumbnail_url: string | null
   language: string
   countries: string[]
   topics: Topic[]
   disability_types: DisabilityType[]
+  files: ResourceFileApi[]
   published_at: string
   download_count: number
   is_featured: boolean
@@ -81,6 +96,16 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return (await response.json()) as T
 }
 
+function mapResourceFile(item: ResourceFileApi): ResourceFile {
+  return {
+    id: item.id,
+    fileUrl: item.file_url,
+    fileType: item.file_type,
+    label: item.label,
+    order: item.order,
+  }
+}
+
 function mapResource(item: ResourceApi): Resource {
   return {
     id: item.id,
@@ -89,12 +114,16 @@ function mapResource(item: ResourceApi): Resource {
     resourceType: item.resource_type,
     accessLevel: item.access_level,
     language: item.language,
-    countries: item.countries,
+    countries: item.countries ?? [],
     topics: item.topics,
     disabilityTypes: item.disability_types,
     publishedAt: item.published_at,
     downloadCount: item.download_count,
     isFeatured: item.is_featured,
+    fileUrl: item.file_url ?? null,
+    externalUrl: item.external_url ?? '',
+    thumbnailUrl: item.thumbnail_url ?? null,
+    files: (item.files ?? []).map(mapResourceFile),
   }
 }
 
@@ -172,4 +201,8 @@ export async function submitContactMessage(payload: ContactPayload): Promise<voi
       message: payload.message,
     }),
   })
+}
+
+export async function incrementDownload(id: number | string): Promise<void> {
+  await request(`/resources/${id}/download/`, { method: 'POST' })
 }

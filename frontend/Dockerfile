@@ -1,16 +1,18 @@
-FROM node:20-alpine AS deps
+FROM node:20-alpine
+
 WORKDIR /app
-COPY package*.json /app/
+
+# Install dependencies first (cached layer)
+COPY package*.json ./
 RUN npm install
 
-FROM node:20-alpine AS build
-WORKDIR /app
-COPY --from=deps /app/node_modules /app/node_modules
-COPY . /app
-RUN npm run build
+# Copy source
+COPY . .
 
-FROM node:20-alpine AS runtime
-WORKDIR /app
-COPY --from=build /app /app
+# Make entrypoint executable
+RUN chmod +x /app/entrypoint.sh
+
 EXPOSE 5173
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
+
+# entrypoint.sh writes .env.local from Docker env vars, then starts Vite
+ENTRYPOINT ["/app/entrypoint.sh"]

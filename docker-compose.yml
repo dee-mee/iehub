@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: iehub-backend
     ports:
-      - "8000:8000"
+      - "8086:8000"
     env_file:
       - ./backend/.env.example
     environment:
@@ -83,13 +83,16 @@ services:
     ports:
       - "5173:5173"
     environment:
-      VITE_API_URL: http://localhost:8000/api
+      # entrypoint.sh writes this into .env.local before Vite starts,
+      # so Vite picks it up as import.meta.env.VITE_API_URL.
+      # The browser hits localhost:8086 (the host-mapped backend port).
+      VITE_API_URL: http://localhost:8086/api
       VITE_USERWAY_KEY: ${VITE_USERWAY_KEY:-}
     depends_on:
       - backend
-    # volumes:
-    #   - ./frontend:/app
-    #   - /app/node_modules
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
   db:
     image: postgres:16

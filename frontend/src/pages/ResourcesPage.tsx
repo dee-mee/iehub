@@ -14,6 +14,9 @@ const RESOURCE_TYPES: { value: ResourceType | ''; label: string }[] = [
   { value: 'REPORT', label: 'Report' },
   { value: 'RESEARCH', label: 'Research' },
   { value: 'PUBLICATION', label: 'Publication' },
+  { value: 'VIDEO', label: 'Video' },
+  { value: 'AUDIO', label: 'Audio' },
+  { value: 'OTHER', label: 'Other' },
 ]
 
 export function ResourcesPage() {
@@ -124,6 +127,10 @@ export function ResourcesPage() {
 
         {resourcesQuery.isLoading ? (
           <LoadingSpinner label="Loading resources" />
+        ) : resourcesQuery.isError ? (
+          <p className="mt-12 text-center text-red-700" role="alert">
+            Could not load resources from the API. Please check that the backend is running and try again.
+          </p>
         ) : filtered.length === 0 ? (
           <p className="mt-12 text-center text-muted" role="status">
             No resources match your search. Try different keywords or filters.
@@ -159,11 +166,6 @@ export function ResourcesPage() {
               </nav>
             )}
           </>
-        )}
-        {resourcesQuery.isError && (
-          <p className="mt-6 text-sm text-red-700" role="status">
-            Could not load latest resources from API.
-          </p>
         )}
       </div>
     </>

@@ -5,6 +5,7 @@ export type ResourceType =
   | 'POLICY_BRIEF'
   | 'RESEARCH'
   | 'VIDEO'
+  | 'AUDIO'
   | 'OTHER'
 
 export type AccessLevel = 'PUBLIC' | 'MEMBERS_ONLY'
@@ -23,6 +24,16 @@ export interface DisabilityType {
   slug: string
 }
 
+export type ResourceFileType = 'PDF' | 'VIDEO' | 'AUDIO' | 'IMAGE' | 'DOCUMENT' | 'OTHER'
+
+export interface ResourceFile {
+  id: number
+  fileUrl: string | null
+  fileType: ResourceFileType
+  label: string
+  order: number
+}
+
 export interface Resource {
   id: number | string
   title: string
@@ -36,6 +47,11 @@ export interface Resource {
   publishedAt: string
   downloadCount: number
   isFeatured?: boolean
+  // File/media fields
+  fileUrl: string | null
+  externalUrl: string
+  thumbnailUrl: string | null
+  files: ResourceFile[]
 }
 
 export interface NewsArticle {

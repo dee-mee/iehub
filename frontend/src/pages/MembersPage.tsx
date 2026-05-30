@@ -5,7 +5,7 @@ import { PageHeader } from '@/components/ui/PageHeader'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import type { AuthUser } from '@/api/auth'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api'
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? '/api'
 
 type Paginated<T> = {
   count: number

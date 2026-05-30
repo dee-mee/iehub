@@ -6,7 +6,7 @@ import { useAuth } from '@/context/AuthContext'
 import { fetchNews, fetchEvents, fetchResources } from '@/api/public'
 import type { EventItem } from '@/types/content'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api'
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? '/api'
 
 type ForumThread = {
   id: number

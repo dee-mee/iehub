@@ -108,6 +108,10 @@ export const resources: Resource[] = [
     publishedAt: '2026-03-15',
     downloadCount: 342,
     isFeatured: true,
+    fileUrl: null,
+    externalUrl: '',
+    thumbnailUrl: null,
+    files: [],
   },
   {
     id: '2',
@@ -123,6 +127,10 @@ export const resources: Resource[] = [
     publishedAt: '2026-02-20',
     downloadCount: 518,
     isFeatured: true,
+    fileUrl: null,
+    externalUrl: '',
+    thumbnailUrl: null,
+    files: [],
   },
   {
     id: '3',
@@ -141,6 +149,10 @@ export const resources: Resource[] = [
     publishedAt: '2026-01-10',
     downloadCount: 201,
     isFeatured: true,
+    fileUrl: null,
+    externalUrl: '',
+    thumbnailUrl: null,
+    files: [],
   },
 ]
 
