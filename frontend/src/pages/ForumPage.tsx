@@ -51,17 +51,21 @@ export function ForumPage() {
   const CategoryCard = ({ category }: { category: ForumCategory }) => (
     <Link
       to={`/forum/c/${category.slug}`}
-      className="oxygen-grid-card group flex-row items-start gap-4"
+      className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex gap-4 hover:shadow-md hover:border-primary-100 transition-all group"
     >
-      <div className="w-12 h-12 border-2 border-[#2d2d2d] bg-[#e6f5f0] flex items-center justify-center text-2xl group-hover:bg-[#00a170] group-hover:text-white transition-colors shrink-0">
+      <div className="w-12 h-12 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center text-2xl group-hover:bg-primary-600 group-hover:text-white transition-all shrink-0 shadow-sm">
         {category.icon || '💬'}
       </div>
       <div className="flex-1 min-w-0">
-        <h3 className="font-extrabold text-gray-900 group-hover:text-[#00a170] transition-colors">{category.name}</h3>
-        <p className="text-sm text-gray-500 mt-1 line-clamp-2">{category.description}</p>
-        <div className="flex gap-4 mt-3 text-xs font-medium text-gray-500">
-          <span>{category.thread_count} threads</span>
-          <span>{category.post_count} posts</span>
+        <h3 className="font-bold text-slate-900 group-hover:text-primary-700 transition-colors">{category.name}</h3>
+        <p className="text-sm text-slate-500 mt-1 line-clamp-2 leading-relaxed">{category.description}</p>
+        <div className="flex gap-4 mt-4 text-xs font-bold text-slate-400 uppercase tracking-wider">
+          <span className="flex items-center gap-1">
+            <span className="text-slate-900">{category.thread_count}</span> threads
+          </span>
+          <span className="flex items-center gap-1">
+            <span className="text-slate-900">{category.post_count}</span> posts
+          </span>
         </div>
       </div>
     </Link>
@@ -70,10 +74,14 @@ export function ForumPage() {
   const Section = ({ title, icon, items }: { title: string; icon: string; items: ForumCategory[] }) =>
     items.length > 0 ? (
       <section>
-        <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-          <span>{icon}</span> {title}
-        </h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-2xl">{icon}</span>
+          <h2 className="text-xl font-bold text-slate-900 tracking-tight">
+            {title}
+          </h2>
+          <div className="h-px bg-slate-100 flex-1 ml-4" />
+        </div>
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {items.map((c) => (
             <CategoryCard key={c.id} category={c} />
           ))}
@@ -83,18 +91,22 @@ export function ForumPage() {
 
   return (
     <MemberPageShell title="Discussions">
-      <p className="text-sm text-gray-600 mb-8">
-        Welcome{user?.first_name ? `, ${user.first_name}` : ''}. Browse categories matched to your membership
-        {user?.profile?.expertise_areas?.length
-          ? ` and expertise (${user.profile.expertise_areas.map((t) => t.name).join(', ')})`
-          : ''}
-        .
-      </p>
+      <div className="bg-primary-50/50 p-6 rounded-2xl border border-primary-100/50 mb-10">
+        <p className="text-sm text-slate-700 font-medium">
+          Welcome back{user?.first_name ? `, ${user.first_name}` : ''}.
+          <span className="text-slate-500 ml-1">
+            Browse categories matched to your membership
+            {user?.profile?.expertise_areas?.length
+              ? ` and expertise (${user.profile.expertise_areas.map((t) => t.name).join(', ')})`
+              : ''}
+            .
+          </span>
+        </p>
+      </div>
 
-      <div className="space-y-12">
+      <div className="space-y-16">
         <Section title="Announcements" icon="📢" items={announcements} />
         <Section title="General Discussion" icon="💬" items={general} />
-        <Section title="Expert Discussions" icon="⭐" items={expert} />
         <Section title="Thematic Communities" icon="🎯" items={thematic} />
         <Section title="Regional Groups" icon="🌍" items={country} />
 

@@ -19,10 +19,6 @@ export function RequireMember({ children }: { children: React.ReactNode }) {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />
   }
 
-  if (!user?.is_verified) {
-    return <Navigate to="/verify-email" replace />
-  }
-
   if (!canAccessMemberArea(user)) {
     return <Navigate to="/pending-approval" replace />
   }

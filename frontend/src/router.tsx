@@ -13,7 +13,7 @@ import { ContactPage } from '@/pages/ContactPage'
 import { AccessibilityPage } from '@/pages/AccessibilityPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { RegisterPage } from '@/pages/RegisterPage'
-import { VerifyEmailPage } from '@/pages/VerifyEmailPage'
+// import { VerifyEmailPage } from '@/pages/VerifyEmailPage'
 import { PendingApprovalPage } from '@/pages/PendingApprovalPage'
 import { LoginPage } from '@/pages/LoginPage'
 import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage'
@@ -56,7 +56,7 @@ export const router = createBrowserRouter([
       { path: 'accessibility', element: <AccessibilityPage /> },
       { path: 'donate', element: <DonatePage /> },
       { path: 'register', element: <RegisterPage /> },
-      { path: 'verify-email', element: <VerifyEmailPage /> },
+      // { path: 'verify-email', element: <VerifyEmailPage /> },
       { path: 'pending-approval', element: <PendingApprovalPage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'forgot-password', element: <ForgotPasswordPage /> },

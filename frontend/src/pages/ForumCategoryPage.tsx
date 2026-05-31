@@ -84,58 +84,58 @@ export function ForumCategoryPage() {
     <MemberPageShell
       title={category.name}
       actions={
-        <Link to={`/forum/c/${slug}/new`} className="btn-primary text-sm flex items-center gap-2">
+        <Link to={`/forum/c/${slug}/new`} className="member-btn-primary text-sm flex items-center gap-2">
           Start new thread
         </Link>
       }
     >
-      <div className="mb-6">
-        <nav className="text-xs font-extrabold text-[#00a170] uppercase tracking-wider mb-2">
-          <Link to="/forum" className="hover:underline">Forum</Link>
-          <span className="mx-2">/</span>
-          <span>{category.name}</span>
+      <div className="mb-10">
+        <nav className="flex items-center gap-2 text-xs font-bold text-primary-600 uppercase tracking-widest mb-3">
+          <Link to="/forum" className="hover:text-primary-700 transition-colors">Forum</Link>
+          <span className="text-slate-300">/</span>
+          <span className="text-slate-500">{category.name}</span>
         </nav>
-        <p className="text-gray-600">{category.description}</p>
+        <p className="text-slate-500 max-w-3xl leading-relaxed">{category.description}</p>
       </div>
 
-      <div className="member-panel p-0 divide-y-2 divide-[#e5e5e5] overflow-hidden">
-          <div className="bg-[#f0f0f0] border-b-2 border-[#2d2d2d] px-6 py-3 flex items-center text-xs font-extrabold text-gray-800 uppercase tracking-wider">
+      <div className="member-panel p-0 divide-y divide-slate-100 overflow-hidden">
+          <div className="bg-slate-50/50 px-6 py-4 flex items-center text-[10px] font-bold text-slate-400 uppercase tracking-widest">
             <div className="flex-1">Discussion</div>
             <div className="w-24 text-center hidden md:block">Stats</div>
             <div className="w-48 text-right hidden md:block">Last Activity</div>
           </div>
 
           {threads?.map((thread) => (
-            <div key={thread.id} className="px-6 py-4 flex flex-col md:flex-row md:items-center gap-4 hover:bg-primary-50/50 transition-colors group">
+            <div key={thread.id} className="px-6 py-5 flex flex-col md:flex-row md:items-center gap-6 hover:bg-slate-50/50 transition-colors group">
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex items-center gap-2 mb-1.5">
                   {thread.is_pinned && (
-                    <span className="px-2 py-0.5 bg-accent-100 text-accent-700 text-[10px] font-bold rounded uppercase">Pinned</span>
+                    <span className="px-2 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-bold rounded uppercase tracking-wider">Pinned</span>
                   )}
                   {thread.is_announcement && (
-                    <span className="px-2 py-0.5 bg-primary-600 text-white text-[10px] font-bold rounded uppercase">Hub Update</span>
+                    <span className="px-2 py-0.5 bg-primary-600 text-white text-[10px] font-bold rounded uppercase tracking-wider">Hub Update</span>
                   )}
                 </div>
-                <Link to={`/forum/t/${thread.slug}`} className="text-lg font-bold text-ink hover:text-primary-700 transition-colors block leading-snug">
+                <Link to={`/forum/t/${thread.slug}`} className="text-lg font-bold text-slate-900 hover:text-primary-600 transition-colors block leading-snug">
                   {thread.title}
                 </Link>
-                <div className="mt-1 flex items-center gap-2 text-sm text-muted">
-                  <span>by <span className="font-medium text-primary-700">{thread.author.first_name || thread.author.username}</span></span>
-                  <span className="text-primary-200">•</span>
+                <div className="mt-1.5 flex items-center gap-2 text-sm text-slate-400">
+                  <span>by <span className="font-bold text-slate-700">{thread.author.first_name || thread.author.username}</span></span>
+                  <span className="text-slate-200">•</span>
                   <span>{new Date(thread.last_activity).toLocaleDateString()}</span>
                 </div>
               </div>
               
               <div className="w-24 flex-row md:flex-col items-center justify-center gap-4 md:gap-0 hidden md:flex">
                 <div className="text-center">
-                  <span className="block text-lg font-bold text-ink leading-none">{thread.post_count}</span>
-                  <span className="text-[10px] text-muted uppercase font-bold tracking-tighter leading-none">Posts</span>
+                  <span className="block text-xl font-bold text-slate-900 leading-none">{thread.post_count}</span>
+                  <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider leading-none mt-1">Posts</span>
                 </div>
               </div>
 
               <div className="w-48 text-right hidden md:block">
-                <span className="text-sm text-ink block font-medium">Last active</span>
-                <span className="text-xs text-muted block italic">
+                <span className="text-sm text-slate-700 block font-bold">Last activity</span>
+                <span className="text-xs text-slate-400 block mt-0.5">
                   {new Date(thread.last_activity).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
               </div>

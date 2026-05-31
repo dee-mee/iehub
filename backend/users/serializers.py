@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from .models import Country, EmailVerificationToken, ExpertiseTag, MemberProfile, Notification
+from .models import Country, ExpertiseTag, MemberProfile, Notification
 
 User = get_user_model()
 
@@ -85,11 +85,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User(**validated_data)
         user.set_password(password)
         user.is_active = True
-        user.is_verified = False
+        user.is_verified = True
         user.is_approved = False
         user.save()
-
-        EmailVerificationToken.objects.get_or_create(user=user)
 
         return user
 

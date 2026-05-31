@@ -14,7 +14,7 @@ export function MemberSettingsPage() {
             Role: <strong>{user?.role}</strong> · Approved:{' '}
             <strong>{user?.is_approved ? 'Yes' : 'Pending'}</strong>
           </p>
-          <Link to="/profile" className="btn-primary inline-block text-sm">
+          <Link to="/profile" className="member-btn-primary inline-block text-sm">
             Edit profile & expertise
           </Link>
         </section>

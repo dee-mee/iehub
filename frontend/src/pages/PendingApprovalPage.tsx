@@ -18,7 +18,7 @@ export function PendingApprovalPage() {
           </div>
           
           <div className="space-y-3">
-            <h2 className="text-2xl font-bold text-ink">Thank you for verifying your email!</h2>
+            <h2 className="text-2xl font-bold text-ink">Thank you for registering!</h2>
             <p className="text-muted text-lg">
               To maintain the quality of our Community of Practice, all new memberships are manually 
               reviewed by our steering committee.

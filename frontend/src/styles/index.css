@@ -1,9 +1,11 @@
+@import 'tailwindcss';
 @import url('https://fonts.googleapis.com/css2?family=Averta+Std:wght@300;400;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap');
 @import url('https://fonts.cdnfonts.com/css/averta-std');
-@import 'tailwindcss';
 @import './oxygen-theme.css';
 @import './a11y-levels.css';
+
+@custom-variant dark (&:where(.dark, [data-theme='dark'], .dark *, [data-theme='dark'] *));
 
 @theme {
   /* Brand palette */
@@ -39,8 +41,20 @@
 @layer base {
   html { scroll-behavior: smooth; }
 
+  :root {
+    --color-surface: #fafafa;
+    --color-ink:     #1a2422;
+    --color-muted:   #4a5c58;
+  }
+
+  .dark {
+    --color-surface: #020617; /* slate-950 */
+    --color-ink:     #f8fafc; /* slate-50 */
+    --color-muted:   #94a3b8; /* slate-400 */
+  }
+
   body {
-    @apply bg-surface text-ink antialiased;
+    @apply bg-surface text-ink antialiased transition-colors duration-200;
     font-family: var(--font-sans);
   }
 
@@ -57,6 +71,7 @@
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
   }
 
+  /* Default (Oxygen) Styles */
   .btn-primary {
     @apply inline-flex min-h-11 items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold text-white;
     border: 2px solid #1a1a1a;
@@ -116,17 +131,54 @@
     background: #fafafa;
   }
 
+  /* Member Dashboard (Normal) Styles */
+  .member-btn-primary {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 px-6 py-2.5 text-sm font-bold text-white rounded-xl bg-primary-600 hover:bg-primary-700 transition-all active:scale-95 shadow-sm shadow-primary-200 dark:shadow-primary-900/20;
+  }
+
+  .member-btn-secondary {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 bg-white dark:bg-slate-800 px-6 py-2.5 text-sm font-bold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all active:scale-95 shadow-sm;
+  }
+
+  .member-panel {
+    @apply bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 p-6 transition-colors;
+  }
+
+  .member-card {
+    @apply bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md dark:hover:border-slate-700 transition-all duration-200;
+  }
+
   .label {
-    @apply block text-sm font-bold text-ink;
+    @apply block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1;
   }
 
   .input {
-    @apply mt-1 w-full min-h-11 border-2 border-[#2d2d2d] bg-white px-3 py-2 text-sm;
-    border-radius: 0;
+    @apply mt-1 w-full min-h-11 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2 text-sm dark:text-slate-200 transition-all focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500;
   }
   .input:focus {
     outline: 2px solid var(--color-green);
     outline-offset: 1px;
+  }
+
+  /* Public Site Utility Classes (legacy oxygen names) */
+  .oxygen-section {
+    @apply py-16 sm:py-24 border-b border-slate-100;
+  }
+
+  .oxygen-section--alt {
+    @apply bg-slate-50/50;
+  }
+
+  .oxygen-section-title {
+    @apply inline-block px-3 py-1 rounded-lg bg-primary-100 text-primary-700 text-[10px] font-bold uppercase tracking-widest mb-4;
+  }
+
+  .oxygen-grid-card {
+    @apply bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-200;
+  }
+
+  .oxygen-grid-card__bar {
+    @apply h-1.5 rounded-full mb-6 -mx-1 opacity-80;
   }
 
   /* Sliding partner logos */

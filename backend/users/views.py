@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from .models import Country, CustomUser, EmailVerificationToken, ExpertiseTag, Notification
+from .models import Country, CustomUser, ExpertiseTag, Notification
 from .serializers import (
     CountrySerializer,
     RegisterSerializer, UserMeSerializer, UserUpdateSerializer,
@@ -37,6 +37,7 @@ class MeView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+"""
 class VerifyEmailView(APIView):
     permission_classes = [permissions.AllowAny]
 
@@ -86,6 +87,7 @@ class ResendVerificationView(APIView):
             return Response({'message': 'Verification email resent'}, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response({'message': 'If an account exists with this email, a verification link has been sent'}, status=status.HTTP_200_OK)
+"""
 
 
 class PendingMembersView(generics.ListAPIView):
@@ -93,7 +95,7 @@ class PendingMembersView(generics.ListAPIView):
     permission_classes = [IsPlatformAdmin]
 
     def get_queryset(self):
-        return User.objects.filter(is_verified=True, is_approved=False).order_by('-date_joined')
+        return User.objects.filter(is_approved=False).order_by('-date_joined')
 
 
 class ApproveMemberView(APIView):

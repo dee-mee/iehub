@@ -129,8 +129,8 @@ export function ForumThreadPage() {
   if (!thread) {
     return (
       <MemberPageShell title="Discussion">
-        <p className="text-gray-600">Thread not found.</p>
-        <Link to="/forum" className="btn-primary inline-block mt-4">
+        <p className="text-slate-500">Thread not found.</p>
+        <Link to="/forum" className="member-btn-primary inline-block mt-4">
           Back to forum
         </Link>
       </MemberPageShell>
@@ -139,33 +139,33 @@ export function ForumThreadPage() {
 
   return (
     <MemberPageShell title={thread.title}>
-      <nav className="text-xs font-extrabold text-[#00a170] uppercase tracking-wider mb-6">
-        <Link to="/forum" className="hover:underline">
+      <nav className="flex items-center gap-2 text-xs font-bold text-primary-600 uppercase tracking-widest mb-6">
+        <Link to="/forum" className="hover:text-primary-700 transition-colors">
           Forum
         </Link>
-        <span className="text-gray-400 mx-2">/</span>
-        <span className="text-gray-600">Discussion</span>
+        <span className="text-slate-300">/</span>
+        <span className="text-slate-500">Discussion</span>
       </nav>
 
-      <div className="max-w-4xl space-y-6">
+      <div className="max-w-4xl space-y-8">
         {posts?.map((post) => (
           <article
             key={post.id}
-            className="member-panel p-0 overflow-hidden flex flex-col md:flex-row"
+            className="member-panel p-0 overflow-hidden flex flex-col md:flex-row shadow-sm border-slate-100"
           >
-            <div className="w-full md:w-48 bg-[#f0f0f0] p-6 border-b-2 md:border-b-0 md:border-r-2 border-[#2d2d2d] flex flex-row md:flex-col items-center md:items-start gap-4">
-              <div className="w-12 h-12 md:w-16 md:h-16 border-2 border-[#2d2d2d] bg-[#e6f5f0] flex items-center justify-center text-[#00a170] font-extrabold text-xl shrink-0">
-                {post.author.first_name?.[0]}
-                {post.author.last_name?.[0]}
+            <div className="w-full md:w-52 bg-slate-50/50 p-6 border-b md:border-b-0 md:border-r border-slate-100 flex flex-row md:flex-col items-center md:items-start gap-4">
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary-600 flex items-center justify-center text-white font-bold text-lg shrink-0 shadow-sm">
+                {(post.author.first_name?.[0] || post.author.username?.[0] || '?').toUpperCase()}
+                {(post.author.last_name?.[0] || '').toUpperCase()}
               </div>
               <div className="min-w-0">
-                <div className="font-extrabold text-gray-900 truncate">
+                <div className="font-bold text-slate-900 truncate">
                   {post.author.first_name} {post.author.last_name}
                 </div>
-                <div className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mt-1 truncate">
+                <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mt-1 truncate">
                   {post.author.professional_title || 'Member'}
                 </div>
-                <div className="text-[10px] text-[#00a170] font-bold mt-0.5 truncate">
+                <div className="text-[10px] text-primary-600 font-bold mt-0.5 truncate">
                   {post.author.organization}
                 </div>
               </div>
@@ -173,7 +173,7 @@ export function ForumThreadPage() {
             <div className="flex-1 p-6 flex flex-col justify-between min-h-[200px]">
               <div>
                 <div
-                  className="prose prose-sm max-w-none text-gray-800 ck-content mb-8"
+                  className="prose prose-slate prose-sm max-w-none text-slate-700 ck-content mb-8"
                   dangerouslySetInnerHTML={{ __html: post.content }}
                 />
 
@@ -187,10 +187,10 @@ export function ForumThreadPage() {
                         key={rt.type}
                         type="button"
                         onClick={() => reactMutation.mutate({ postId: post.id, type: rt.type })}
-                        className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold border-2 border-[#2d2d2d] ${
+                        className={`flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-full border transition-all ${
                           isActive
-                            ? 'bg-[#e6f5f0] text-[#006b4f]'
-                            : 'bg-white text-gray-600 hover:bg-[#fafafa]'
+                            ? 'bg-primary-50 text-primary-700 border-primary-200'
+                            : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-900'
                         }`}
                       >
                         <span>{rt.emoji}</span>
@@ -201,12 +201,12 @@ export function ForumThreadPage() {
                 </div>
               </div>
 
-              <div className="mt-auto pt-6 border-t-2 border-[#e5e5e5] flex justify-between items-center flex-wrap gap-3">
+              <div className="mt-auto pt-6 border-t border-slate-50 flex justify-between items-center flex-wrap gap-3">
                 <div className="flex items-center gap-4">
                   <div className="relative group">
                     <button
                       type="button"
-                      className="flex items-center gap-1 text-[10px] uppercase font-bold tracking-widest text-gray-500 hover:text-[#00a170]"
+                      className="flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-widest text-slate-400 hover:text-primary-600 transition-colors"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -224,13 +224,13 @@ export function ForumThreadPage() {
                       </svg>
                       React
                     </button>
-                    <div className="absolute bottom-full left-0 mb-2 hidden group-hover:flex bg-white border-2 border-[#2d2d2d] p-1 gap-1 z-10">
+                    <div className="absolute bottom-full left-0 mb-3 hidden group-hover:flex bg-white shadow-xl border border-slate-100 rounded-2xl p-1.5 gap-1 z-10 animate-in fade-in slide-in-from-bottom-2">
                       {REACTION_TYPES.map((rt) => (
                         <button
                           key={rt.type}
                           type="button"
                           onClick={() => reactMutation.mutate({ postId: post.id, type: rt.type })}
-                          className="w-8 h-8 flex items-center justify-center hover:bg-[#e6f5f0] text-lg border border-transparent hover:border-[#2d2d2d]"
+                          className="w-9 h-9 rounded-xl flex items-center justify-center hover:bg-primary-50 text-lg transition-colors"
                           title={rt.label}
                         >
                           {rt.emoji}
@@ -240,12 +240,12 @@ export function ForumThreadPage() {
                   </div>
                   <button
                     type="button"
-                    className="text-[10px] uppercase font-bold tracking-widest text-gray-500 hover:text-[#00a170]"
+                    className="text-[10px] uppercase font-bold tracking-widest text-slate-400 hover:text-primary-600 transition-colors"
                   >
                     Quote
                   </button>
                 </div>
-                <span className="text-[10px] uppercase font-bold tracking-widest text-gray-400 italic">
+                <span className="text-[10px] uppercase font-bold tracking-widest text-slate-300 italic">
                   {new Date(post.created_at).toLocaleString()}
                 </span>
               </div>
@@ -253,23 +253,25 @@ export function ForumThreadPage() {
           </article>
         ))}
 
-        <div className="member-panel mt-8 border-dashed">
-          <h2 className="text-xl font-extrabold text-gray-900 mb-6">Post a Reply</h2>
+        <div className="member-panel mt-12 bg-slate-50/30 border-dashed border-slate-200">
+          <h2 className="text-xl font-bold text-slate-900 mb-6">Post a Reply</h2>
           <form
             onSubmit={(e) => {
               e.preventDefault()
               postReplyMutation.mutate(replyContent)
             }}
           >
-            <RichTextEditor
-              value={replyContent}
-              onChange={(data) => setReplyContent(data)}
-              placeholder="Share your thoughts or ask a question..."
-            />
+            <div className="rounded-xl overflow-hidden border border-slate-200 bg-white">
+              <RichTextEditor
+                value={replyContent}
+                onChange={(data) => setReplyContent(data)}
+                placeholder="Share your thoughts or ask a question..."
+              />
+            </div>
             <div className="mt-6 flex justify-end">
               <button
                 type="submit"
-                className="btn-primary px-8"
+                className="member-btn-primary px-8"
                 disabled={
                   postReplyMutation.isPending || !replyContent.trim() || replyContent === '<p></p>'
                 }

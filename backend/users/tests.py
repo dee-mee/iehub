@@ -48,7 +48,7 @@ class RegistrationAPITest(APITestCase):
         self.assertEqual(user.how_heard, 'From a colleague')
         self.assertEqual(user.country.name, 'Kenya')
         self.assertEqual(user.role, User.Role.MEMBER)
-        self.assertFalse(user.is_verified)
+        self.assertTrue(user.is_verified)
         self.assertFalse(user.is_approved)
 
     def test_registration_missing_required_fields(self):

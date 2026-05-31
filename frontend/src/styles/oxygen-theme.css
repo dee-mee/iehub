@@ -77,8 +77,9 @@
   border-bottom: 2px solid var(--oxygen-border);
 }
 
-/* ─── Member dashboard / forum portal ─────────────────────────────────────── */
+/* ─── Member dashboard / forum portal (LEGACY - DISABLING TO PREVENT CONFLICTS) ──────────────── */
 
+/*
 .site-member {
   --oxygen-border: #2d2d2d;
   --oxygen-border-light: #b8b8b8;
@@ -352,3 +353,4 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
+*/

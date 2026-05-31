@@ -23,7 +23,7 @@ export function MemberResourcesPage() {
             <Link
               key={resource.id}
               to={`/member-resources/${resource.id}`}
-              className="oxygen-grid-card"
+              className="member-card"
             >
               <p className="text-xs font-bold text-[#00a170] uppercase">{resource.resourceType}</p>
               <h3 className="font-bold text-gray-900 mt-1">{resource.title}</h3>

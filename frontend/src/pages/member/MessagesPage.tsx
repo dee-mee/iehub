@@ -57,20 +57,22 @@ export function MessagesPage() {
         <button
           type="button"
           onClick={() => setCompose((v) => !v)}
-          className="btn-primary text-sm"
+          className="member-btn-primary text-sm"
         >
           {compose ? 'Cancel' : 'New message'}
         </button>
       }
     >
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-6">
         {(['inbox', 'sent'] as const).map((b) => (
           <button
             key={b}
             type="button"
             onClick={() => setBox(b)}
-            className={`px-4 py-2 text-sm font-bold capitalize border-2 border-[#2d2d2d] ${
-              box === b ? 'bg-[#00a170] text-white' : 'bg-white text-gray-700'
+            className={`px-6 py-2 rounded-xl text-sm font-bold capitalize transition-all ${
+              box === b 
+                ? 'bg-primary-600 text-white shadow-sm shadow-primary-200' 
+                : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
             }`}
           >
             {b}
@@ -80,7 +82,7 @@ export function MessagesPage() {
 
       {compose && (
         <form
-          className="card mb-6 space-y-4"
+          className="member-panel mb-8 space-y-4 border-primary-100 bg-primary-50/30"
           onSubmit={(e) => {
             e.preventDefault()
             const data = new FormData(e.currentTarget)
@@ -91,9 +93,10 @@ export function MessagesPage() {
             })
           }}
         >
+          <h3 className="font-bold text-slate-900">New Message</h3>
           <div>
-            <label className="block text-sm font-medium mb-1">To</label>
-            <select name="recipient_id" required className="input w-full">
+            <label className="label">To</label>
+            <select name="recipient_id" required className="input">
               <option value="">Select member</option>
               {membersQuery.data?.map((m) => (
                 <option key={m.id} value={m.id}>
@@ -103,14 +106,14 @@ export function MessagesPage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Subject</label>
-            <input name="subject" required className="input w-full" />
+            <label className="label">Subject</label>
+            <input name="subject" required className="input" />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Message</label>
-            <textarea name="body" required rows={5} className="input w-full" />
+            <label className="label">Message</label>
+            <textarea name="body" required rows={5} className="input" />
           </div>
-          <button type="submit" className="btn-primary" disabled={sendMutation.isPending}>
+          <button type="submit" className="member-btn-primary" disabled={sendMutation.isPending}>
             Send message
           </button>
         </form>
@@ -119,7 +122,7 @@ export function MessagesPage() {
       {messagesQuery.isLoading ? (
         <LoadingSpinner label="Loading messages..." />
       ) : (
-        <div className="member-panel p-0 divide-y-2 divide-[#e5e5e5]">
+        <div className="member-panel p-0 divide-y divide-slate-100 overflow-hidden">
           {(messagesQuery.data ?? []).length === 0 ? (
             <p className="p-8 text-center text-gray-500 text-sm">No messages in {box}.</p>
           ) : (

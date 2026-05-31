@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { MemberPageShell } from '@/components/member/MemberPageShell'
 import { useAuth } from '@/context/AuthContext'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+import { apiFetch, apiList } from '@/api/client'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? '/api'
 
@@ -22,11 +23,7 @@ export function ProfilePage() {
 
   const { data: expertiseTags } = useQuery<ExpertiseTag[]>({
     queryKey: ['expertise-tags'],
-    queryFn: async () => {
-      const response = await fetch(`${API_BASE_URL}/auth/expertise-tags/`)
-      if (!response.ok) throw new Error('Failed to fetch tags')
-      return response.json()
-    }
+    queryFn: () => apiFetch<ExpertiseTag[]>('/auth/expertise-tags/').then(apiList),
   })
 
   const [formData, setFormData] = useState({
@@ -57,7 +54,7 @@ export function ProfilePage() {
           twitter_url: user.profile?.twitter_url ?? '',
           website_url: user.profile?.website_url ?? '',
           is_visible_in_directory: user.profile?.is_visible_in_directory ?? true,
-          expertise_area_ids: user.profile?.expertise_areas.map(a => a.id) ?? []
+          expertise_area_ids: user.profile?.expertise_areas?.map(a => a.id) ?? []
         }
       })
     }
@@ -371,7 +368,7 @@ export function ProfilePage() {
                     <section>
                       <h4 className="text-xs font-bold text-primary-700 uppercase tracking-widest mb-4">Areas of Expertise</h4>
                       <div className="flex flex-wrap gap-2">
-                        {user.profile?.expertise_areas.length ? (
+                        {user.profile?.expertise_areas?.length ? (
                           user.profile.expertise_areas.map(area => (
                             <span key={area.id} className="px-3 py-1 bg-primary-50 text-primary-700 text-xs font-bold rounded-full border border-primary-100">
                               {area.name}

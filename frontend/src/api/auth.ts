@@ -28,12 +28,13 @@ export type AuthUser = {
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const { headers, ...rest } = init ?? {}
   const response = await fetch(`${API_BASE_URL}${path}`, {
     headers: {
       'Content-Type': 'application/json',
-      ...(init?.headers ?? {}),
+      ...headers,
     },
-    ...init,
+    ...rest,
   })
 
   if (!response.ok) {

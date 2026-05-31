@@ -26,13 +26,12 @@ export function LoginPage() {
       await login(email, password)
       const tokens = JSON.parse(localStorage.getItem('iehub_tokens') || '{}')
       const user = tokens.access ? await meApi(tokens.access) : null
-      if (!user?.is_verified) {
-        navigate('/verify-email')
-      } else if (!canAccessMemberArea(user)) {
+      if (!canAccessMemberArea(user)) {
         navigate('/pending-approval')
       } else {
         navigate(from, { replace: true })
       }
+
     } catch {
       setError('Invalid credentials. Please try again.')
     } finally {

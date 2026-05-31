@@ -3,7 +3,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
 
 from .views import (
-    MeView, RegisterView, VerifyEmailView, ResendVerificationView,
+    MeView, RegisterView,
     PendingMembersView, ApproveMemberView,
     MemberListView, MemberDetailView, ExpertiseTagListView,
     NotificationViewSet, CountryListView,
@@ -15,8 +15,8 @@ router.register(r'notifications', NotificationViewSet, basename='notification')
 urlpatterns = [
     path('', include(router.urls)),
     path('register/', RegisterView.as_view(), name='auth-register'),
-    path('verify-email/', VerifyEmailView.as_view(), name='auth-verify-email'),
-    path('resend-verification/', ResendVerificationView.as_view(), name='auth-resend-verification'),
+    # path('verify-email/', VerifyEmailView.as_view(), name='auth-verify-email'),
+    # path('resend-verification/', ResendVerificationView.as_view(), name='auth-resend-verification'),
     path('login/', TokenObtainPairView.as_view(), name='auth-login'),
     path('refresh/', TokenRefreshView.as_view(), name='auth-refresh'),
     path('me/', MeView.as_view(), name='auth-me'),
