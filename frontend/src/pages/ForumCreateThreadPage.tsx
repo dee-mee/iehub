@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation } from '@tanstack/react-query'
-import { PageHeader } from '@/components/ui/PageHeader'
+import { MemberPageShell } from '@/components/member/MemberPageShell'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { RichTextEditor } from '@/components/ui/RichTextEditor'
 
@@ -75,19 +75,26 @@ export function ForumCreateThreadPage() {
     }
   })
 
-  if (isLoading) return <LoadingSpinner label="Preparing form..." />
+  if (isLoading) {
+    return (
+      <MemberPageShell title="New discussion">
+        <LoadingSpinner label="Preparing form..." />
+      </MemberPageShell>
+    )
+  }
 
-  if (!category) return <div className="container-page py-12 text-center">Category not found.</div>
+  if (!category) {
+    return (
+      <MemberPageShell title="New discussion">
+        <p className="text-center text-gray-500">Category not found.</p>
+      </MemberPageShell>
+    )
+  }
 
   return (
-    <>
-      <PageHeader 
-        title="Start New Discussion" 
-        description={`Posting in ${category.name}`} 
-      />
-
-      <div className="container-page py-12">
-        <div className="max-w-3xl mx-auto">
+    <MemberPageShell title="Start new discussion">
+      <p className="text-sm text-gray-600 mb-6">Posting in {category.name}</p>
+        <div className="max-w-3xl">
           <form 
             onSubmit={(e) => { e.preventDefault(); createThreadMutation.mutate({ title, content }); }}
             className="card space-y-6"
@@ -135,7 +142,6 @@ export function ForumCreateThreadPage() {
             </div>
           </form>
         </div>
-      </div>
-    </>
+    </MemberPageShell>
   )
 }

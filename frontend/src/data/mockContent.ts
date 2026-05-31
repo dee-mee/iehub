@@ -3,27 +3,39 @@ import type { EventItem, FocusArea, ImpactStat, NewsArticle, Resource } from '@/
 export const impactStats: ImpactStat[] = [
   {
     id: '1',
-    value: '54',
-    label: 'African countries',
-    description: 'Continental reach for inclusive education practitioners',
+    value: '5,000+',
+    label: 'Members Served',
+    description: 'Active practitioners in our Community of Practice',
   },
   {
     id: '2',
-    value: '11',
-    label: 'LM country offices',
-    description: 'Regional hubs supporting local communities',
+    value: '120+',
+    label: 'Projects Completed',
+    description: 'Inclusive education initiatives across the continent',
   },
   {
     id: '3',
-    value: '13',
-    label: 'Steering Committee partners',
-    description: 'Organizations governing the platform',
+    value: '1M+',
+    label: 'Beneficiaries Reached',
+    description: 'Learners with disabilities supported by our programmes',
   },
   {
     id: '4',
-    value: '5',
-    label: 'Languages',
-    description: 'English, French, Arabic, Portuguese, and Swahili',
+    value: '54',
+    label: 'Counties Covered',
+    description: 'Continental reach across all African nations',
+  },
+  {
+    id: '5',
+    value: '85',
+    label: 'Training Programs',
+    description: 'Teacher capacity building sessions conducted',
+  },
+  {
+    id: '6',
+    value: '13',
+    label: 'Partners Engaged',
+    description: 'Leading organizations in our Steering Committee',
   },
 ]
 
@@ -271,4 +283,102 @@ export const lmOffices = [
   'Rwanda & Burundi',
   'DRC',
   'Niger & Mali',
+]
+
+export const missionVision = {
+  mission: 'To empower persons with disabilities through inclusive education and sustainable community development across Africa.',
+  vision: 'A continent where every person, regardless of ability, has equal access to education, opportunities, and a dignified life.',
+  goal: 'To reach 1 million learners with disabilities by 2030 through policy influence and practitioner support.',
+  motto: 'Inclusion is not a favor, it is a right.',
+}
+
+export const coreValues = [
+  {
+    title: 'Integrity',
+    description: 'We uphold the highest ethical standards in all our actions and decisions.',
+  },
+  {
+    title: 'Inclusion',
+    description: 'We believe in a world where everyone belongs and has a voice.',
+  },
+  {
+    title: 'Accountability',
+    description: 'We take responsibility for our impact and are transparent with our stakeholders.',
+  },
+  {
+    title: 'Innovation',
+    description: 'We embrace creative solutions to overcome barriers to inclusion.',
+  },
+  {
+    title: 'Empowerment',
+    description: 'We support individuals and communities to take charge of their own futures.',
+  },
+  {
+    title: 'Collaboration',
+    description: 'We work together with partners to achieve greater impact.',
+  },
+]
+
+export const leadershipTeam = [
+  {
+    name: 'Dr. Sarah Johnson',
+    role: 'Executive Director',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&q=80',
+  },
+  {
+    name: 'Samuel Okello',
+    role: 'Board Chairperson',
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&q=80',
+  },
+  {
+    name: 'Grace Mwangi',
+    role: 'Program Manager',
+    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&q=80',
+  },
+  {
+    name: 'David Chen',
+    role: 'Finance Officer',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&q=80',
+  },
+  {
+    name: 'Aisha Toure',
+    role: 'Communications Officer',
+    image: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=400&q=80',
+  },
+]
+
+export const regionalHubs = [
+  {
+    name: 'East & Central Africa',
+    location: 'Nairobi & Kampala',
+    description: 'Coordinating regional advocacy, teacher training, and inclusive pedagogy across the Great Lakes region.',
+  },
+  {
+    name: 'West & North Africa',
+    location: 'Dakar & Niamey',
+    description: 'Focusing on policy reform, education in emergencies, and cross-border research initiatives.',
+  },
+  {
+    name: 'Southern Africa',
+    location: 'Lusaka & Harare',
+    description: 'Supporting OPD capacity building and community-based rehabilitation programmes.',
+  },
+]
+
+export const ourHistory = [
+  {
+    year: '2024',
+    title: 'Foundation',
+    description: 'IE Hub was conceptualized by LM International as a response to the gap in continental resource sharing for inclusive education.',
+  },
+  {
+    year: '2025',
+    title: 'Steering Committee Formation',
+    description: '13 leading organisations across Africa joined forces to govern and guide the platform development.',
+  },
+  {
+    year: '2026',
+    title: 'Platform Soft Launch',
+    description: 'Launch of the public website and the Community of Practice, connecting practitioners across 54 countries.',
+  },
 ]

@@ -17,8 +17,8 @@ class ForumPostInline(admin.TabularInline):
 
 @admin.register(ForumThread)
 class ForumThreadAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'author', 'is_pinned', 'is_locked', 'last_activity')
-    list_filter = ('category', 'is_pinned', 'is_locked', 'is_announcement')
+    list_display = ('title', 'category', 'author', 'status', 'is_pinned', 'last_activity')
+    list_filter = ('category', 'status', 'is_pinned', 'is_announcement')
     search_fields = ('title', 'slug', 'author__username', 'author__email')
     prepopulated_fields = {'slug': ('title',)}
     inlines = [ForumPostInline]
@@ -26,18 +26,18 @@ class ForumThreadAdmin(admin.ModelAdmin):
 
 @admin.register(ForumPost)
 class ForumPostAdmin(admin.ModelAdmin):
-    list_display = ('thread', 'author', 'is_approved', 'created_at')
-    list_filter = ('is_approved', 'is_edited')
+    list_display = ('thread', 'author', 'approval_status', 'created_at')
+    list_filter = ('approval_status', 'is_edited', 'is_flagged')
     search_fields = ('content', 'author__username', 'author__email', 'thread__title')
-    actions = ['approve_posts', 'unapprove_posts']
+    actions = ['approve_posts', 'reject_posts']
 
     def approve_posts(self, request, queryset):
-        queryset.update(is_approved=True)
+        queryset.update(approval_status=ForumPost.ApprovalStatus.APPROVED, is_flagged=False)
     approve_posts.short_description = "Approve selected posts"
 
-    def unapprove_posts(self, request, queryset):
-        queryset.update(is_approved=False)
-    unapprove_posts.short_description = "Unapprove selected posts"
+    def reject_posts(self, request, queryset):
+        queryset.update(approval_status=ForumPost.ApprovalStatus.REJECTED)
+    reject_posts.short_description = "Reject selected posts"
 
 
 @admin.register(ForumReaction)

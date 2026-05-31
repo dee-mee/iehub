@@ -103,7 +103,7 @@ export function RegisterPage() {
         howHeard: formData.howHeard,
         country: formData.country,
       })
-      navigate('/login')
+      navigate('/verify-email', { state: { registered: true } })
     } catch (err: any) {
       setError(err?.message || 'Registration failed. Check details and try again.')
     } finally {

@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/context/AuthContext'
+import { canAccessMemberArea } from '@/lib/memberNav'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? '/api'
 
@@ -37,7 +38,7 @@ function LanguageSwitcher() {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(v => !v)}
-        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md border border-gray-200 bg-white hover:border-[#00a170] transition-colors text-gray-700"
+        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold border-2 border-[#2d2d2d] bg-white hover:border-[#00a170] transition-colors text-gray-700"
         aria-expanded={open}
         aria-haspopup="listbox"
       >
@@ -50,7 +51,7 @@ function LanguageSwitcher() {
         </svg>
       </button>
       {open && (
-        <div className="absolute right-0 top-full mt-1 bg-white shadow-xl border border-gray-100 rounded-xl overflow-hidden min-w-[140px] z-50">
+        <div className="absolute right-0 top-full mt-0 bg-white border-2 border-[#2d2d2d] overflow-hidden min-w-[140px] z-50 shadow-[4px_4px_0_#2d2d2d]">
           {languages.map(lang => (
             <button
               key={lang.code}
@@ -83,7 +84,7 @@ function NavDropdown({ label, items }: { label: string; items: { label: string; 
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(v => !v)}
-        className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-semibold text-gray-700 transition-colors hover:text-[#00a170]"
+        className="flex items-center gap-1 px-3 py-2 text-sm font-bold text-gray-700 border-2 border-transparent hover:border-[#2d2d2d] transition-colors hover:text-[#00a170]"
         aria-expanded={open}
         aria-haspopup="true"
       >
@@ -94,7 +95,7 @@ function NavDropdown({ label, items }: { label: string; items: { label: string; 
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full mt-1 z-50 min-w-[220px] rounded-xl border border-gray-100 bg-white py-2 shadow-xl">
+        <div className="absolute left-0 top-full mt-0 z-50 min-w-[220px] border-2 border-[#2d2d2d] bg-white py-1 shadow-[4px_4px_0_#2d2d2d]">
           {items.map(item => (
             <Link
               key={item.href}
@@ -189,9 +190,9 @@ export function Navbar() {
   ]
 
   return (
-    <header className={`sticky top-0 z-50 bg-white transition-shadow ${scrolled ? 'shadow-md' : 'border-b border-gray-100'}`}>
+    <header className={`sticky top-0 z-50 bg-white border-b-2 border-[#2d2d2d] ${scrolled ? 'shadow-[0_4px_0_#2d2d2d]' : ''}`}>
       {/* Top bar — contact info + language */}
-      <div className="hidden md:block border-b border-gray-100 bg-gray-50">
+      <div className="hidden md:block border-b-2 border-[#2d2d2d] bg-[#f0f0f0]">
         <div className="container-page flex items-center justify-between py-2">
           <div className="flex items-center gap-5 text-xs text-gray-500">
             <a href="tel:+25412345678" className="flex items-center gap-1.5 hover:text-[#00a170] transition-colors">
@@ -219,12 +220,12 @@ export function Navbar() {
       </div>
 
       {/* Main nav */}
-      <nav className="container-page" aria-label="Main navigation">
-        <div className="flex min-h-[4rem] items-center justify-between gap-4">
+      <nav className="container-page border-x-2 border-[#2d2d2d] max-w-[calc(80rem+4px)]" aria-label="Main navigation">
+        <div className="flex min-h-[4rem] items-center justify-between gap-4 px-1">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 rounded-lg focus-visible:outline-offset-4 flex-shrink-0">
-            <span className="flex h-10 w-10 items-center justify-center rounded-lg text-base font-extrabold text-white"
+          <Link to="/" className="flex items-center gap-3 border-2 border-transparent hover:border-[#2d2d2d] p-1 focus-visible:outline-offset-4 flex-shrink-0">
+            <span className="flex h-10 w-10 items-center justify-center text-base font-extrabold text-white border-2 border-[#1a1a1a]"
               style={{ background: 'linear-gradient(135deg, #00a170 0%, #662d91 100%)' }}
               aria-hidden="true">
               IE
@@ -238,7 +239,7 @@ export function Navbar() {
           {/* Desktop nav links */}
           <div className="hidden items-center gap-0.5 lg:flex">
             <NavLink to="/" end
-              className={({ isActive }) => `rounded-md px-3 py-2 text-sm font-semibold transition-colors ${isActive ? 'text-[#00a170]' : 'text-gray-700 hover:text-[#00a170]'}`}>
+              className={({ isActive }) => `px-3 py-2 text-sm font-bold border-2 transition-colors ${isActive ? 'text-[#00a170] border-[#00a170] bg-[#e6f5f0]' : 'text-gray-700 border-transparent hover:text-[#00a170] hover:border-[#2d2d2d]'}`}>
               {t('nav.home')}
             </NavLink>
             <NavDropdown label={t('nav.about')} items={aboutDropdown} />
@@ -246,7 +247,7 @@ export function Navbar() {
             <NavDropdown label={t('nav.programmes')} items={programmesDropdown} />
             <NavDropdown label={t('nav.news')} items={newsDropdown} />
             <NavLink to="/contact"
-              className={({ isActive }) => `rounded-md px-3 py-2 text-sm font-semibold transition-colors ${isActive ? 'text-[#00a170]' : 'text-gray-700 hover:text-[#00a170]'}`}>
+              className={({ isActive }) => `px-3 py-2 text-sm font-bold border-2 transition-colors ${isActive ? 'text-[#00a170] border-[#00a170] bg-[#e6f5f0]' : 'text-gray-700 border-transparent hover:text-[#00a170] hover:border-[#2d2d2d]'}`}>
               {t('nav.contact')}
             </NavLink>
           </div>
@@ -255,25 +256,34 @@ export function Navbar() {
           <div className="hidden items-center gap-3 lg:flex flex-shrink-0">
             {isAuthenticated ? (
               <div className="flex items-center gap-3">
+                {canAccessMemberArea(user) && (
+                  <Link
+                    to="/dashboard"
+                    className="px-4 py-2 text-sm font-bold text-white border-2 border-[#1a1a1a] shadow-[2px_2px_0_#1a1a1a]"
+                    style={{ background: '#2563eb' }}
+                  >
+                    Member Dashboard
+                  </Link>
+                )}
                 <NotificationBell />
                 <div className="h-6 w-px bg-gray-200" />
                 <Link to="/profile" className="text-sm font-semibold text-gray-700 hover:text-[#00a170] transition-colors">
                   {user?.first_name || user?.username}
                 </Link>
                 <button onClick={handleLogout}
-                  className="rounded-lg border-2 px-4 py-2 text-sm font-semibold transition-colors hover:bg-gray-50"
-                  style={{ borderColor: '#00a170', color: '#00a170' }}>
+                  className="border-2 border-[#1a1a1a] px-4 py-2 text-sm font-bold transition-colors hover:bg-gray-50 shadow-[2px_2px_0_#1a1a1a]"
+                  style={{ color: '#00a170' }}>
                   {t('nav.signOut')}
                 </button>
               </div>
             ) : (
               <div className="flex items-center gap-2">
                 <Link to="/login"
-                  className="rounded-lg px-4 py-2 text-sm font-semibold text-gray-700 hover:text-[#00a170] transition-colors">
+                  className="px-4 py-2 text-sm font-bold text-gray-700 border-2 border-transparent hover:border-[#2d2d2d] hover:text-[#00a170] transition-colors">
                   {t('nav.signIn')}
                 </Link>
                 <Link to="/register"
-                  className="rounded-lg px-4 py-2 text-sm font-bold text-white transition-all hover:opacity-90"
+                  className="px-4 py-2 text-sm font-bold text-white border-2 border-[#1a1a1a] shadow-[2px_2px_0_#1a1a1a] hover:opacity-95"
                   style={{ background: '#ec559f' }}>
                   {t('nav.join')}
                 </Link>
@@ -286,7 +296,7 @@ export function Navbar() {
             {isAuthenticated && <NotificationBell />}
             <button
               type="button"
-              className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-lg border border-gray-200 p-2"
+              className="inline-flex min-h-10 min-w-10 items-center justify-center border-2 border-[#2d2d2d] p-2"
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(v => !v)}
             >
@@ -303,7 +313,7 @@ export function Navbar() {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div className="border-t border-gray-100 pb-4 lg:hidden" id="mobile-menu">
+          <div className="border-t-2 border-[#2d2d2d] pb-4 lg:hidden bg-[#fafafa]" id="mobile-menu">
             <ul className="flex flex-col gap-1 pt-2">
               {[
                 { to: '/',          label: t('nav.home'),       end: true },
@@ -315,7 +325,7 @@ export function Navbar() {
               ].map(link => (
                 <li key={link.to}>
                   <NavLink to={link.to} end={link.end}
-                    className={({ isActive }) => `block rounded-md px-3 py-2 text-sm font-semibold transition-colors ${isActive ? 'text-[#00a170] bg-green-50' : 'text-gray-700 hover:text-[#00a170] hover:bg-green-50'}`}
+                    className={({ isActive }) => `block mx-2 px-3 py-2 text-sm font-bold border-2 transition-colors ${isActive ? 'text-[#00a170] border-[#00a170] bg-green-50' : 'text-gray-700 border-transparent hover:text-[#00a170] hover:border-[#2d2d2d]'}`}
                     onClick={() => setMenuOpen(false)}>
                     {link.label}
                   </NavLink>
@@ -341,22 +351,32 @@ export function Navbar() {
             <div className="mt-3 flex flex-col gap-2 border-t border-gray-100 pt-3">
               {isAuthenticated ? (
                 <>
+                  {canAccessMemberArea(user) && (
+                    <Link
+                      to="/dashboard"
+                      className="mx-3 border-2 border-[#1a1a1a] py-2 text-center text-sm font-bold text-white shadow-[2px_2px_0_#1a1a1a]"
+                      style={{ background: '#2563eb' }}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Member Dashboard
+                    </Link>
+                  )}
                   <Link to="/profile" className="px-3 py-2 text-sm font-semibold text-gray-700" onClick={() => setMenuOpen(false)}>
                     {t('nav.profile')} ({user?.first_name || user?.username})
                   </Link>
                   <button onClick={handleLogout}
-                    className="rounded-lg border-2 py-2 text-sm font-semibold"
+                    className="mx-3 border-2 border-[#1a1a1a] py-2 text-sm font-bold shadow-[2px_2px_0_#1a1a1a]"
                     style={{ borderColor: '#00a170', color: '#00a170' }}>
                     {t('nav.signOut')}
                   </button>
                 </>
               ) : (
                 <>
-                  <Link to="/login" className="rounded-lg border-2 py-2 text-center text-sm font-semibold"
+                  <Link to="/login" className="mx-3 border-2 border-[#1a1a1a] py-2 text-center text-sm font-bold shadow-[2px_2px_0_#1a1a1a]"
                     style={{ borderColor: '#00a170', color: '#00a170' }} onClick={() => setMenuOpen(false)}>
                     {t('nav.signIn')}
                   </Link>
-                  <Link to="/register" className="rounded-lg py-2 text-center text-sm font-bold text-white"
+                  <Link to="/register" className="mx-3 border-2 border-[#1a1a1a] py-2 text-center text-sm font-bold text-white shadow-[2px_2px_0_#1a1a1a]"
                     style={{ background: '#ec559f' }} onClick={() => setMenuOpen(false)}>
                     {t('nav.join')}
                   </Link>

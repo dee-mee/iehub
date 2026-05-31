@@ -1,0 +1,120 @@
+/* Multi-step accessibility levels (0 = default, 1 = medium, 2 = strong) */
+
+/* Text size */
+html.iehub-a11y-text-1 { font-size: 112%; }
+html.iehub-a11y-text-2 { font-size: 128%; }
+html.iehub-a11y-text-1 *,
+html.iehub-a11y-text-2 * {
+  font-size: inherit;
+}
+
+/* Contrast */
+html.iehub-a11y-contrast-1 {
+  filter: contrast(1.35) saturate(1.1);
+}
+html.iehub-a11y-contrast-2,
+html.iehub-a11y-contrast-2 * {
+  background-color: #000 !important;
+  color: #fff !important;
+  border-color: #fff !important;
+  box-shadow: none !important;
+}
+html.iehub-a11y-contrast-2 img {
+  filter: grayscale(1) contrast(1.2);
+}
+html.iehub-a11y-contrast-2 a {
+  color: #ff0 !important;
+  text-decoration: underline !important;
+}
+
+/* Saturation */
+html.iehub-a11y-sat-1 {
+  filter: saturate(0.65);
+}
+html.iehub-a11y-sat-2 {
+  filter: grayscale(1);
+}
+
+/* Letter spacing */
+html.iehub-a11y-spacing-1 p,
+html.iehub-a11y-spacing-1 li,
+html.iehub-a11y-spacing-1 span,
+html.iehub-a11y-spacing-1 a,
+html.iehub-a11y-spacing-1 label {
+  letter-spacing: 0.08em !important;
+  word-spacing: 0.1em !important;
+}
+html.iehub-a11y-spacing-2 p,
+html.iehub-a11y-spacing-2 li,
+html.iehub-a11y-spacing-2 span,
+html.iehub-a11y-spacing-2 a,
+html.iehub-a11y-spacing-2 label {
+  letter-spacing: 0.14em !important;
+  word-spacing: 0.2em !important;
+}
+
+/* Line height */
+html.iehub-a11y-line-1 p,
+html.iehub-a11y-line-1 li {
+  line-height: 1.75 !important;
+}
+html.iehub-a11y-line-2 p,
+html.iehub-a11y-line-2 li {
+  line-height: 2.1 !important;
+}
+
+/* Links */
+html.iehub-a11y-links-1 a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+}
+html.iehub-a11y-links-2 a {
+  text-decoration: underline !important;
+  background: #ff0 !important;
+  color: #000 !important;
+  outline: 2px solid #000 !important;
+  outline-offset: 1px !important;
+}
+
+/* Cursor */
+html.iehub-a11y-cursor-1,
+html.iehub-a11y-cursor-1 * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M4 2l18 10-7 2-4 8z' fill='%23000' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E") 4 2, auto !important;
+}
+html.iehub-a11y-cursor-2,
+html.iehub-a11y-cursor-2 * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M6 3l26 14-10 3-6 12z' fill='%23000' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E") 6 3, auto !important;
+}
+
+/* Readable font */
+html.iehub-a11y-font-1,
+html.iehub-a11y-font-1 * {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+html.iehub-a11y-font-2,
+html.iehub-a11y-font-2 * {
+  font-family: 'Atkinson Hyperlegible', 'Segoe UI', sans-serif !important;
+  letter-spacing: 0.04em;
+  word-spacing: 0.08em;
+}
+
+/* Reduce motion */
+html.iehub-a11y-motion-1 *,
+html.iehub-a11y-motion-1 *::before,
+html.iehub-a11y-motion-1 *::after {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
+html.iehub-a11y-motion-2 *,
+html.iehub-a11y-motion-2 *::before,
+html.iehub-a11y-motion-2 *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* Focus visible — stronger when a11y active */
+html[class*='iehub-a11y-'] :focus-visible {
+  outline: 3px solid #000 !important;
+  outline-offset: 2px !important;
+}

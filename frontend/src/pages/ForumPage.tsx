@@ -1,131 +1,112 @@
 import { useQuery } from '@tanstack/react-query'
-import { Link } from 'react-router-dom'
-import { PageHeader } from '@/components/ui/PageHeader'
+import { Link, useSearchParams } from 'react-router-dom'
+import { MemberPageShell } from '@/components/member/MemberPageShell'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
-
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? '/api'
+import { apiFetch, apiList } from '@/api/client'
+import { useAuth } from '@/context/AuthContext'
 
 type ForumCategory = {
   id: number
   name: string
   slug: string
   description: string
-  category_type: 'COUNTRY' | 'THEMATIC' | 'GENERAL' | 'ANNOUNCEMENT'
+  category_type: 'COUNTRY' | 'THEMATIC' | 'GENERAL' | 'ANNOUNCEMENT' | 'EXPERT_ONLY'
   icon: string
   thread_count: number
   post_count: number
+  can_access?: boolean
 }
 
 export function ForumPage() {
+  const { user } = useAuth()
+  const [params] = useSearchParams()
+  const filterType = params.get('type')
+
   const { data: categories, isLoading, error } = useQuery<ForumCategory[]>({
     queryKey: ['forum-categories'],
-    queryFn: async () => {
-      const tokens = JSON.parse(localStorage.getItem('iehub_tokens') || '{}')
-      const response = await fetch(`${API_BASE_URL}/forum/categories/`, {
-        headers: {
-          'Authorization': `Bearer ${tokens.access}`,
-        }
-      })
-      if (!response.ok) throw new Error('Failed to fetch forum categories')
-      const data = await response.json()
-      return data.results ?? data
-    }
+    queryFn: () =>
+      apiFetch<{ results?: ForumCategory[] } | ForumCategory[]>('/forum/categories/').then(
+        (data) => apiList(data).filter((c) => c.can_access !== false),
+      ),
   })
 
-  if (isLoading) return <LoadingSpinner label="Loading forum..." />
+  if (isLoading) {
+    return (
+      <MemberPageShell title="Discussions">
+        <LoadingSpinner label="Loading forum..." />
+      </MemberPageShell>
+    )
+  }
 
-  const announcements = categories?.filter(c => c.category_type === 'ANNOUNCEMENT') || []
-  const general = categories?.filter(c => c.category_type === 'GENERAL') || []
-  const thematic = categories?.filter(c => c.category_type === 'THEMATIC') || []
-  const country = categories?.filter(c => c.category_type === 'COUNTRY') || []
+  const list = filterType
+    ? categories?.filter((c) => c.category_type === filterType) ?? []
+    : categories ?? []
+
+  const announcements = list.filter((c) => c.category_type === 'ANNOUNCEMENT')
+  const general = list.filter((c) => c.category_type === 'GENERAL')
+  const thematic = list.filter((c) => c.category_type === 'THEMATIC')
+  const country = list.filter((c) => c.category_type === 'COUNTRY')
+  const expert = list.filter((c) => c.category_type === 'EXPERT_ONLY')
 
   const CategoryCard = ({ category }: { category: ForumCategory }) => (
-    <Link 
-      to={`/forum/c/${category.slug}`} 
-      className="card hover:border-primary-400 transition-all group flex items-start gap-4"
+    <Link
+      to={`/forum/c/${category.slug}`}
+      className="oxygen-grid-card group flex-row items-start gap-4"
     >
-      <div className="w-12 h-12 rounded-xl bg-primary-50 flex items-center justify-center text-2xl group-hover:bg-primary-600 group-hover:text-white transition-colors">
+      <div className="w-12 h-12 border-2 border-[#2d2d2d] bg-[#e6f5f0] flex items-center justify-center text-2xl group-hover:bg-[#00a170] group-hover:text-white transition-colors shrink-0">
         {category.icon || '💬'}
       </div>
       <div className="flex-1 min-w-0">
-        <h3 className="font-bold text-ink group-hover:text-primary-700 transition-colors">{category.name}</h3>
-        <p className="text-sm text-muted mt-1 line-clamp-2">{category.description}</p>
-        <div className="flex gap-4 mt-3 text-xs font-medium text-muted">
-          <span className="flex items-center gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-            </svg>
-            {category.thread_count} threads
-          </span>
-          <span className="flex items-center gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
-            </svg>
-            {category.post_count} posts
-          </span>
+        <h3 className="font-extrabold text-gray-900 group-hover:text-[#00a170] transition-colors">{category.name}</h3>
+        <p className="text-sm text-gray-500 mt-1 line-clamp-2">{category.description}</p>
+        <div className="flex gap-4 mt-3 text-xs font-medium text-gray-500">
+          <span>{category.thread_count} threads</span>
+          <span>{category.post_count} posts</span>
         </div>
       </div>
     </Link>
   )
 
+  const Section = ({ title, icon, items }: { title: string; icon: string; items: ForumCategory[] }) =>
+    items.length > 0 ? (
+      <section>
+        <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+          <span>{icon}</span> {title}
+        </h2>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {items.map((c) => (
+            <CategoryCard key={c.id} category={c} />
+          ))}
+        </div>
+      </section>
+    ) : null
+
   return (
-    <>
-      <PageHeader 
-        title="Community of Practice" 
-        description="Share knowledge, discuss challenges, and connect with peers." 
-      />
+    <MemberPageShell title="Discussions">
+      <p className="text-sm text-gray-600 mb-8">
+        Welcome{user?.first_name ? `, ${user.first_name}` : ''}. Browse categories matched to your membership
+        {user?.profile?.expertise_areas?.length
+          ? ` and expertise (${user.profile.expertise_areas.map((t) => t.name).join(', ')})`
+          : ''}
+        .
+      </p>
 
-      <div className="container-page py-12 space-y-12">
-        {/* Announcements */}
-        {announcements.length > 0 && (
-          <section>
-            <h2 className="text-xl font-bold text-ink mb-6 flex items-center gap-2">
-              <span className="text-accent-500">📢</span> Announcements
-            </h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              {announcements.map(c => <CategoryCard key={c.id} category={c} />)}
-            </div>
-          </section>
-        )}
-
-        {/* General Discussion */}
-        <section>
-          <h2 className="text-xl font-bold text-ink mb-6 flex items-center gap-2">
-            <span className="text-primary-600">💬</span> General Discussion
-          </h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {general.map(c => <CategoryCard key={c.id} category={c} />)}
-          </div>
-        </section>
-
-        {/* Thematic Groups */}
-        <section>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-ink flex items-center gap-2">
-              <span className="text-primary-600">🎯</span> Thematic Communities
-            </h2>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {thematic.map(c => <CategoryCard key={c.id} category={c} />)}
-          </div>
-        </section>
-
-        {/* Country Groups */}
-        <section>
-          <h2 className="text-xl font-bold text-ink mb-6 flex items-center gap-2">
-            <span className="text-primary-600">🌍</span> Regional Groups
-          </h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {country.map(c => <CategoryCard key={c.id} category={c} />)}
-          </div>
-        </section>
+      <div className="space-y-12">
+        <Section title="Announcements" icon="📢" items={announcements} />
+        <Section title="General Discussion" icon="💬" items={general} />
+        <Section title="Expert Discussions" icon="⭐" items={expert} />
+        <Section title="Thematic Communities" icon="🎯" items={thematic} />
+        <Section title="Regional Groups" icon="🌍" items={country} />
 
         {error && (
           <div className="card p-8 text-center text-red-600 bg-red-50">
-            Error loading forum. Please ensure you are logged in.
+            Error loading forum. Please try again later.
           </div>
         )}
+        {!error && list.length === 0 && (
+          <p className="text-gray-500 text-sm">No categories available for your profile yet.</p>
+        )}
       </div>
-    </>
+    </MemberPageShell>
   )
 }

@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Averta+Std:wght@300;400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap');
 @import url('https://fonts.cdnfonts.com/css/averta-std');
 @import 'tailwindcss';
+@import './oxygen-theme.css';
+@import './a11y-levels.css';
 
 @theme {
   /* Brand palette */
@@ -55,30 +58,75 @@
   }
 
   .btn-primary {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white transition-all;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold text-white;
+    border: 2px solid #1a1a1a;
+    border-radius: 0;
     background-color: var(--color-green);
+    box-shadow: 3px 3px 0 #1a1a1a;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
   }
-  .btn-primary:hover { background-color: var(--color-primary-700); }
+  .btn-primary:hover {
+    background-color: var(--color-primary-700);
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 #1a1a1a;
+  }
 
   .btn-secondary {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border-2 bg-white px-5 py-2.5 text-sm font-semibold transition-all;
-    border-color: var(--color-green);
+    @apply inline-flex min-h-11 items-center justify-center gap-2 bg-white px-5 py-2.5 text-sm font-bold;
+    border: 2px solid #1a1a1a;
+    border-radius: 0;
     color: var(--color-green);
+    box-shadow: 3px 3px 0 #1a1a1a;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
   }
-  .btn-secondary:hover { background-color: var(--color-primary-50); }
+  .btn-secondary:hover {
+    background-color: var(--color-primary-50);
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 #1a1a1a;
+  }
 
   .btn-pink {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white transition-all;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold text-white;
+    border: 2px solid #1a1a1a;
+    border-radius: 0;
     background-color: var(--color-pink);
+    box-shadow: 3px 3px 0 #1a1a1a;
   }
-  .btn-pink:hover { opacity: 0.88; }
+  .btn-pink:hover {
+    opacity: 0.92;
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 #1a1a1a;
+  }
 
   .section-heading {
-    @apply text-3xl font-bold tracking-tight text-ink sm:text-4xl;
+    @apply text-3xl font-extrabold tracking-tight text-ink sm:text-4xl;
+    border-left: 4px solid var(--color-green);
+    padding-left: 0.75rem;
   }
 
   .card {
-    @apply rounded-xl border border-primary-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md;
+    border: 2px solid #2d2d2d;
+    border-radius: 0;
+    background: #fff;
+    padding: 1.5rem;
+    box-shadow: none;
+    transition: background-color 0.15s ease;
+  }
+  .card:hover {
+    background: #fafafa;
+  }
+
+  .label {
+    @apply block text-sm font-bold text-ink;
+  }
+
+  .input {
+    @apply mt-1 w-full min-h-11 border-2 border-[#2d2d2d] bg-white px-3 py-2 text-sm;
+    border-radius: 0;
+  }
+  .input:focus {
+    outline: 2px solid var(--color-green);
+    outline-offset: 1px;
   }
 
   /* Sliding partner logos */

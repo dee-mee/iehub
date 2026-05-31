@@ -14,7 +14,7 @@ export function PublicLayout() {
       {/* UserWay — optional SaaS enhancement, only loads when VITE_USERWAY_KEY is set */}
       <UserWay />
       <Navbar />
-      <main id="main-content" tabIndex={-1} className="outline-none">
+      <main id="main-content" tabIndex={-1} className="site-oxygen outline-none bg-white">
         <Outlet />
       </main>
       <Footer />

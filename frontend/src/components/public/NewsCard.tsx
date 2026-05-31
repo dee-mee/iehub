@@ -21,7 +21,7 @@ export function NewsCard({ article }: NewsCardProps) {
   const img = placeholderImgs[article.id] ?? fallbackImg
 
   return (
-    <article className="group relative overflow-hidden rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
+    <article className="group relative overflow-hidden border-2 border-[#2d2d2d] bg-white transition-colors hover:bg-[#fafafa]">
       {/* Image */}
       <div className="relative h-52 overflow-hidden">
         <img
@@ -33,7 +33,7 @@ export function NewsCard({ article }: NewsCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
         {/* Category badge */}
         <span
-          className="absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-bold text-white"
+          className="absolute top-3 left-3 border-2 border-white px-3 py-1 text-xs font-bold text-white"
           style={{ background: '#662d91' }}
         >
           {article.category}

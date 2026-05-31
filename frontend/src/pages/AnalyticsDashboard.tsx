@@ -1,10 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
-import { PageHeader } from '@/components/ui/PageHeader'
+import { MemberPageShell } from '@/components/member/MemberPageShell'
+import { apiFetch } from '@/api/client'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
-import { useAuth } from '@/context/AuthContext'
-
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? '/api'
 
 type AnalyticsData = {
   members: {
@@ -27,60 +25,52 @@ type AnalyticsData = {
 }
 
 export function AnalyticsDashboard() {
-  const { user } = useAuth()
-  
   const { data, isLoading, error } = useQuery<AnalyticsData>({
     queryKey: ['platform-analytics'],
-    queryFn: async () => {
-      const tokens = JSON.parse(localStorage.getItem('iehub_tokens') || '{}')
-      const response = await fetch(`${API_BASE_URL}/analytics/`, {
-        headers: { 'Authorization': `Bearer ${tokens.access}` }
-      })
-      if (!response.ok) throw new Error('Failed to fetch analytics')
-      return response.json()
-    }
+    queryFn: () => apiFetch<AnalyticsData>('/analytics/')
   })
 
-  const isStaff = user?.role === 'SUPER_ADMIN' || user?.role === 'STEERING_COMMITTEE' || user?.role === 'REGIONAL_ADMIN'
-
-  if (!isStaff) {
-    return <div className="container-page py-12 text-center">Unauthorized. This page is for administrators only.</div>
+  if (isLoading) {
+    return (
+      <MemberPageShell title="Analytics">
+        <LoadingSpinner label="Collecting platform data..." />
+      </MemberPageShell>
+    )
   }
-
-  if (isLoading) return <LoadingSpinner label="Collecting platform data..." />
 
   if (error || !data) {
     return (
-      <div className="container-page py-12 text-center">
+      <MemberPageShell title="Analytics">
         <p className="text-red-600 mb-4">Error loading analytics data.</p>
         <Link to="/dashboard" className="btn-primary">Back to Dashboard</Link>
-      </div>
+      </MemberPageShell>
     )
   }
 
   return (
-    <>
-      <PageHeader title="Platform Analytics" description="Overseeing growth, engagement, and impact across the IE Hub." />
-
-      <div className="container-page py-12 space-y-8">
+    <MemberPageShell title="Platform Analytics">
+      <p className="text-sm text-gray-600 mb-6">
+        Growth, engagement, and impact metrics across the IE Hub community.
+      </p>
+      <div className="space-y-8">
         {/* Stats Grid */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="card text-center py-8">
+          <div className="member-stat-card text-center py-8">
             <p className="text-sm font-bold text-muted uppercase tracking-widest mb-1">Total Members</p>
             <p className="text-4xl font-bold text-ink">{data.members.total}</p>
             <p className="text-xs text-green-600 font-bold mt-2">{data.members.approved} Approved</p>
           </div>
-          <div className="card text-center py-8">
+          <div className="member-stat-card text-center py-8">
             <p className="text-sm font-bold text-muted uppercase tracking-widest mb-1">Resources</p>
             <p className="text-4xl font-bold text-ink">{data.content.resources}</p>
             <p className="text-xs text-primary-600 font-bold mt-2">{data.content.private_resources} Members-only</p>
           </div>
-          <div className="card text-center py-8">
+          <div className="member-stat-card text-center py-8">
             <p className="text-sm font-bold text-muted uppercase tracking-widest mb-1">Downloads</p>
             <p className="text-4xl font-bold text-ink">{data.content.downloads}</p>
             <p className="text-xs text-muted font-bold mt-2">Continental Impact</p>
           </div>
-          <div className="card text-center py-8">
+          <div className="member-stat-card text-center py-8">
             <p className="text-sm font-bold text-muted uppercase tracking-widest mb-1">Forum Posts</p>
             <p className="text-4xl font-bold text-ink">{data.forum.posts}</p>
             <p className="text-xs text-accent-600 font-bold mt-2">{data.forum.reactions} Reactions</p>
@@ -89,7 +79,7 @@ export function AnalyticsDashboard() {
 
         <div className="grid gap-8 lg:grid-cols-2">
           {/* Regional Table */}
-          <section className="card">
+          <section className="member-panel">
             <h2 className="text-xl font-bold text-ink mb-6 flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -122,7 +112,7 @@ export function AnalyticsDashboard() {
 
           {/* Quick Admin Actions */}
           <section className="space-y-6">
-            <div className="card bg-accent-50 border-accent-100">
+            <div className="member-panel bg-[#e6f5f0]">
               <h2 className="text-lg font-bold text-accent-900 mb-2">Pending Member Approvals</h2>
               <p className="text-accent-800 text-sm mb-4">There are {data.members.verified - data.members.approved} members awaiting review.</p>
               <a href="/admin/users/customuser/?is_approved__exact=0&is_verified__exact=1" className="btn-primary bg-accent-600 hover:bg-accent-700 border-none text-white inline-block">
@@ -130,25 +120,25 @@ export function AnalyticsDashboard() {
               </a>
             </div>
 
-            <div className="card">
+            <div className="member-panel">
               <h2 className="text-lg font-bold text-ink mb-4">Oversight Shortcuts</h2>
               <ul className="space-y-3">
                 <li>
-                  <a href="/admin/forum/forumpost/?is_approved__exact=0" className="flex items-center justify-between p-3 rounded-lg border border-primary-50 hover:bg-primary-50 transition-colors">
+                  <a href="/admin/forum/forumpost/?is_approved__exact=0" className="flex items-center justify-between p-3 border-2 border-[#2d2d2d] hover:bg-[#f0f0f0] transition-colors">
                     <span className="text-sm font-medium">Unapproved Forum Posts</span>
-                    <span className="bg-primary-100 text-primary-700 px-2 py-0.5 rounded text-[10px] font-bold">Manage</span>
+                    <span className="bg-[#e6f5f0] text-[#006b4f] px-2 py-0.5 border border-[#2d2d2d] text-[10px] font-bold">Manage</span>
                   </a>
                 </li>
                 <li>
-                  <a href="/admin/public/resource/" className="flex items-center justify-between p-3 rounded-lg border border-primary-50 hover:bg-primary-50 transition-colors">
+                  <a href="/admin/public/resource/" className="flex items-center justify-between p-3 border-2 border-[#2d2d2d] hover:bg-[#f0f0f0] transition-colors">
                     <span className="text-sm font-medium">Resource Library Management</span>
-                    <span className="bg-primary-100 text-primary-700 px-2 py-0.5 rounded text-[10px] font-bold">Manage</span>
+                    <span className="bg-[#e6f5f0] text-[#006b4f] px-2 py-0.5 border border-[#2d2d2d] text-[10px] font-bold">Manage</span>
                   </a>
                 </li>
                 <li>
-                  <a href="/admin/public/donation/" className="flex items-center justify-between p-3 rounded-lg border border-primary-50 hover:bg-primary-50 transition-colors">
+                  <a href="/admin/public/donation/" className="flex items-center justify-between p-3 border-2 border-[#2d2d2d] hover:bg-[#f0f0f0] transition-colors">
                     <span className="text-sm font-medium">Donation Records</span>
-                    <span className="bg-primary-100 text-primary-700 px-2 py-0.5 rounded text-[10px] font-bold">View</span>
+                    <span className="bg-[#e6f5f0] text-[#006b4f] px-2 py-0.5 border border-[#2d2d2d] text-[10px] font-bold">View</span>
                   </a>
                 </li>
               </ul>
@@ -156,6 +146,6 @@ export function AnalyticsDashboard() {
           </section>
         </div>
       </div>
-    </>
+    </MemberPageShell>
   )
 }

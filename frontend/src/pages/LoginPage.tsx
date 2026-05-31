@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { useAuth } from '@/context/AuthContext'
+import { canAccessMemberArea } from '@/lib/memberNav'
+import { me as meApi } from '@/api/auth'
 
 export function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const from = (location.state as { from?: string } | null)?.from ?? '/dashboard'
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
 
@@ -17,8 +21,18 @@ export function LoginPage() {
     const data = new FormData(event.currentTarget)
 
     try {
-      await login(String(data.get('email') ?? ''), String(data.get('password') ?? ''))
-      navigate('/dashboard')
+      const email = String(data.get('email') ?? '')
+      const password = String(data.get('password') ?? '')
+      await login(email, password)
+      const tokens = JSON.parse(localStorage.getItem('iehub_tokens') || '{}')
+      const user = tokens.access ? await meApi(tokens.access) : null
+      if (!user?.is_verified) {
+        navigate('/verify-email')
+      } else if (!canAccessMemberArea(user)) {
+        navigate('/pending-approval')
+      } else {
+        navigate(from, { replace: true })
+      }
     } catch {
       setError('Invalid credentials. Please try again.')
     } finally {

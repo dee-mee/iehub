@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { PageHeader } from '@/components/ui/PageHeader'
+import { MemberPageShell } from '@/components/member/MemberPageShell'
 import { useAuth } from '@/context/AuthContext'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 
@@ -63,8 +63,14 @@ export function ProfilePage() {
     }
   }, [user])
 
-  if (authLoading) return <LoadingSpinner label="Loading profile..." />
-  if (!user) return <div className="container-page py-12 text-center">Please log in to view your profile.</div>
+  if (authLoading) {
+    return (
+      <MemberPageShell title="My Profile">
+        <LoadingSpinner label="Loading profile..." />
+      </MemberPageShell>
+    )
+  }
+  if (!user) return null
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -129,14 +135,11 @@ export function ProfilePage() {
   }
 
   return (
-    <>
-      <PageHeader 
-        title="My Profile" 
-        description="Manage your professional information and directory visibility." 
-      />
-
-      <div className="container-page py-12">
-        <div className="max-w-4xl mx-auto">
+    <MemberPageShell title="My Profile">
+      <p className="text-sm text-gray-600 mb-6">
+        Manage your professional information, expertise areas, and directory visibility.
+      </p>
+        <div className="max-w-4xl">
           {success && (
             <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -422,7 +425,6 @@ export function ProfilePage() {
             </div>
           </div>
         </div>
-      </div>
-    </>
+    </MemberPageShell>
   )
 }

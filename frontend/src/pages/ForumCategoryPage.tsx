@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+import { MemberPageShell } from '@/components/member/MemberPageShell'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? '/api'
 
@@ -63,42 +64,42 @@ export function ForumCategoryPage() {
     enabled: !!slug
   })
 
-  if (catLoading || threadsLoading) return <LoadingSpinner label="Loading threads..." />
+  if (catLoading || threadsLoading) {
+    return (
+      <MemberPageShell title="Category">
+        <LoadingSpinner label="Loading threads..." />
+      </MemberPageShell>
+    )
+  }
 
-  if (!category) return <div className="container-page py-12 text-center">Category not found.</div>
+  if (!category) {
+    return (
+      <MemberPageShell title="Category">
+        <p className="text-center text-gray-500">Category not found.</p>
+      </MemberPageShell>
+    )
+  }
 
   return (
-    <>
-      <div className="bg-primary-50 border-b border-primary-100 py-8">
-        <div className="container-page flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="flex items-start gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center text-3xl shadow-sm">
-              {category.icon || '💬'}
-            </div>
-            <div>
-              <nav className="flex items-center gap-2 text-xs font-bold text-primary-600 uppercase tracking-wider mb-1">
-                <Link to="/forum" className="hover:underline">Forum</Link>
-                <span>/</span>
-                <span>Category</span>
-              </nav>
-              <h1 className="text-2xl font-bold text-ink">{category.name}</h1>
-              <p className="text-muted mt-1">{category.description}</p>
-            </div>
-          </div>
-          <div>
-            <Link to={`/forum/c/${slug}/new`} className="btn-primary flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-              </svg>
-              Start New Thread
-            </Link>
-          </div>
-        </div>
+    <MemberPageShell
+      title={category.name}
+      actions={
+        <Link to={`/forum/c/${slug}/new`} className="btn-primary text-sm flex items-center gap-2">
+          Start new thread
+        </Link>
+      }
+    >
+      <div className="mb-6">
+        <nav className="text-xs font-extrabold text-[#00a170] uppercase tracking-wider mb-2">
+          <Link to="/forum" className="hover:underline">Forum</Link>
+          <span className="mx-2">/</span>
+          <span>{category.name}</span>
+        </nav>
+        <p className="text-gray-600">{category.description}</p>
       </div>
 
-      <div className="container-page py-12">
-        <div className="card divide-y divide-primary-100 overflow-hidden">
-          <div className="bg-primary-900/5 px-6 py-3 flex items-center text-xs font-bold text-primary-800 uppercase tracking-wider">
+      <div className="member-panel p-0 divide-y-2 divide-[#e5e5e5] overflow-hidden">
+          <div className="bg-[#f0f0f0] border-b-2 border-[#2d2d2d] px-6 py-3 flex items-center text-xs font-extrabold text-gray-800 uppercase tracking-wider">
             <div className="flex-1">Discussion</div>
             <div className="w-24 text-center hidden md:block">Stats</div>
             <div className="w-48 text-right hidden md:block">Last Activity</div>
@@ -150,7 +151,6 @@ export function ForumCategoryPage() {
             </div>
           )}
         </div>
-      </div>
-    </>
+    </MemberPageShell>
   )
 }

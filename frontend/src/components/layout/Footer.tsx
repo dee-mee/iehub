@@ -14,12 +14,12 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-gray-200 bg-gray-900 text-white" role="contentinfo">
-      <div className="container-page grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4">
+    <footer className="border-t-4 border-[#2d2d2d] bg-gray-900 text-white" role="contentinfo">
+      <div className="container-page grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4 border-x-2 border-[#2d2d2d]">
 
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg text-sm font-extrabold text-white"
+            <span className="flex h-9 w-9 items-center justify-center border-2 border-white text-sm font-extrabold text-white"
               style={{ background: 'linear-gradient(135deg, #00a170 0%, #662d91 100%)' }}>
               IE
             </span>
@@ -30,7 +30,7 @@ export function Footer() {
           <div className="mt-5 flex gap-3">
             {['twitter', 'facebook', 'linkedin', 'youtube'].map(s => (
               <a key={s} href="#" aria-label={s}
-                className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-800 text-gray-400 hover:bg-[#00a170] hover:text-white transition-colors text-xs font-bold uppercase">
+                className="flex h-8 w-8 items-center justify-center border-2 border-gray-600 bg-gray-800 text-gray-400 hover:bg-[#00a170] hover:text-white hover:border-white transition-colors text-xs font-bold uppercase">
                 {s.slice(0, 2)}
               </a>
             ))}
@@ -82,7 +82,7 @@ export function Footer() {
           </h2>
           <p className="mb-4 text-sm text-gray-400">{t('footer.newsletterDesc')}</p>
           {submitted ? (
-            <p className="rounded-lg bg-gray-800 p-3 text-sm text-gray-300" role="status">
+            <p className="border-2 border-gray-600 bg-gray-800 p-3 text-sm text-gray-300" role="status">
               {t('footer.thankYou')}
             </p>
           ) : (
@@ -90,12 +90,12 @@ export function Footer() {
               <input
                 name="name" type="text" required autoComplete="name"
                 placeholder={t('footer.yourName')}
-                className="w-full min-h-10 rounded-lg border border-gray-700 bg-gray-800 px-3 text-sm text-white placeholder:text-gray-500 focus:border-[#00a170] focus:outline-none"
+                className="w-full min-h-10 border-2 border-gray-600 bg-gray-800 px-3 text-sm text-white placeholder:text-gray-500 focus:border-[#00a170] focus:outline-none"
               />
               <input
                 name="email" type="email" required autoComplete="email"
                 placeholder={t('footer.emailAddress')}
-                className="w-full min-h-10 rounded-lg border border-gray-700 bg-gray-800 px-3 text-sm text-white placeholder:text-gray-500 focus:border-[#00a170] focus:outline-none"
+                className="w-full min-h-10 border-2 border-gray-600 bg-gray-800 px-3 text-sm text-white placeholder:text-gray-500 focus:border-[#00a170] focus:outline-none"
               />
               <div className="flex items-start gap-2">
                 <input id="newsletter-consent" name="consent" type="checkbox" required
@@ -105,8 +105,8 @@ export function Footer() {
                 </label>
               </div>
               <button type="submit"
-                className="w-full rounded-lg py-2.5 text-sm font-bold text-white transition-all hover:opacity-90"
-                style={{ background: '#00a170' }}>
+                className="w-full border-2 border-[#1a1a1a] py-2.5 text-sm font-bold text-white hover:opacity-95"
+                style={{ background: '#00a170', boxShadow: '3px 3px 0 #000' }}>
                 {t('footer.subscribe')}
               </button>
             </form>
@@ -114,7 +114,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-gray-800">
+      <div className="border-t-2 border-gray-700">
         <div className="container-page flex flex-col items-center justify-between gap-2 py-4 text-xs text-gray-500 sm:flex-row">
           <p>{t('footer.copyright', { year })}</p>
           <Link to="/privacy-policy" className="hover:text-white transition-colors underline underline-offset-2">

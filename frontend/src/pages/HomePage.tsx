@@ -117,31 +117,23 @@ export function HomePage() {
       <ImpactStats />
 
       {/* ── 3. ABOUT US ─────────────────────────────────────────────────────── */}
-      <section className="py-16 md:py-24 bg-white" aria-labelledby="about-heading">
+      <section className="oxygen-section" aria-labelledby="about-heading">
         <div className="container-page">
-          <div className="grid gap-12 md:grid-cols-2 items-center">
+          <div className="grid gap-8 md:grid-cols-2 items-stretch border-2 border-[#2d2d2d] bg-white">
             {/* Image side */}
-            <div className="relative">
-              <div className="overflow-hidden rounded-2xl shadow-lg">
+            <div className="relative border-b-2 md:border-b-0 md:border-r-2 border-[#2d2d2d]">
+              <div className="overflow-hidden h-full min-h-[280px]">
                 <img
                   src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&q=80"
                   alt="Family with wheelchair user outdoors"
                   className="w-full h-80 object-cover"
                 />
               </div>
-              {/* Decorative accent box */}
-              <div className="absolute -bottom-5 -right-5 w-32 h-32 rounded-2xl hidden md:block"
-                style={{ background: PINK, opacity: 0.12 }} />
-              <div className="absolute -top-4 -left-4 w-16 h-16 rounded-xl hidden md:block"
-                style={{ background: GREEN, opacity: 0.15 }} />
             </div>
 
             {/* Text side */}
-            <div>
-              <span className="inline-block rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-white mb-4"
-                style={{ background: GREEN }}>
-                About Us
-              </span>
+            <div className="p-8 md:p-10">
+              <span className="oxygen-section-title">About Us</span>
               <h2 id="about-heading" className="section-heading">
                 A Hub for Inclusive Education Across Africa
               </h2>
@@ -152,14 +144,10 @@ export function HomePage() {
                 Hosted by LM International and governed by a 13-member Steering Committee, IE Hub supports practitioners across 54 African countries through resources, peer learning, and evidence-based advocacy.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link to="/about"
-                  className="inline-flex min-h-11 items-center gap-2 rounded-lg px-6 py-2.5 text-sm font-bold text-white transition-all hover:opacity-90"
-                  style={{ background: GREEN }}>
+                <Link to="/about" className="btn-primary px-6">
                   Learn More About Us
                 </Link>
-                <Link to="/register"
-                  className="inline-flex min-h-11 items-center gap-2 rounded-lg border-2 px-6 py-2.5 text-sm font-bold transition-all hover:bg-pink-50"
-                  style={{ borderColor: PINK, color: PINK }}>
+                <Link to="/register" className="btn-secondary px-6" style={{ color: PINK, borderColor: '#1a1a1a' }}>
                   Join the Community
                 </Link>
               </div>
@@ -169,13 +157,10 @@ export function HomePage() {
       </section>
 
       {/* ── 4. WHAT WE DO ────────────────────────────────────────────────────── */}
-      <section className="py-16 md:py-24" style={{ background: '#f8f9fa' }} aria-labelledby="what-we-do-heading">
+      <section className="oxygen-section oxygen-section--alt" aria-labelledby="what-we-do-heading">
         <div className="container-page">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="inline-block rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-white mb-4"
-              style={{ background: PURPLE }}>
-              What We Do
-            </span>
+          <div className="text-center max-w-2xl mx-auto mb-12 border-2 border-[#2d2d2d] bg-white p-8">
+            <span className="oxygen-section-title" style={{ background: PURPLE }}>What We Do</span>
             <h2 id="what-we-do-heading" className="section-heading">
               How IE Hub Supports Inclusive Education
             </h2>
@@ -187,9 +172,8 @@ export function HomePage() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {whatWeDoItems.map(item => (
               <Link key={item.title} to={item.href}
-                className="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm hover:shadow-lg transition-all border border-gray-100 flex flex-col">
-                {/* Color accent top bar */}
-                <div className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl" style={{ background: item.color }} />
+                className="oxygen-grid-card group">
+                <div className="oxygen-grid-card__bar" style={{ background: item.color }} />
                 <div className="text-4xl mb-4">{item.icon}</div>
                 <h3 className="text-base font-bold text-gray-900 group-hover:underline">{item.title}</h3>
                 <p className="mt-2 text-sm text-gray-500 flex-1 leading-relaxed">{item.desc}</p>
@@ -203,14 +187,11 @@ export function HomePage() {
       </section>
 
       {/* ── 5. OUR PROGRAMMES ────────────────────────────────────────────────── */}
-      <section className="py-16 md:py-24 bg-white" aria-labelledby="programmes-heading">
+      <section className="oxygen-section" aria-labelledby="programmes-heading">
         <div className="container-page">
-          <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end mb-12">
+          <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end mb-12 border-2 border-[#2d2d2d] p-6 bg-white">
             <div className="max-w-2xl">
-              <span className="inline-block rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-white mb-4"
-                style={{ background: BLUE }}>
-                Our Programmes
-              </span>
+              <span className="oxygen-section-title" style={{ background: BLUE }}>Our Programmes</span>
               <h2 id="programmes-heading" className="section-heading">
                 Focus Areas & Thematic Programmes
               </h2>
@@ -218,9 +199,7 @@ export function HomePage() {
                 Specialized support and evidence-based resources across priority areas to ensure no child is excluded from learning.
               </p>
             </div>
-            <Link to="/programmes"
-              className="inline-flex min-h-11 items-center rounded-lg border-2 px-5 py-2.5 text-sm font-bold transition-all whitespace-nowrap hover:bg-green-50"
-              style={{ borderColor: GREEN, color: GREEN }}>
+            <Link to="/programmes" className="btn-secondary whitespace-nowrap">
               View All Programmes
             </Link>
           </div>
@@ -228,7 +207,7 @@ export function HomePage() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {programmes.map(prog => (
               <Link key={prog.num} to={prog.href}
-                className="group flex gap-4 items-start rounded-2xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md transition-all">
+                className="oxygen-grid-card group flex-row gap-4 items-start">
                 <span className="text-2xl font-extrabold flex-shrink-0 leading-none"
                   style={{ color: prog.color, opacity: 0.4 }}>
                   {prog.num}
@@ -247,9 +226,9 @@ export function HomePage() {
       </section>
 
       {/* ── 6. FEATURED RESOURCES ─────────────────────────────────────────────── */}
-      <section className="py-16 md:py-24" style={{ background: '#f8f9fa' }} aria-labelledby="resources-heading">
+      <section className="oxygen-section oxygen-section--alt" aria-labelledby="resources-heading">
         <div className="container-page">
-          <div className="flex items-center justify-between mb-10">
+          <div className="flex items-center justify-between mb-10 border-2 border-[#2d2d2d] bg-white p-4">
             <h2 id="resources-heading" className="section-heading">Featured Resources</h2>
             <Link to="/resources" className="text-sm font-bold hover:underline" style={{ color: GREEN }}>
               View All →
@@ -264,9 +243,9 @@ export function HomePage() {
       </section>
 
       {/* ── 7. NEWS & EVENTS ──────────────────────────────────────────────────── */}
-      <section className="py-16 md:py-24 bg-white" aria-labelledby="news-events-heading">
+      <section className="oxygen-section" aria-labelledby="news-events-heading">
         <div className="container-page">
-          <div className="flex items-center justify-between mb-10">
+          <div className="flex items-center justify-between mb-10 border-2 border-[#2d2d2d] p-4 bg-white">
             <h2 id="news-events-heading" className="section-heading">News & Events</h2>
             <Link to="/news" className="text-sm font-bold hover:underline" style={{ color: GREEN }}>
               View All →
@@ -275,9 +254,9 @@ export function HomePage() {
 
           <div className="grid gap-12 lg:grid-cols-2">
             {/* News */}
-            <div>
-              <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <span className="h-1 w-6 rounded inline-block" style={{ background: PINK }} />
+            <div className="border-2 border-[#2d2d2d] p-5 bg-white">
+              <h3 className="text-lg font-extrabold text-gray-900 mb-6 flex items-center gap-2 border-b-2 border-[#2d2d2d] pb-3">
+                <span className="h-4 w-1 inline-block" style={{ background: PINK }} />
                 Latest News
               </h3>
               <div className="grid gap-5 sm:grid-cols-1 md:grid-cols-1">
@@ -292,9 +271,9 @@ export function HomePage() {
             </div>
 
             {/* Events */}
-            <div>
-              <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <span className="h-1 w-6 rounded inline-block" style={{ background: BLUE }} />
+            <div className="border-2 border-[#2d2d2d] p-5 bg-white">
+              <h3 className="text-lg font-extrabold text-gray-900 mb-6 flex items-center gap-2 border-b-2 border-[#2d2d2d] pb-3">
+                <span className="h-4 w-1 inline-block" style={{ background: BLUE }} />
                 Upcoming Events
               </h3>
               <div className="grid gap-5">
@@ -315,28 +294,24 @@ export function HomePage() {
       <PartnersStrip />
 
       {/* ── 9. JOIN CTA ──────────────────────────────────────────────────────── */}
-      <section className="py-16 md:py-24 bg-white">
+      <section className="oxygen-section oxygen-section--alt">
         <div className="container-page">
-          <div className="rounded-3xl p-10 md:p-16 text-center text-white relative overflow-hidden"
-            style={{ background: `linear-gradient(135deg, ${GREEN} 0%, ${PURPLE} 100%)` }}>
-            {/* Decorative circles */}
-            <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full opacity-10 bg-white" />
-            <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full opacity-10 bg-white" />
+          <div className="border-2 border-[#1a1a1a] p-10 md:p-16 text-center text-white relative"
+            style={{ background: `linear-gradient(135deg, ${GREEN} 0%, ${PURPLE} 100%)`, boxShadow: '8px 8px 0 #1a1a1a' }}>
 
-            <h2 className="text-3xl md:text-4xl font-extrabold relative">
+            <h2 className="text-3xl md:text-4xl font-extrabold">
               Join the Community of Practice
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base opacity-85 relative">
+            <p className="mx-auto mt-4 max-w-2xl text-base opacity-90 border-t-2 border-white/30 pt-6">
               Connect with educators, policymakers and advocates across 54 African countries. Access exclusive resources, join discussions, and help shape the future of inclusive education.
             </p>
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 relative">
-              <Link to="/register"
-                className="rounded-lg px-8 py-3 text-sm font-bold text-white transition-all hover:opacity-90 min-h-11"
-                style={{ background: PINK }}>
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link to="/register" className="btn-pink px-8 min-h-11">
                 Join as a Member
               </Link>
               <Link to="/about"
-                className="rounded-lg border-2 border-white px-8 py-3 text-sm font-bold text-white transition-all hover:bg-white/10 min-h-11">
+                className="inline-flex min-h-11 items-center border-2 border-white bg-transparent px-8 py-3 text-sm font-bold text-white hover:bg-white/10"
+                style={{ boxShadow: '3px 3px 0 rgba(0,0,0,0.3)' }}>
                 Learn More
               </Link>
             </div>

@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
-import { PageHeader } from '@/components/ui/PageHeader'
+import { MemberPageShell } from '@/components/member/MemberPageShell'
+import { apiFetch } from '@/api/client'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import type { AuthUser } from '@/api/auth'
-
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? '/api'
 
 type Paginated<T> = {
   count: number
@@ -21,31 +20,21 @@ export function MembersPage() {
   const { data, isLoading, error } = useQuery<Paginated<AuthUser>>({
     queryKey: ['members', search, country],
     queryFn: async () => {
-      const tokens = JSON.parse(localStorage.getItem('iehub_tokens') || '{}')
       const query = new URLSearchParams()
       if (search) query.set('search', search)
       if (country) query.set('country', country)
-      
-      const response = await fetch(`${API_BASE_URL}/directory/?${query.toString()}`, {
-        headers: {
-          'Authorization': `Bearer ${tokens.access}`,
-        }
-      })
-      if (!response.ok) throw new Error('Failed to fetch members')
-      return response.json()
+      return apiFetch<Paginated<AuthUser>>(`/directory/?${query.toString()}`)
     }
   })
 
   return (
-    <>
-      <PageHeader 
-        title="Member Directory" 
-        description="Connect with inclusive education practitioners across Africa." 
-      />
-
-      <div className="container-page py-12">
+    <MemberPageShell title="Member Directory">
+      <p className="text-sm text-gray-600 mb-6">
+        Connect with inclusive education practitioners across Africa.
+      </p>
+      <div>
         {/* Filters */}
-        <div className="card mb-8">
+        <div className="member-panel mb-8">
           <div className="grid gap-4 md:grid-cols-3">
             <div>
               <label htmlFor="search" className="label">Search Members</label>
@@ -96,7 +85,7 @@ export function MembersPage() {
             {data?.results.map((member) => (
               <Link key={member.id} to={`/members/${member.id}`} className="card hover:border-primary-400 transition-colors group">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center text-primary-600 font-bold shrink-0 group-hover:bg-primary-600 group-hover:text-white transition-colors">
+                  <div className="w-12 h-12 border-2 border-[#2d2d2d] bg-[#e6f5f0] flex items-center justify-center text-[#00a170] font-extrabold shrink-0 group-hover:bg-[#00a170] group-hover:text-white transition-colors">
                     {member.first_name[0]}{member.last_name[0]}
                   </div>
                   <div className="min-w-0">
@@ -125,6 +114,6 @@ export function MembersPage() {
           </div>
         )}
       </div>
-    </>
+    </MemberPageShell>
   )
 }

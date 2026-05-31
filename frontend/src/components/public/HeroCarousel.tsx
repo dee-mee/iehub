@@ -65,11 +65,11 @@ export function HeroCarousel() {
 
   return (
     <section
-      className="relative overflow-hidden"
+      className="relative overflow-hidden border-b-2 border-[#2d2d2d]"
       style={{ background: '#00a170' }}
       aria-label="Hero carousel"
     >
-      <div className="container-page">
+      <div className="container-page border-x-2 border-[#2d2d2d] max-w-[calc(80rem+4px)]">
         <div className="grid gap-0 md:grid-cols-2 md:items-center min-h-[360px] md:min-h-[420px]">
 
           {/* ── Left: text content with fade transition ── */}
@@ -77,7 +77,7 @@ export function HeroCarousel() {
             {/* Badge */}
             <div
               key={`badge-${slide.id}`}
-              className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-xs font-semibold text-white/90 backdrop-blur-sm mb-6 animate-hero-fade"
+              className="inline-flex items-center gap-2 border-2 border-white bg-white/10 px-4 py-1.5 text-xs font-bold text-white mb-6 animate-hero-fade"
             >
               {slide.badge}
             </div>
@@ -109,12 +109,13 @@ export function HeroCarousel() {
             {/* CTAs */}
             <div className="mt-8 flex flex-wrap gap-3">
               <a href="/resources"
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-6 py-2.5 text-sm font-bold text-white transition-all hover:opacity-90"
-                style={{ background: '#662d91' }}>
+                className="inline-flex min-h-11 items-center justify-center gap-2 border-2 border-[#1a1a1a] px-6 py-2.5 text-sm font-bold text-white hover:opacity-95"
+                style={{ background: '#662d91', boxShadow: '3px 3px 0 #1a1a1a' }}>
                 Explore resources
               </a>
               <a href="/register"
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border-2 border-white bg-transparent px-6 py-2.5 text-sm font-bold text-white transition-all hover:bg-white/10">
+                className="inline-flex min-h-11 items-center justify-center gap-2 border-2 border-white bg-transparent px-6 py-2.5 text-sm font-bold text-white hover:bg-white/10"
+                style={{ boxShadow: '3px 3px 0 rgba(0,0,0,0.25)' }}>
                 Join as a member
               </a>
             </div>
@@ -127,7 +128,7 @@ export function HeroCarousel() {
                   role="tab"
                   aria-selected={i === current}
                   onClick={() => goTo(i)}
-                  className={`h-2 rounded-full transition-all duration-500 ${i === current ? 'w-8 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'}`}
+                  className={`h-2 border border-white transition-all duration-500 ${i === current ? 'w-8 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'}`}
                   aria-label={`Go to slide ${i + 1}`}
                 />
               ))}

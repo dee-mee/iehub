@@ -22,7 +22,7 @@ export function EventCard({ event }: { event: EventItem }) {
   const img = placeholderImgs[event.id] ?? fallbackImg
 
   return (
-    <article className="group relative overflow-hidden rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
+    <article className="group relative overflow-hidden border-2 border-[#2d2d2d] bg-white hover:bg-[#fafafa] transition-colors">
       {/* Image */}
       <div className="relative h-44 overflow-hidden">
         <img
@@ -32,7 +32,7 @@ export function EventCard({ event }: { event: EventItem }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
         <span
-          className="absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-bold text-white"
+          className="absolute top-3 left-3 border-2 border-white px-3 py-1 text-xs font-bold text-white"
           style={{ background: '#1cb7ee' }}
         >
           {typeLabels[event.eventType]}
@@ -49,7 +49,7 @@ export function EventCard({ event }: { event: EventItem }) {
         </div>
         {event.onlineLink && (
           <a href={event.onlineLink} target="_blank" rel="noopener noreferrer"
-            className="mt-3 inline-flex items-center gap-1.5 rounded-lg px-4 py-1.5 text-xs font-bold text-white transition-all hover:opacity-90"
+            className="mt-3 inline-flex items-center gap-1.5 border-2 border-white px-4 py-1.5 text-xs font-bold text-white hover:opacity-90"
             style={{ background: '#662d91' }}>
             Register →
           </a>
