@@ -43,3 +43,34 @@
     background-color: #135e96 !important;
     border-color: #135e96 !important;
 }
+
+/* Move submit row below the form instead of on the right */
+.change-form .row [class*="col-md-"] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+}
+
+.change-form .row .col-12.col-md-3 {
+    margin-top: 20px;
+}
+
+/* Ensure the submit row inside the right column is full width and looks like a bottom bar */
+.change-form .col-md-3 .card {
+    border: 1px solid #dcdcde !important;
+    box-shadow: none !important;
+}
+
+.change-form .submit-row {
+    background: #f6f7f7 !important;
+    padding: 15px !important;
+    border: 1px solid #dcdcde !important;
+    margin-top: 0 !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+}
+
+.change-form .submit-row input, .change-form .submit-row a {
+    margin: 0 !important;
+}

@@ -129,7 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
@@ -249,11 +249,7 @@ JAZZMIN_SETTINGS = {
     "welcome_sign": "Welcome to the IE Hub Management Portal",
     "copyright": "Inclusive Education Hub for Africa",
     "search_model": ["users.CustomUser", "forum.ForumThread"],
-    "topmenu_links": [
-        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
-        {"name": "Dashboard", "url": "/dashboard", "new_window": True},
-        {"model": "users.CustomUser"},
-    ],
+    "topmenu_links": [],
     "show_sidebar": True,
     "navigation_expanded": True,
     "icons": {
