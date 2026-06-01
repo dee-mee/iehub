@@ -9,6 +9,7 @@ type AnalyticsData = {
     total: number
     verified: number
     approved: number
+    new_30d: number
   }
   content: {
     resources: number
@@ -20,6 +21,8 @@ type AnalyticsData = {
     threads: number
     posts: number
     reactions: number
+    new_threads_30d: number
+    new_posts_30d: number
   }
   regional: Array<{ country: string, count: number }>
 }
@@ -58,7 +61,9 @@ export function AnalyticsDashboard() {
           <div className="member-stat-card text-center py-8">
             <p className="text-sm font-bold text-muted uppercase tracking-widest mb-1">Total Members</p>
             <p className="text-4xl font-bold text-ink">{data.members.total}</p>
-            <p className="text-xs text-green-600 font-bold mt-2">{data.members.approved} Approved</p>
+            <p className="text-xs text-green-600 font-bold mt-2">
+              {data.members.approved} Approved · +{data.members.new_30d} new
+            </p>
           </div>
           <div className="member-stat-card text-center py-8">
             <p className="text-sm font-bold text-muted uppercase tracking-widest mb-1">Resources</p>
@@ -73,7 +78,9 @@ export function AnalyticsDashboard() {
           <div className="member-stat-card text-center py-8">
             <p className="text-sm font-bold text-muted uppercase tracking-widest mb-1">Forum Posts</p>
             <p className="text-4xl font-bold text-ink">{data.forum.posts}</p>
-            <p className="text-xs text-accent-600 font-bold mt-2">{data.forum.reactions} Reactions</p>
+            <p className="text-xs text-accent-600 font-bold mt-2">
+              {data.forum.reactions} Reactions · +{data.forum.new_posts_30d} new
+            </p>
           </div>
         </div>
 

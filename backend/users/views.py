@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from .models import Country, CustomUser, ExpertiseTag, Notification
+from .models import Country, CustomUser, ExpertiseTag, Notification, EmailVerificationToken
 from .serializers import (
     CountrySerializer,
     RegisterSerializer, UserMeSerializer, UserUpdateSerializer,
@@ -37,7 +37,6 @@ class MeView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-"""
 class VerifyEmailView(APIView):
     permission_classes = [permissions.AllowAny]
 
@@ -59,7 +58,7 @@ class VerifyEmailView(APIView):
             verification_token.delete()
             
             return Response({'message': 'Email verified successfully'}, status=status.HTTP_200_OK)
-        except EmailVerificationToken.DoesNotExist:
+        except (EmailVerificationToken.DoesNotExist, ValueError):
             return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -80,14 +79,15 @@ class ResendVerificationView(APIView):
             EmailVerificationToken.objects.filter(user=user).delete()
             
             # Create new token
-            EmailVerificationToken.objects.create(user=user)
+            token = EmailVerificationToken.objects.create(user=user)
             
-            # TODO: Send email here using Celery
+            # Send email
+            from .tasks import send_verification_email
+            send_verification_email.delay(user.email, user.first_name, str(token.token))
             
             return Response({'message': 'Verification email resent'}, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response({'message': 'If an account exists with this email, a verification link has been sent'}, status=status.HTTP_200_OK)
-"""
 
 
 class PendingMembersView(generics.ListAPIView):
@@ -118,6 +118,10 @@ class ApproveMemberView(APIView):
                     message="Welcome to the Community of Practice! Your account has been approved.",
                     link="/dashboard"
                 )
+                
+                # Send approval email
+                from .tasks import send_approval_notification
+                send_approval_notification.delay(user.email, user.first_name)
                 
                 return Response({'message': f'Member {user.email} approved successfully'}, status=status.HTTP_200_OK)
             elif action == 'reject':

@@ -17,10 +17,6 @@ class Country(models.Model):
 
     code = models.CharField(max_length=2, unique=True)
     name = models.CharField(max_length=100)
-    name_fr = models.CharField(max_length=100, blank=True, default='')
-    name_ar = models.CharField(max_length=100, blank=True, default='')
-    name_pt = models.CharField(max_length=100, blank=True, default='')
-    name_sw = models.CharField(max_length=100, blank=True, default='')
     region = models.CharField(max_length=32, choices=Region.choices)
     lm_office = models.BooleanField(default=False)
     flag_emoji = models.CharField(max_length=16, blank=True, default='')
@@ -58,6 +54,8 @@ class CustomUser(AbstractUser):
     professional_title = models.CharField(max_length=255, blank=True, default='')
     bio = models.TextField(blank=True, default='')
     how_heard = models.TextField(blank=True, default='')
+    preferred_language = models.CharField(max_length=10, default='en')
+    accessibility_preferences = models.JSONField(default=dict, blank=True)
     is_verified = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
 
@@ -104,6 +102,15 @@ def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
     else:
         MemberProfile.objects.get_or_create(user=instance)
+
+
+@receiver(post_save, sender=CustomUser)
+def create_verification_token(sender, instance, created, **kwargs):
+    if created and not instance.is_verified:
+        token = EmailVerificationToken.objects.create(user=instance)
+        # Import task here to avoid circular dependency
+        from .tasks import send_verification_email
+        send_verification_email.delay(instance.email, instance.first_name, str(token.token))
 
 
 class EmailVerificationToken(models.Model):

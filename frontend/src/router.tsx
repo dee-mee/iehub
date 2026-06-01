@@ -15,11 +15,14 @@ import { ELearningPage } from '@/pages/ELearningPage'
 import { AccessibilityPage } from '@/pages/AccessibilityPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { RegisterPage } from '@/pages/RegisterPage'
-// import { VerifyEmailPage } from '@/pages/VerifyEmailPage'
+import { VerifyEmailPage } from '@/pages/VerifyEmailPage'
 import { PendingApprovalPage } from '@/pages/PendingApprovalPage'
 import { LoginPage } from '@/pages/LoginPage'
 import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage'
 import { DonatePage } from '@/pages/DonatePage'
+import { CommitmentsPage } from '@/pages/CommitmentsPage'
+import { FundingPage } from '@/pages/FundingPage'
+import { OpportunitiesPage } from '@/pages/OpportunitiesPage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { ProfilePage } from '@/pages/ProfilePage'
 import { MembersPage } from '@/pages/MembersPage'
@@ -56,11 +59,13 @@ export const router = createBrowserRouter([
       { path: 'news/:slug', element: <NewsDetailPage /> },
       { path: 'contact', element: <ContactPage /> },
       { path: 'programmes', element: <ProgramsPage /> },
+      { path: 'commitments', element: <CommitmentsPage /> },
+      { path: 'funding', element: <FundingPage /> },
       { path: 'elearning', element: <ELearningPage /> },
       { path: 'accessibility', element: <AccessibilityPage /> },
       { path: 'donate', element: <DonatePage /> },
       { path: 'register', element: <RegisterPage /> },
-      // { path: 'verify-email', element: <VerifyEmailPage /> },
+      { path: 'verify-email/:token', element: <VerifyEmailPage /> },
       { path: 'pending-approval', element: <PendingApprovalPage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'forgot-password', element: <ForgotPasswordPage /> },
@@ -81,6 +86,7 @@ export const router = createBrowserRouter([
       { path: 'forum/c/:slug/new', element: <ForumCreateThreadPage /> },
       { path: 'forum/t/:slug', element: <ForumThreadPage /> },
       { path: 'announcements', element: <MemberAnnouncementsPage /> },
+      { path: 'opportunities', element: <OpportunitiesPage /> },
       { path: 'member-resources', element: <MemberResourcesPage /> },
       { path: 'member-resources/:id', element: <MemberResourceDetailPage /> },
       { path: 'events', element: <MemberEventsPage /> },

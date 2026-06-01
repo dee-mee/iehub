@@ -92,7 +92,7 @@ export function HeroCarousel() {
             <p
               key={`accent-${slide.id}`}
               className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-1 animate-hero-fade"
-              style={{ color: '#ec559f', animationDelay: '80ms' }}
+              style={{ color: '#ed559e', animationDelay: '80ms' }}
             >
               {slide.titleAccent}
             </p>

@@ -371,7 +371,12 @@ class ForumPostViewSet(viewsets.ModelViewSet):
         """Notify thread subscribers of new post"""
         thread = post.thread
         subscriptions = thread.subscribers.exclude(user=post.author)
+        from django.conf import settings
+        from .tasks import send_forum_reply_notification
         
+        frontend_url = getattr(settings, 'FRONTEND_URL', 'http://localhost:5173')
+        thread_url = f"{frontend_url}/forum/t/{thread.slug}"
+
         for subscription in subscriptions:
             if subscription.notification_level == ThreadSubscription.NotificationLevel.ALL or \
                (subscription.notification_level == ThreadSubscription.NotificationLevel.REPLIES and not post.parent):
@@ -384,6 +389,16 @@ class ForumPostViewSet(viewsets.ModelViewSet):
                     related_post=post,
                     related_thread=thread,
                     from_user=post.author
+                )
+
+                # Send email notification
+                send_forum_reply_notification.delay(
+                    subscription.user.email,
+                    subscription.user.first_name,
+                    thread.title,
+                    post.author.get_full_name() or post.author.username,
+                    post.content[:200],
+                    thread_url
                 )
 
 
@@ -532,6 +547,25 @@ class PrivateMessageViewSet(viewsets.ModelViewSet):
         if box == 'sent':
             return PrivateMessage.objects.filter(sender=user).select_related('sender', 'recipient')
         return PrivateMessage.objects.filter(recipient=user).select_related('sender', 'recipient')
+
+    def perform_create(self, serializer):
+        message = serializer.save(sender=self.request.user)
+        
+        # Send email notification
+        from django.conf import settings
+        from .tasks import send_private_message_notification
+        
+        frontend_url = getattr(settings, 'FRONTEND_URL', 'http://localhost:5173')
+        messages_url = f"{frontend_url}/messages"
+        
+        send_private_message_notification.delay(
+            message.recipient.email,
+            message.recipient.first_name,
+            message.sender.get_full_name() or message.sender.username,
+            message.subject,
+            message.body[:100],
+            messages_url
+        )
 
     @action(detail=True, methods=['post'])
     def mark_read(self, request, pk=None):

@@ -2,9 +2,10 @@ from rest_framework import mixins, status, viewsets
 from rest_framework.views import APIView
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, F
 from forum.models import ForumThread, ForumPost, ForumReaction
 from users.models import CustomUser
 from users.permissions import IsPlatformAdmin
@@ -39,7 +40,8 @@ class ResourceViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Resource.objects.prefetch_related('topics', 'disability_types', 'files').all()
     serializer_class = ResourceSerializer
     permission_classes = [AllowAny]
-    filter_backends = [SearchFilter, OrderingFilter]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['topics__slug', 'disability_types__slug', 'language', 'resource_type', 'is_featured']
     search_fields = ['title', 'description', 'resource_type']
     ordering_fields = ['published_at', 'download_count', 'title']
     ordering = ['-published_at']
@@ -107,13 +109,23 @@ class PlatformAnalyticsView(APIView):
         total_reactions = ForumReaction.objects.count()
         
         # Regional Breakdown
-        members_by_country = CustomUser.objects.values('country').annotate(count=Count('id')).order_by('-count')
+        members_by_country = CustomUser.objects.values('country__name').annotate(
+            country=F('country__name'),
+            count=Count('id')
+        ).values('country', 'count').order_by('-count')
+
+        # TREND DATA (last 30 days)
+        last_30_days = timezone.now() - timedelta(days=30)
+        new_members_30d = CustomUser.objects.filter(date_joined__gte=last_30_days).count()
+        new_threads_30d = ForumThread.objects.filter(created_at__gte=last_30_days).count()
+        new_posts_30d = ForumPost.objects.filter(created_at__gte=last_30_days).count()
 
         return Response({
             'members': {
                 'total': total_members,
                 'verified': verified_members,
                 'approved': approved_members,
+                'new_30d': new_members_30d,
             },
             'content': {
                 'resources': total_resources,
@@ -125,6 +137,8 @@ class PlatformAnalyticsView(APIView):
                 'threads': total_threads,
                 'posts': total_posts,
                 'reactions': total_reactions,
+                'new_threads_30d': new_threads_30d,
+                'new_posts_30d': new_posts_30d,
             },
             'regional': members_by_country
         })

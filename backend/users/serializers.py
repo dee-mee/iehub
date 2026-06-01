@@ -85,7 +85,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User(**validated_data)
         user.set_password(password)
         user.is_active = True
-        user.is_verified = True
+        user.is_verified = False
         user.is_approved = False
         user.save()
 
@@ -101,6 +101,7 @@ class UserMeSerializer(serializers.ModelSerializer):
     )
     country_detail = CountrySerializer(read_only=True, source='country')
     profile = MemberProfileSerializer(read_only=True)
+    forum_stats = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -118,10 +119,32 @@ class UserMeSerializer(serializers.ModelSerializer):
             'professional_title',
             'bio',
             'how_heard',
+            'preferred_language',
+            'accessibility_preferences',
             'is_verified',
             'is_approved',
             'profile',
+            'forum_stats',
         ]
+
+    def get_forum_stats(self, obj):
+        try:
+            rep = obj.forum_reputation
+            return {
+                'points': rep.points,
+                'level': rep.get_level(),
+                'threads_count': rep.threads_created,
+                'posts_count': rep.posts_created,
+                'solutions_count': rep.solutions_provided,
+            }
+        except:
+            return {
+                'points': 0,
+                'level': 'Newcomer',
+                'threads_count': 0,
+                'posts_count': 0,
+                'solutions_count': 0,
+            }
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
@@ -145,6 +168,8 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             'organization_type',
             'professional_title',
             'bio',
+            'preferred_language',
+            'accessibility_preferences',
             'profile',
         ]
 

@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? '/api'
 
 export function VerifyEmailPage() {
-  const [searchParams] = useSearchParams()
+  const { token } = useParams<{ token: string }>()
   const navigate = useNavigate()
-  const token = searchParams.get('token')
   
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
   const [message, setMessage] = useState('')

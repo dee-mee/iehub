@@ -9,13 +9,13 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         client = Minio(
-            settings.MINIO_ENDPOINT,
-            access_key=settings.MINIO_ACCESS_KEY,
-            secret_key=settings.MINIO_SECRET_KEY,
-            secure=settings.MINIO_USE_HTTPS,
+            settings.MINIO_STORAGE_ENDPOINT,
+            access_key=settings.MINIO_STORAGE_ACCESS_KEY,
+            secret_key=settings.MINIO_STORAGE_SECRET_KEY,
+            secure=settings.MINIO_STORAGE_USE_HTTPS,
         )
 
-        bucket_name = settings.MINIO_MEDIA_BUCKET_NAME
+        bucket_name = settings.MINIO_STORAGE_MEDIA_BUCKET_NAME
 
         try:
             if not client.bucket_exists(bucket_name):

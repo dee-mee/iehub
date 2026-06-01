@@ -170,7 +170,7 @@ export function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-bold text-ink">Office</h3>
-                    <p className="text-muted text-sm">Nairobi, Kenya (LM International Regional Office)</p>
+                    <p className="text-muted text-sm">Nairobi, Kenya</p>
                   </div>
                 </div>
               </div>

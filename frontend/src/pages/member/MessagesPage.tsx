@@ -31,7 +31,7 @@ export function MessagesPage() {
   const membersQuery = useQuery({
     queryKey: ['message-recipients'],
     queryFn: () =>
-      apiFetch<{ results: Member[] }>('/members/?page_size=100').then((d) => d.results ?? []),
+      apiFetch<{ results: Member[] }>('/auth/directory/?page_size=100').then((d) => d.results ?? []),
     enabled: compose,
   })
 

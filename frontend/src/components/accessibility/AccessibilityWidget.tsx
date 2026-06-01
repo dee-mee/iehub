@@ -183,7 +183,7 @@ export function AccessibilityWidget() {
               position: 'absolute',
               top: '0',
               right: '0',
-              background: '#ec559f',
+              background: '#ed559e',
               color: '#fff',
               borderRadius: '50%',
               minWidth: '1.25rem',

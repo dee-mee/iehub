@@ -26,6 +26,17 @@ type ForumCategory = {
   }
 }
 
+type LeaderboardUser = {
+  points: number
+  level: string
+  user: {
+    id: number
+    username: string
+    first_name: string
+    last_name: string
+  }
+}
+
 // ─── Icons ───────────────────────────────────────────────────────────────────
 function Icon({ name }: { name: string }) {
   const icons: Record<string, ReactNode> = {
@@ -163,6 +174,11 @@ export function DashboardPage() {
   }>({
     queryKey: ['dashboard-members'],
     queryFn: () => apiFetch('/members/?is_active=true&page_size=12'),
+  })
+
+  const leaderboardQuery = useQuery<LeaderboardUser[]>({
+    queryKey: ['forum-leaderboard'],
+    queryFn: () => apiFetch<LeaderboardUser[]>('/forum/reputation/leaderboard/').then(apiList),
   })
 
   // Fake announcement data fallback
@@ -366,6 +382,41 @@ export function DashboardPage() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/* Reputation Leaderboard */}
+            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 transition-colors">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="font-bold text-slate-900 dark:text-white text-base tracking-tight">Top Contributors</h3>
+                <Link to="/members" className="text-xs font-bold text-primary-600 dark:text-primary-400 hover:text-primary-700">
+                  Full list
+                </Link>
+              </div>
+              <div className="space-y-4">
+                {leaderboardQuery.isLoading ? (
+                  <p className="text-xs text-slate-400">Loading...</p>
+                ) : (
+                  leaderboardQuery.data?.slice(0, 5).map((l, i) => (
+                    <div key={l.user.id} className="flex items-center gap-3">
+                      <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-[10px] font-bold text-slate-500">
+                        {i + 1}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-bold text-slate-900 dark:text-white truncate">
+                          {l.user.first_name || l.user.username}
+                        </p>
+                        <p className="text-[10px] font-bold text-primary-600 uppercase tracking-tighter">
+                          {l.level}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-slate-900 dark:text-white leading-none">{l.points}</p>
+                        <p className="text-[9px] text-slate-400 font-bold uppercase mt-1">pts</p>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
 

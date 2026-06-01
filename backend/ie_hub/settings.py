@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS', 'localhost,
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -128,13 +129,25 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('fr', 'Français'),
+    ('sw', 'Swahili'),
+    ('ar', 'Arabic'),
+    ('pt', 'Portuguese'),
+]
 
 TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
 USE_TZ = True
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+MODELTRANSLATION_LANGUAGES = ('en', 'fr', 'sw', 'ar', 'pt')
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('en',)
 
 
 # Static files (CSS, JavaScript, Images)
@@ -148,9 +161,22 @@ STATICFILES_DIRS = [
 
 # Media files (MinIO S3-compatible storage)
 MEDIA_URL = '/media/'
+
+if os.getenv('MINIO_ENDPOINT'):
+    DEFAULT_FILE_STORAGE = 'minio_storage.storage.MinioMediaStorage'
+    MINIO_STORAGE_ENDPOINT = os.getenv('MINIO_ENDPOINT')
+    MINIO_STORAGE_ACCESS_KEY = os.getenv('MINIO_ACCESS_KEY')
+    MINIO_STORAGE_SECRET_KEY = os.getenv('MINIO_SECRET_KEY')
+    MINIO_STORAGE_USE_HTTPS = os.getenv('MINIO_USE_HTTPS', 'False').lower() == 'true'
+    MINIO_STORAGE_MEDIA_BUCKET_NAME = os.getenv('MINIO_MEDIA_BUCKET_NAME', 'iehub-media')
+    MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
+    MINIO_STORAGE_MEDIA_USE_PRESIGNED = True
+else:
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
 STORAGES = {
     'default': {
-        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        'BACKEND': DEFAULT_FILE_STORAGE,
     },
     'staticfiles': {
         'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
@@ -197,6 +223,17 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60  # 30 minutes
+
+# Email Configuration
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.sendgrid.net')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() == 'true'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'apikey')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'IE Hub <info@iehub.africa>')
+
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:5173')
 
 # CKEditor 5 Configuration
 CKEDITOR_5_CONFIGS = {

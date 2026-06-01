@@ -136,7 +136,7 @@ function NotificationBell() {
       </svg>
       {data && data.count > 0 && (
         <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-bold text-white"
-          style={{ background: '#ec559f' }}>
+          style={{ background: '#ed559e' }}>
           {data.count > 9 ? '9+' : data.count}
         </span>
       )}
@@ -164,11 +164,13 @@ export function Navbar() {
   const aboutDropdown = [
     { label: t('nav.aboutDropdown.ourStory'),          href: '/about' },
     { label: t('nav.aboutDropdown.whoWeAre'),          href: '/about#who-we-are' },
+    { label: "Commitments Tracker",                    href: '/commitments' },
     { label: t('nav.aboutDropdown.steeringCommittee'), href: '/about#steering-committee' },
     { label: t('nav.aboutDropdown.countryOffices'),    href: '/about#country-offices' },
   ]
   const resourcesDropdown = [
     { label: t('nav.resourcesDropdown.allResources'),  href: '/resources' },
+    { label: "Funding & Grant Tracker",                href: '/funding' },
     { label: t('nav.resourcesDropdown.policyAdvocacy'),href: '/resources?topic=policy-advocacy' },
     { label: t('nav.resourcesDropdown.teacherTraining'),href: '/resources?topic=teacher-training' },
     { label: t('nav.resourcesDropdown.assistiveTech'), href: '/resources?topic=assistive-technology' },
@@ -225,11 +227,7 @@ export function Navbar() {
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 border-2 border-transparent hover:border-[#2d2d2d] p-1 focus-visible:outline-offset-4 flex-shrink-0">
-            <span className="flex h-10 w-10 items-center justify-center text-base font-extrabold text-white border-2 border-[#1a1a1a]"
-              style={{ background: 'linear-gradient(135deg, #00a170 0%, #662d91 100%)' }}
-              aria-hidden="true">
-              IE
-            </span>
+            <img src="/logo.png" alt="IE Hub Logo" className="h-10 w-auto object-contain" />
             <span className="flex flex-col leading-tight">
               <span className="text-sm font-extrabold" style={{ color: '#00a170' }}>IE Hub</span>
               <span className="text-[10px] text-gray-400 font-medium tracking-wide">Africa</span>
@@ -288,7 +286,7 @@ export function Navbar() {
                 </Link>
                 <Link to="/register"
                   className="px-4 py-2 text-sm font-bold text-white border-2 border-[#1a1a1a] shadow-[2px_2px_0_#1a1a1a] hover:opacity-95"
-                  style={{ background: '#ec559f' }}>
+                  style={{ background: '#ed559e' }}>
                   {t('nav.join')}
                 </Link>
               </div>
@@ -382,7 +380,7 @@ export function Navbar() {
                     {t('nav.signIn')}
                   </Link>
                   <Link to="/register" className="mx-3 border-2 border-[#1a1a1a] py-2 text-center text-sm font-bold text-white shadow-[2px_2px_0_#1a1a1a]"
-                    style={{ background: '#ec559f' }} onClick={() => setMenuOpen(false)}>
+                    style={{ background: '#ed559e' }} onClick={() => setMenuOpen(false)}>
                     {t('nav.join')}
                   </Link>
                 </>

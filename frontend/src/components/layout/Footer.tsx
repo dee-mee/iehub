@@ -35,10 +35,7 @@ export function Footer() {
 
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <span className="flex h-9 w-9 items-center justify-center border-2 border-white text-sm font-extrabold text-white"
-              style={{ background: 'linear-gradient(135deg, #00a170 0%, #662d91 100%)' }}>
-              IE
-            </span>
+            <img src="/logo.png" alt="IE Hub Logo" className="h-10 w-auto object-contain" />
             <span className="text-lg font-extrabold" style={{ color: '#00a170' }}>IE Hub</span>
           </div>
           <p className="text-sm text-gray-400">{t('tagline')}</p>
@@ -81,7 +78,7 @@ export function Footer() {
               <span className="font-semibold text-white">Phone: </span>
               <a href="tel:+254700000000" className="hover:text-white transition-colors hover:underline">+254 700 000 000</a>
             </p>
-            <p>LM International · Nairobi, Kenya</p>
+            <p>Nairobi, Kenya</p>
           </address>
         </div>
 

@@ -16,7 +16,7 @@ import {
 // ─── Colour tokens ────────────────────────────────────────────────────────────
 const GREEN  = '#00a170'
 const PURPLE = '#662d91'
-const PINK   = '#ec559f'
+const PINK   = '#ed559e'
 const BLUE   = '#1cb7ee'
 
 // ─── "What We Do" items ───────────────────────────────────────────────────────
@@ -139,7 +139,7 @@ export function HomePage() {
                 The Inclusive Education Hub for Africa (IE Hub) is a continental platform that brings together government institutions, Organisations of Persons with Disabilities (OPDs), Civil Society Organisations, Faith-Based Organisations, academic institutions, the corporate sector, international partners, learners, teachers and other key education stakeholders.
               </p>
               <p className="mt-3 text-base text-gray-600 leading-relaxed">
-                Hosted by LM International and governed by a 13-member Steering Committee, IE Hub supports practitioners across 54 African countries through resources, peer learning, and evidence-based advocacy.
+                Governed by a 13-member Steering Committee, IE Hub supports practitioners across 54 African countries through resources, peer learning, and evidence-based advocacy.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link to="/about" className="btn-primary px-6">
@@ -184,7 +184,66 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ── 5. OUR PROGRAMMES ────────────────────────────────────────────────── */}
+      {/* ── 5. WHO WE SERVE (Segmented Paths) ───────────────────────────────── */}
+      <section className="oxygen-section" aria-labelledby="who-we-serve-heading">
+        <div className="container-page">
+          <div className="text-center max-w-2xl mx-auto mb-12 border-2 border-[#2d2d2d] bg-white p-8">
+            <span className="oxygen-section-title" style={{ background: '#f7941d' }}>Who We Serve</span>
+            <h2 id="who-we-serve-heading" className="section-heading">
+              Tailored Support for Every Stakeholder
+            </h2>
+            <p className="mt-4 text-base text-gray-500">
+              Access resources, community, and support tailored specifically to your role in inclusive education.
+            </p>
+          </div>
+
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                title: "Parents & Caregivers",
+                desc: "Find guidance, peer support, and advocacy tools to support your child's inclusive learning journey.",
+                icon: "👪",
+                color: "#1cb7ee",
+                href: "/resources?audience=PARENT"
+              },
+              {
+                title: "Educators & Practitioners",
+                desc: "Access lesson plans, teaching toolkits, and best practices for creating truly inclusive classrooms.",
+                icon: "🎓",
+                color: "#00a170",
+                href: "/resources?audience=TEACHER"
+              },
+              {
+                title: "Policymakers",
+                desc: "Explore policy frameworks, regional data trackers, and evidence to drive systemic change.",
+                icon: "⚖️",
+                color: "#662d91",
+                href: "/resources?audience=POLICYMAKER"
+              },
+              {
+                title: "Donors & Partners",
+                desc: "Track impact, discover grant opportunities, and join a network of organizations driving continental change.",
+                icon: "🤝",
+                color: "#ed559e",
+                href: "/resources?audience=DONOR"
+              }
+            ].map(path => (
+              <div key={path.title} className="relative group overflow-hidden border-2 border-[#2d2d2d] bg-white p-6 transition-all hover:-translate-y-1 hover:shadow-[6px_6px_0_#2d2d2d]">
+                <div className="absolute top-0 right-0 w-12 h-12 flex items-center justify-center text-2xl bg-gray-50 border-b-2 border-l-2 border-[#2d2d2d]">
+                  {path.icon}
+                </div>
+                <h3 className="text-lg font-bold text-ink mb-3 pr-8">{path.title}</h3>
+                <p className="text-sm text-gray-600 mb-6 flex-1">{path.desc}</p>
+                <Link to={path.href} className="inline-flex items-center text-xs font-bold uppercase tracking-widest hover:underline" style={{ color: path.color }}>
+                  I am a {path.title.split(' ')[0]} →
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. OUR PROGRAMMES ────────────────────────────────────────────────── */}
       <section className="oxygen-section" aria-labelledby="programmes-heading">
         <div className="container-page">
           <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end mb-12 border-2 border-[#2d2d2d] p-6 bg-white">

@@ -182,6 +182,30 @@ export function ProfilePage() {
                   </li>
                 </ul>
               </div>
+
+              <div className="card bg-primary-50/50 border-primary-100">
+                <h3 className="font-bold text-primary-900 mb-4 text-sm uppercase tracking-wider">Forum Reputation</h3>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-bold text-primary-700 bg-primary-100 px-2 py-1 rounded uppercase tracking-tighter">
+                    {user.forum_stats?.level || 'Newcomer'}
+                  </span>
+                  <span className="text-xl font-bold text-primary-900">{user.forum_stats?.points || 0} pts</span>
+                </div>
+                <div className="grid grid-cols-3 gap-2 text-center border-t border-primary-100 pt-4">
+                  <div>
+                    <p className="text-lg font-bold text-primary-900">{user.forum_stats?.threads_count || 0}</p>
+                    <p className="text-[10px] text-primary-600 uppercase font-bold">Topics</p>
+                  </div>
+                  <div>
+                    <p className="text-lg font-bold text-primary-900">{user.forum_stats?.posts_count || 0}</p>
+                    <p className="text-[10px] text-primary-600 uppercase font-bold">Posts</p>
+                  </div>
+                  <div>
+                    <p className="text-lg font-bold text-primary-900">{user.forum_stats?.solutions_count || 0}</p>
+                    <p className="text-[10px] text-primary-600 uppercase font-bold">Solved</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Main Content */}

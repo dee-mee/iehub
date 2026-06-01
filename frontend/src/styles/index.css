@@ -9,10 +9,11 @@
 
 @theme {
   /* Brand palette */
-  --color-pink:    #ec559f;
+  --color-pink:    #ed559e;
   --color-purple:  #662d91;
   --color-green:   #00a170;
   --color-blue:    #1cb7ee;
+  --color-orange:  #f7941d;
 
   /* Map to semantic primary (green = main) */
   --color-primary-50:   #e6f5f0;
@@ -26,9 +27,10 @@
   --color-primary-800:  #006646;
   --color-primary-900:  #004d34;
 
-  --color-accent-pink:   #ec559f;
+  --color-accent-pink:   #ed559e;
   --color-accent-purple: #662d91;
   --color-accent-blue:   #1cb7ee;
+  --color-accent-orange: #f7941d;
 
   --color-surface: #fafafa;
   --color-ink:     #1a2422;
