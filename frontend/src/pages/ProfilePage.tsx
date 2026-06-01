@@ -5,8 +5,6 @@ import { useAuth } from '@/context/AuthContext'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { apiFetch, apiList } from '@/api/client'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? '/api'
-
 type ExpertiseTag = {
   id: number
   name: string

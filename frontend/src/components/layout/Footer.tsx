@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useAuth } from '@/context/AuthContext'
 
 export function Footer() {
   const { t } = useTranslation()
@@ -11,6 +12,21 @@ export function Footer() {
   const handleNewsletter = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSubmitted(true)
+  }
+
+  const { isAuthenticated } = useAuth()
+
+  const quickLinks = [
+    { to: '/resources',   label: t('nav.resources') },
+    { to: '/news',        label: t('nav.news') },
+    { to: '/news?category=BLOG', label: t('nav.newsDropdown.blog') },
+    { to: '/about',       label: t('nav.about') },
+    { to: '/programmes',  label: t('nav.programmes') },
+    { to: '/accessibility', label: t('nav.accessibility') },
+  ]
+
+  if (isAuthenticated) {
+    quickLinks.push({ to: '/members', label: t('nav.members') })
   }
 
   return (
@@ -42,14 +58,7 @@ export function Footer() {
             {t('footer.quickLinks')}
           </h2>
           <ul className="space-y-2.5 text-sm">
-            {[
-              { to: '/resources',   label: t('nav.resources') },
-              { to: '/news',        label: t('nav.news') },
-              { to: '/about',       label: t('nav.about') },
-              { to: '/programmes',  label: t('nav.programmes') },
-              { to: '/members',     label: t('nav.members') },
-              { to: '/accessibility', label: t('nav.accessibility') },
-            ].map(link => (
+            {quickLinks.map(link => (
               <li key={link.to}>
                 <Link to={link.to} className="text-gray-400 hover:text-white transition-colors hover:underline underline-offset-2">
                   {link.label}

@@ -46,7 +46,6 @@ export function ForumPage() {
   const general = list.filter((c) => c.category_type === 'GENERAL')
   const thematic = list.filter((c) => c.category_type === 'THEMATIC')
   const country = list.filter((c) => c.category_type === 'COUNTRY')
-  const expert = list.filter((c) => c.category_type === 'EXPERT_ONLY')
 
   const CategoryCard = ({ category }: { category: ForumCategory }) => (
     <Link

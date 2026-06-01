@@ -10,6 +10,8 @@ import { ResourceDetailPage } from '@/pages/ResourceDetailPage'
 import { NewsPage } from '@/pages/NewsPage'
 import { NewsDetailPage } from '@/pages/NewsDetailPage'
 import { ContactPage } from '@/pages/ContactPage'
+import { ProgramsPage } from '@/pages/ProgramsPage'
+import { ELearningPage } from '@/pages/ELearningPage'
 import { AccessibilityPage } from '@/pages/AccessibilityPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { RegisterPage } from '@/pages/RegisterPage'
@@ -53,6 +55,8 @@ export const router = createBrowserRouter([
       { path: 'news', element: <NewsPage /> },
       { path: 'news/:slug', element: <NewsDetailPage /> },
       { path: 'contact', element: <ContactPage /> },
+      { path: 'programmes', element: <ProgramsPage /> },
+      { path: 'elearning', element: <ELearningPage /> },
       { path: 'accessibility', element: <AccessibilityPage /> },
       { path: 'donate', element: <DonatePage /> },
       { path: 'register', element: <RegisterPage /> },

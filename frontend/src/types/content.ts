@@ -97,8 +97,15 @@ export type ForumThread = {
   slug: string
   author: {
     first_name: string
+    last_name?: string
     username: string
+  }
+  category?: {
+    name: string
+    slug: string
   }
   post_count: number
   last_activity: string
+  is_pinned?: boolean
+  is_announcement?: boolean
 }

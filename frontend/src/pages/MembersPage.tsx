@@ -77,8 +77,18 @@ export function MembersPage() {
         {isLoading ? (
           <LoadingSpinner label="Finding members..." />
         ) : error ? (
-          <div className="card p-8 text-center text-red-600">
-            Error loading directory. Please make sure you are logged in and approved.
+          <div className="card p-8 text-center">
+            <div className="text-red-600 font-bold mb-2">Error loading member directory</div>
+            <p className="text-sm text-gray-500">
+              {error instanceof Error && error.message.includes('401') 
+                ? 'Your session has expired. Please log out and log back in.' 
+                : 'This directory is restricted to approved members only. Please ensure your account is approved.'}
+            </p>
+            <div className="mt-6">
+              <Link to="/help" className="text-primary-600 hover:underline text-sm font-semibold">
+                Contact support if you believe this is an error
+              </Link>
+            </div>
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

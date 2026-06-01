@@ -7,25 +7,9 @@ import { fetchEvents } from '@/api/public'
 import { fetchResources } from '@/api/public'
 import { apiFetch, apiList } from '@/api/client'
 import { useAuth } from '@/context/AuthContext'
+import type { EventItem, ForumThread } from '@/types/content'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
-type ForumThread = {
-  id: number
-  title: string
-  slug: string
-  last_activity: string
-  post_count: number
-  author: {
-    first_name: string
-    last_name: string
-    username: string
-  }
-  category?: {
-    name: string
-    slug: string
-  }
-}
-
 type ForumCategory = {
   id: number
   name: string
@@ -40,13 +24,6 @@ type ForumCategory = {
     author_name: string
     last_activity: string
   }
-}
-
-type EventItem = {
-  id: number
-  title: string
-  startDatetime: string
-  locationAddress?: string
 }
 
 // ─── Icons ───────────────────────────────────────────────────────────────────

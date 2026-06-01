@@ -245,6 +245,10 @@ export function Navbar() {
             <NavDropdown label={t('nav.about')} items={aboutDropdown} />
             <NavDropdown label={t('nav.resources')} items={resourcesDropdown} />
             <NavDropdown label={t('nav.programmes')} items={programmesDropdown} />
+            <NavLink to="/elearning"
+              className={({ isActive }) => `px-3 py-2 text-sm font-bold border-2 transition-colors ${isActive ? 'text-[#00a170] border-[#00a170] bg-[#e6f5f0]' : 'text-gray-700 border-transparent hover:text-[#00a170] hover:border-[#2d2d2d]'}`}>
+              eLearning
+            </NavLink>
             <NavDropdown label={t('nav.news')} items={newsDropdown} />
             <NavLink to="/contact"
               className={({ isActive }) => `px-3 py-2 text-sm font-bold border-2 transition-colors ${isActive ? 'text-[#00a170] border-[#00a170] bg-[#e6f5f0]' : 'text-gray-700 border-transparent hover:text-[#00a170] hover:border-[#2d2d2d]'}`}>
@@ -320,6 +324,7 @@ export function Navbar() {
                 { to: '/about',     label: t('nav.about') },
                 { to: '/resources', label: t('nav.resources') },
                 { to: '/programmes',label: t('nav.programmes') },
+                { to: '/elearning', label: 'eLearning' },
                 { to: '/news',      label: t('nav.news') },
                 { to: '/contact',   label: t('nav.contact') },
               ].map(link => (

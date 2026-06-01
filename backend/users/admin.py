@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Country, CustomUser, ExpertiseTag, MemberProfile
+from .models import Country, CustomUser, ExpertiseTag, MemberProfile, PendingMember
 
 
 @admin.register(Country)
@@ -72,6 +72,18 @@ class CustomUserAdmin(UserAdmin):
         updated = queryset.update(is_approved=False)
         self.message_user(request, f"{updated} members successfully rejected/suspended.")
     reject_members.short_description = "Reject/Suspend selected members"
+
+
+@admin.register(PendingMember)
+class PendingMemberAdmin(CustomUserAdmin):
+    """Dedicated view for unapproved members."""
+    def get_queryset(self, request):
+        return super().get_queryset(request).filter(is_approved=False, is_superuser=False)
+
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['title'] = 'Pending Member Approvals'
+        return super().changelist_view(request, extra_context=extra_context)
 
 
 @admin.register(MemberProfile)

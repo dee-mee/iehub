@@ -121,14 +121,12 @@ export function HomePage() {
         <div className="container-page">
           <div className="grid gap-8 md:grid-cols-2 items-stretch border-2 border-[#2d2d2d] bg-white">
             {/* Image side */}
-            <div className="relative border-b-2 md:border-b-0 md:border-r-2 border-[#2d2d2d]">
-              <div className="overflow-hidden h-full min-h-[280px]">
-                <img
-                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&q=80"
-                  alt="Family with wheelchair user outdoors"
-                  className="w-full h-80 object-cover"
-                />
-              </div>
+            <div className="relative border-b-2 md:border-b-0 md:border-r-2 border-[#2d2d2d] min-h-[300px] md:min-h-full">
+              <img
+                src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&q=80"
+                alt="Family with wheelchair user outdoors"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             </div>
 
             {/* Text side */}

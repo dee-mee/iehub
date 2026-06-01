@@ -138,3 +138,10 @@ class Notification(TimestampedModel):
 
     def __str__(self) -> str:
         return f"Notification for {self.user.username}: {self.title}"
+
+
+class PendingMember(CustomUser):
+    class Meta:
+        proxy = True
+        verbose_name = 'Pending Approval'
+        verbose_name_plural = 'Pending Approvals'

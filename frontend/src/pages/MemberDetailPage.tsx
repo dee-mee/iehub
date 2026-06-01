@@ -29,8 +29,11 @@ export function MemberDetailPage() {
     return (
       <div className="container-page py-12 text-center">
         <div className="card max-w-lg mx-auto py-12">
-          <h2 className="text-xl font-bold text-red-600 mb-2">Profile Not Found</h2>
-          <p className="text-muted mb-6">This member profile may be private or no longer exists.</p>
+          <h2 className="text-xl font-bold text-red-600 mb-2">Member Profile Restricted</h2>
+          <p className="text-muted mb-6">
+            Detailed member profiles are only accessible to approved practitioners. 
+            If you are logged in, please ensure your account has been approved by the steering committee.
+          </p>
           <Link to="/members" className="btn-primary">Back to Directory</Link>
         </div>
       </div>

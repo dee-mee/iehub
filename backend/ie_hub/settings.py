@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -152,9 +153,11 @@ STORAGES = {
         'BACKEND': 'django.core.files.storage.FileSystemStorage',
     },
     'staticfiles': {
-        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+        'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
     },
 }
+
+WHITENOISE_MANIFEST_STRICT = False
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -261,6 +264,7 @@ JAZZMIN_SETTINGS = {
         "users.MemberProfile": "fas fa-id-card",
         "users.ExpertiseTag": "fas fa-tags",
         "users.Notification": "fas fa-bell",
+        "users.PendingMember": "fas fa-user-clock",
         "forum.ForumCategory": "fas fa-folder",
         "forum.ForumThread": "fas fa-comments",
         "forum.ForumPost": "fas fa-comment-dots",
@@ -272,14 +276,9 @@ JAZZMIN_SETTINGS = {
         "public.Donation": "fas fa-hand-holding-usd",
     },
     "order_with_respect_to": ["users", "forum", "public", "auth"],
-    "custom_links": {
-        "users": [{
-            "name": "Pending Approvals", 
-            "url": "/admin/users/customuser/?is_approved__exact=0&is_verified__exact=1", 
-            "icon": "fas fa-user-clock",
-        }]
-    },
+    "custom_links": {},
     "changeform_format": "horizontal_tabs",
+
     "custom_css": "admin/css/wp-custom.css",
 }
 
