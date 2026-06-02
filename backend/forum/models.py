@@ -189,7 +189,8 @@ class ForumThread(TimestampedModel):
         self.solution_post = post
         self.save()
         # Award points to solution author
-        post.author.profile.add_reputation(25, "Marked as solution")
+        if hasattr(post.author, 'forum_reputation'):
+            post.author.forum_reputation.add_reputation(25, UserReputation.ActionType.SOLUTION, "Marked as solution")
 
     def increase_views(self, user=None):
         """Increment view count"""

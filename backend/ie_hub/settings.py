@@ -153,17 +153,19 @@ MODELTRANSLATION_FALLBACK_LANGUAGES = ('en',)
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # Media files (MinIO S3-compatible storage)
 MEDIA_URL = '/media/'
 
 if os.getenv('MINIO_ENDPOINT'):
-    DEFAULT_FILE_STORAGE = 'minio_storage.storage.MinioMediaStorage'
+    _STORAGE_BACKEND = 'minio_storage.storage.MinioMediaStorage'
     MINIO_STORAGE_ENDPOINT = os.getenv('MINIO_ENDPOINT')
     MINIO_STORAGE_ACCESS_KEY = os.getenv('MINIO_ACCESS_KEY')
     MINIO_STORAGE_SECRET_KEY = os.getenv('MINIO_SECRET_KEY')
@@ -172,11 +174,11 @@ if os.getenv('MINIO_ENDPOINT'):
     MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
     MINIO_STORAGE_MEDIA_USE_PRESIGNED = True
 else:
-    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+    _STORAGE_BACKEND = 'django.core.files.storage.FileSystemStorage'
 
 STORAGES = {
     'default': {
-        'BACKEND': DEFAULT_FILE_STORAGE,
+        'BACKEND': _STORAGE_BACKEND,
     },
     'staticfiles': {
         'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
@@ -286,6 +288,8 @@ JAZZMIN_SETTINGS = {
     "site_title": "IE Hub Admin",
     "site_header": "IE Hub Portal",
     "site_brand": "IE Hub",
+    "site_logo": "images/logo.png",
+    "login_logo": "images/logo.png",
     "welcome_sign": "Welcome to the IE Hub Management Portal",
     "copyright": "Inclusive Education Hub for Africa",
     "search_model": ["users.CustomUser", "forum.ForumThread"],

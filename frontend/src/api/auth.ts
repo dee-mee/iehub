@@ -25,6 +25,13 @@ export type AuthUser = {
     expertise_areas: Array<{ id: number; name: string; slug: string }>
     countries_of_work: string[]
   }
+  forum_stats?: {
+    points: number
+    level: string
+    threads_count: number
+    posts_count: number
+    solutions_count: number
+  }
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {

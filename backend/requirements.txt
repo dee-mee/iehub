@@ -1,4 +1,4 @@
-django
+django==4.2.16
 djangorestframework
 django-cors-headers
 gunicorn
@@ -14,4 +14,4 @@ Pillow
 django-filter
 django-ckeditor-5
 django-jazzmin
-whitenoise
+whitenoise==6.8.2
